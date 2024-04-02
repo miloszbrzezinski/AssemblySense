@@ -5,10 +5,12 @@ import { Project } from "@prisma/client";
 import { Edit, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const ProjectItem = ({ project }: { project: ProjectWithCustomer }) => {
+const ProjectItem = ({ project }: { project: Project }) => {
   const router = useRouter();
   const onClick = () => {
-    router.push(`projects/${project.id}/dashboard`);
+    router.push(
+      `/workspace/${project.workspaceId}/projects/${project.id}/dashboard`,
+    );
   };
   return (
     <div
@@ -20,7 +22,6 @@ const ProjectItem = ({ project }: { project: ProjectWithCustomer }) => {
           <span className="font-light">{project.projectNo}</span>
           <span>{project.name}</span>
         </p>
-        <p className="font-extralight">{project.customer.name}</p>
       </div>
       <div
         className={cn(

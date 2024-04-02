@@ -82,3 +82,23 @@ export const JoinWorkspaceSchema = z.object({
     message: "Invitation code is required",
   }),
 });
+
+export const CreateCustomerSchema = z.object({
+  customerName: z.string().min(1, {
+    message: "Customer name is required",
+  }),
+  customerDescription: z.string(),
+});
+
+export const CreateProjectSchema = z.object({
+  projectId: z.string().min(1, {
+    message: "Project ID is required",
+  }),
+  projectName: z.string().min(1, {
+    message: "Project name is required",
+  }),
+  projectCustomer: z.string().min(1, {
+    message: "Project customer is required",
+  }),
+  customerDescription: z.string(),
+});

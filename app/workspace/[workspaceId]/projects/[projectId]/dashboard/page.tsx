@@ -29,8 +29,13 @@ export default function ProjectDashboardPage() {
           icon={<CalendarRange strokeWidth={1} />}
           title="Project timeline"
         >
-          <div className="w-full flex h-full items-center">
-            <div className="w-full flex h-10 bg-red-500" />
+          <div className="w-full flex h-full items-center space-x-[1px]">
+            <div className="w-full flex h-10 bg-slate-400 hover:scale-y-110 hover:shadow-md hover:shadow-slate-500 transition-all duration-200" />
+            <div className="w-full flex h-10 bg-slate-400 hover:scale-y-110 hover:shadow-md hover:shadow-slate-500 transition-all duration-200" />
+            <div className="w-full flex h-10 bg-slate-400 hover:scale-y-110 hover:shadow-md hover:shadow-slate-500 transition-all duration-200" />
+            <div className="w-full flex h-40 bg-white-500 border rounded-md hover:scale-y-105 transition-all duration-200 shadow-md" />
+            <div className="w-full flex h-10 bg-stone-600 hover:scale-y-110 hover:shadow-md hover:shadow-stone-500 transition-all duration-200" />
+            <div className="w-full flex h-10 bg-stone-600 hover:scale-y-110 hover:shadow-md hover:shadow-stone-500 transition-all duration-200" />
           </div>
         </DashboardCard>
       </div>

@@ -1,23 +1,22 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { CreateProjectSchema } from "@/schemas";
+import { CreateCustomerSchema } from "@/schemas";
 import { MemberRole } from "@prisma/client";
 import { z } from "zod";
 
-export const createProject = async (
+export const createCustomer = async (
   profileId: string,
   workspaceId: string,
-  values: z.infer<typeof CreateProjectSchema>,
+  values: z.infer<typeof CreateCustomerSchema>,
 ) => {
-  const validatedFields = CreateProjectSchema.safeParse(values);
+  const validatedFields = CreateCustomerSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: "Invalid fields!" };
   }
 
-  const { projectId, projectName, projectCustomer, customerDescription } =
-    validatedFields.data;
+  const { customerName, customerDescription } = validatedFields.data;
 
   const workspace = await db.workspace.update({
     where: {
@@ -32,16 +31,14 @@ export const createProject = async (
       },
     },
     data: {
-      projects: {
+      customers: {
         create: {
-          projectNo: projectId,
-          name: projectName,
-          description: "",
-          customerId: projectCustomer,
+          name: customerName,
+          description: customerDescription,
         },
       },
     },
   });
 
-  return { success: `Project ${projectName} created` };
+  return { success: `Customer ${customerName} created` };
 };
