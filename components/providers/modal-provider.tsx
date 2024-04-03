@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AddComponentModal } from "../modals/add-component-modal";
 import { AddProcessModal } from "../modals/add-process-modal";
+import { InviteUsersModal } from "../modals/invite-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -19,6 +20,7 @@ export const ModalProvider = () => {
     <>
       <AddComponentModal />
       <AddProcessModal />
+      <InviteUsersModal />
     </>
   );
 };

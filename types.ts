@@ -4,6 +4,8 @@ import {
   Component,
   ComponentCategory,
   Customer,
+  Member,
+  Profile,
   Project,
 } from "@prisma/client";
 
@@ -17,4 +19,8 @@ export type ComponentCategoryWithComponents = ComponentCategory & {
 
 export type AssemblyGroupWithProcesses = AssemblyGroup & {
   assemblyProcesses: AssemblyProcess[];
+};
+
+export type MemberWithProfile = Member & {
+  profile: Profile;
 };
