@@ -117,3 +117,12 @@ export const CreateAssemblyGroupSchema = z.object({
     message: "Assembly group name is required",
   }),
 });
+
+export const CreateProcessSchema = z.object({
+  processId: z.string().min(1, {
+    message: "Project ID is required",
+  }),
+  processName: z.string().min(1, {
+    message: "Project name is required",
+  }),
+});

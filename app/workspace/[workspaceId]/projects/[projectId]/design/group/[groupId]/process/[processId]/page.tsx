@@ -3,10 +3,15 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-export default async function ComponentsLibraryPage({
+export default async function ProcessPage({
   params,
 }: {
-  params: { workspaceId: string; componentId: string };
+  params: {
+    workspaceId: string;
+    projectId: string;
+    groupId: string;
+    processId: string;
+  };
 }) {
   const profile = await currentProfile();
 
@@ -21,38 +26,30 @@ export default async function ComponentsLibraryPage({
         },
       },
     },
-    include: {
-      componentCategories: {
-        include: {
-          components: {
-            where: {
-              id: params.componentId,
-            },
-          },
-        },
-      },
-    },
   });
 
   if (!workspace) {
-    return;
+    return <p className="p-5">Workspace not found!</p>;
   }
 
-  const tmpComponent = workspace.componentCategories.filter(
-    (category) => category.components.length > 0,
-  );
+  const process = await db.assemblyProcess.findUnique({
+    where: {
+      id: params.processId,
+    },
+    include: {
+      assemblyGroup: true,
+    },
+  });
 
-  if (!tmpComponent[0]) {
-    return <p className="p-5">Component not found!</p>;
+  if (!process) {
+    return <p className="p-5">Process not found!</p>;
   }
-
-  const component = tmpComponent[0].components[0];
 
   return (
     <div className="h-full w-full flex flex-col p-4">
       <div className="pb-4 flex space-x-3">
-        <p className="text-4xl font-light">{component.manufacturer}</p>
-        <p className="text-4xl font-extralight">{component.name}</p>
+        <p className="text-4xl font-light">{process.processId}</p>
+        <p className="text-4xl font-extralight">{process.name}</p>
       </div>
       <Tabs defaultValue="overview">
         <TabsList>

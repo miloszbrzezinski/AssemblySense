@@ -1,4 +1,4 @@
-import { ComponentCategory, Project } from "@prisma/client";
+import { AssemblyGroup, ComponentCategory, Project } from "@prisma/client";
 import { create } from "zustand";
 
 export type ModalType =
@@ -11,6 +11,7 @@ interface ModalData {
   projectId?: string;
   profileId?: string;
   componentCategory?: ComponentCategory;
+  assemblyGroup?: AssemblyGroup;
   workspaceId?: string;
   apiUrl?: string;
   query?: Record<string, any>;

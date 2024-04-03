@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AddComponentModal } from "../modals/add-component-modal";
-import { AddAssemblyGroupModal } from "../modals/add-assembly-group-modal";
+import { AddProcessModal } from "../modals/add-process-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -18,7 +18,7 @@ export const ModalProvider = () => {
   return (
     <>
       <AddComponentModal />
-      <AddAssemblyGroupModal />
+      <AddProcessModal />
     </>
   );
 };

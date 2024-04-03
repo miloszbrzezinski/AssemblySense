@@ -86,6 +86,7 @@ export const AssemblyGroupItem = ({
                 <ProcessItem
                   key={process.id}
                   assemblyProcess={process}
+                  assemblyGroup={assemblyGroup}
                   workspaceId={workspaceId}
                 />
               ))}
@@ -100,15 +101,16 @@ export const AssemblyGroupItem = ({
         <ContextMenuSeparator />
         <ContextMenuItem
           onClick={() => {
-            // onOpen("addComponent", {
-            //   componentCategory: componentGroup,
-            //   profileId: profileId,
-            // });
+            onOpen("addProcess", {
+              assemblyGroup,
+              workspaceId,
+              profileId,
+            });
           }}
           className="space-x-2"
         >
           <FilePlus strokeWidth={1} className="w-5 h-5" />
-          <p>New component</p>s
+          <p>New process</p>
         </ContextMenuItem>
         <ContextMenuItem className="space-x-2">
           <FolderPlus strokeWidth={1} className="w-5 h-5" />

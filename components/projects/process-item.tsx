@@ -2,15 +2,17 @@
 import { ComponentIcon, File, Puzzle } from "lucide-react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { AssemblyProcess, Component } from "@prisma/client";
+import { AssemblyGroup, AssemblyProcess, Component } from "@prisma/client";
 
 interface ProcessItemProps {
   assemblyProcess: AssemblyProcess;
+  assemblyGroup: AssemblyGroup;
   workspaceId: string;
 }
 
 export const ProcessItem = ({
   assemblyProcess,
+  assemblyGroup,
   workspaceId,
 }: ProcessItemProps) => {
   const router = useRouter();
@@ -19,7 +21,9 @@ export const ProcessItem = ({
       variant="ghost"
       className="p-1 pl-5 h-min justify-start w-full rounded-none space-x-2 hover:bg-slate-200"
       onClick={() => {
-        router.push(`/workspace/${workspaceId}/library/${assemblyProcess.id}`);
+        router.push(
+          `/workspace/${workspaceId}/projects/${assemblyGroup.projectId}/design/group/${assemblyGroup.id}/process/${assemblyProcess.id}`,
+        );
       }}
     >
       <ComponentIcon strokeWidth={1} className="w-5 h-5" />
