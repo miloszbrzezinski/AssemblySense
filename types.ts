@@ -1,4 +1,6 @@
 import {
+  AssemblyGroup,
+  AssemblyProcess,
   Component,
   ComponentCategory,
   Customer,
@@ -11,4 +13,8 @@ export type ProjectWithCustomer = Project & {
 
 export type ComponentCategoryWithComponents = ComponentCategory & {
   components: Component[];
+};
+
+export type AssemblyGroupWithProcesses = AssemblyGroup & {
+  assemblyProcesses: AssemblyProcess[];
 };

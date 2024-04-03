@@ -1,13 +1,14 @@
-import { ComponentCategory } from "@prisma/client";
+import { ComponentCategory, Project } from "@prisma/client";
 import { create } from "zustand";
 
 export type ModalType =
   | "addWorkspace"
-  | "addProcessGroup"
+  | "addAssemblyGroup"
   | "addProcess"
   | "addComponent";
 
 interface ModalData {
+  projectId?: string;
   profileId?: string;
   componentCategory?: ComponentCategory;
   workspaceId?: string;

@@ -1,3 +1,4 @@
+"use client";
 import {
   Copy,
   Edit,
@@ -10,32 +11,54 @@ import {
   Scissors,
   Trash,
   Users,
-  Waypoints,
 } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "./catalog-accordion";
+} from "../ui/catalog-accordion";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from "./context-menu";
-import { Button } from "./button";
-import { Separator } from "./separator";
+} from "../ui/context-menu";
+import {
+  AssemblyGroupWithProcesses,
+  ComponentCategoryWithComponents,
+} from "@/types";
+import { useModal } from "@/hooks/use-modal-store";
+import { Button } from "../ui/button";
+import { ProcessItem } from "./process-item";
+import { useState } from "react";
 
-export const ProcessCatalog = () => {
+interface AssemblyGroupItemProps {
+  assemblyGroup: AssemblyGroupWithProcesses;
+  profileId: string;
+  workspaceId: string;
+}
+
+export const AssemblyGroupItem = ({
+  assemblyGroup,
+  profileId,
+  workspaceId,
+}: AssemblyGroupItemProps) => {
+  const [newComponent, setNewComponent] = useState(false);
+  const { onOpen } = useModal();
+
+  const hideNewCategory = () => {
+    setNewComponent(false);
+  };
   return (
     <ContextMenu>
       <ContextMenuTrigger>
         <Accordion type="multiple">
           <AccordionItem value="group">
             <AccordionTrigger className="justify-start items-center space-x-1">
-              <Folder strokeWidth={1} className="w-5 h-5" /> <p>ST100</p>
+              <Folder strokeWidth={1} className="w-5 h-5" />{" "}
+              <p>{assemblyGroup.name}</p>
             </AccordionTrigger>
             <AccordionContent className="w-full">
               <Button
@@ -59,38 +82,13 @@ export const ProcessCatalog = () => {
                 <Puzzle strokeWidth={1} className="w-5 h-5" />
                 <p className="font-light">Components</p>
               </Button>
-
-              <Button
-                variant="ghost"
-                className="p-1 pl-5 h-min justify-start w-full rounded-none space-x-2 hover:bg-slate-200"
-              >
-                <File strokeWidth={1} className="w-5 h-5" />
-                <div className="space-x-1 flex">
-                  <p className="font-light">OP101</p>
-                  <p className="font-extralight">Loading parts</p>
-                </div>
-              </Button>
-              <Button
-                variant="ghost"
-                className="p-1 pl-5 h-min justify-start w-full rounded-none space-x-2 hover:bg-slate-200"
-              >
-                <File strokeWidth={1} className="w-5 h-5" />
-                <div className="space-x-1 flex">
-                  <p className="font-light">OP102</p>
-                  <p className="font-extralight">Processing part</p>
-                </div>
-              </Button>
-              <Button
-                variant="ghost"
-                className="p-1 pl-2 h-min justify-start w-full rounded-none space-x-1 hover:bg-slate-200"
-              >
-                <div className="w-2 h-full flex rounded-full bg-red-500" />
-                <File strokeWidth={1} className="w-5 h-5" />
-                <div className="space-x-1 flex">
-                  <p className="font-light">OP103</p>
-                  <p className="font-extralight">Packing parts</p>
-                </div>
-              </Button>
+              {assemblyGroup.assemblyProcesses.map((process) => (
+                <ProcessItem
+                  key={process.id}
+                  assemblyProcess={process}
+                  workspaceId={workspaceId}
+                />
+              ))}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -100,9 +98,17 @@ export const ProcessCatalog = () => {
           <p>Open</p>
         </ContextMenuItem>
         <ContextMenuSeparator />
-        <ContextMenuItem className="space-x-2">
+        <ContextMenuItem
+          onClick={() => {
+            // onOpen("addComponent", {
+            //   componentCategory: componentGroup,
+            //   profileId: profileId,
+            // });
+          }}
+          className="space-x-2"
+        >
           <FilePlus strokeWidth={1} className="w-5 h-5" />
-          <p>New component</p>
+          <p>New component</p>s
         </ContextMenuItem>
         <ContextMenuItem className="space-x-2">
           <FolderPlus strokeWidth={1} className="w-5 h-5" />

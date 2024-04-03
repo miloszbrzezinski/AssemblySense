@@ -168,9 +168,9 @@ model AssemblyGroup {
 }
 
 model AssemblyProcess {
-  id           String @id @default(uuid())
-  manufacturer String
-  name         String
+  id        String @id @default(uuid())
+  processId String
+  name      String
 
   assemblyGroupId String
   assemblyGroup   AssemblyGroup @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)

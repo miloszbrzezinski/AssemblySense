@@ -3,6 +3,7 @@ import {
   FilePlus,
   FolderPlus,
   Network,
+  Plus,
   Puzzle,
   Users,
   Waypoints,
@@ -17,12 +18,35 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../ui/accordion";
-import { ProcessCatalog } from "../ui/process-catalog";
+import { AssemblyGroupWithProcesses } from "@/types";
+import { AssemblyGroupItem } from "./assembly-group-item";
+import { NewCategory } from "../library/new-category";
+import { useState } from "react";
+import { NewAssemblyGroup } from "./new-assembly-group";
 
-export const DesignSidebar = () => {
+interface DesignSidebarProps {
+  profileId: string;
+  workspaceId: string;
+  projectId: string;
+  assemblyGroups: AssemblyGroupWithProcesses[];
+}
+
+export const DesignSidebar = ({
+  profileId,
+  workspaceId,
+  projectId,
+  assemblyGroups,
+}: DesignSidebarProps) => {
   const params = useParams();
   const router = useRouter();
   const { onOpen } = useModal();
+
+  const [newGroup, setNewGroup] = useState(false);
+
+  const hideNewGroup = () => {
+    setNewGroup(false);
+  };
+
   return (
     <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll">
       <Accordion type="multiple">
@@ -84,15 +108,48 @@ export const DesignSidebar = () => {
       </Accordion>
       <Accordion type="multiple">
         <AccordionItem value="project">
-          <AccordionTrigger>
-            <div className="flex justify-between w-full">
-              <p className="text-lg pl-1 font-normal">Processes</p>
+          <div className="flex w-full justify-between items-center">
+            <AccordionTrigger>
+              <div className="flex justify-between w-full">
+                <p className="text-lg pl-1 font-normal">Processes</p>
+              </div>
+            </AccordionTrigger>
+            <div className="space-x-1 px-2">
+              <button>
+                <FilePlus strokeWidth={1} />
+              </button>
+              <button
+                onClick={() => {
+                  setNewGroup(true);
+                  // onOpen("addAssemblyGroup", {
+                  //   profileId,
+                  //   projectId,
+                  //   workspaceId,
+                  // });
+                }}
+              >
+                <FolderPlus strokeWidth={1} />
+              </button>
             </div>
-          </AccordionTrigger>
+          </div>
+
           <AccordionContent className="pl-4 pb-2">
-            <ProcessCatalog />
-            <ProcessCatalog />
-            <ProcessCatalog />
+            {newGroup && (
+              <NewAssemblyGroup
+                hide={hideNewGroup}
+                profileId={profileId}
+                workspaceId={workspaceId}
+                projectId={projectId}
+              />
+            )}
+            {assemblyGroups.map((group) => (
+              <AssemblyGroupItem
+                key={group.id}
+                profileId={profileId}
+                workspaceId={workspaceId}
+                assemblyGroup={group}
+              />
+            ))}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

@@ -111,3 +111,9 @@ export const CreateComponentSchema = z.object({
     message: "Component manufacturer is required",
   }),
 });
+
+export const CreateAssemblyGroupSchema = z.object({
+  assemblyGroupName: z.string().min(1, {
+    message: "Assembly group name is required",
+  }),
+});
