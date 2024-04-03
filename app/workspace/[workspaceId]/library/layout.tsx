@@ -32,7 +32,18 @@ export default async function ProjectDesignLayout({
       },
     },
     include: {
-      componentCategories: true,
+      componentCategories: {
+        include: {
+          components: {
+            orderBy: {
+              name: "asc",
+            },
+          },
+        },
+        orderBy: {
+          name: "asc",
+        },
+      },
     },
   });
 
@@ -49,6 +60,8 @@ export default async function ProjectDesignLayout({
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel className="min-w-72 h-full" defaultSize={15}>
             <LibrarySidebar
+              profileId={profile.id}
+              workspaceId={params.workspaceId}
               componentCategories={workspace.componentCategories}
             />
           </ResizablePanel>

@@ -1,13 +1,52 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import HelloWidget from "@/components/workspace/hello-widget";
-import { SpaceNavbar } from "@/components/workspace/space-navbar";
-import Image from "next/image";
+import { currentProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 
-export default function ComponentsLibraryPage() {
+export default async function ComponentsLibraryPage({
+  params,
+}: {
+  params: { workspaceId: string; componentId: string };
+}) {
+  const profile = await currentProfile();
+
+  if (!profile) return redirect("/");
+
+  const workspace = await db.workspace.findUnique({
+    where: {
+      id: params.workspaceId,
+      members: {
+        some: {
+          profileId: profile.id,
+        },
+      },
+    },
+    include: {
+      componentCategories: {
+        include: {
+          components: {
+            where: {
+              id: params.componentId,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return;
+  }
+
+  const component = workspace.componentCategories.filter(
+    (category) => category.components.length > 0,
+  )[0].components[0];
+
   return (
-    <div className="h-full w-full flex flex-col">
-      <div className="p-4">
-        <p className="text-4xl font-extralight">Kuka KR1100</p>
+    <div className="h-full w-full flex flex-col p-4">
+      <div className="pb-4 flex space-x-3">
+        <p className="text-4xl font-light">{component.manufacturer}</p>
+        <p className="text-4xl font-extralight">{component.name}</p>
       </div>
       <Tabs defaultValue="overview">
         <TabsList>

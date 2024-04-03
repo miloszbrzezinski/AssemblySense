@@ -1,9 +1,16 @@
+import { ComponentCategory } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "addWorkspace" | "addProcessGroup" | "addProcess";
+export type ModalType =
+  | "addWorkspace"
+  | "addProcessGroup"
+  | "addProcess"
+  | "addComponent";
 
 interface ModalData {
-  budgetGroupId?: string;
+  profileId?: string;
+  componentCategory?: ComponentCategory;
+  workspaceId?: string;
   apiUrl?: string;
   query?: Record<string, any>;
 }

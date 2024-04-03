@@ -102,3 +102,12 @@ export const CreateProjectSchema = z.object({
   }),
   customerDescription: z.string(),
 });
+
+export const CreateComponentSchema = z.object({
+  componentName: z.string().min(1, {
+    message: "Component name is required",
+  }),
+  componentManufacturer: z.string().min(1, {
+    message: "Component manufacturer is required",
+  }),
+});
