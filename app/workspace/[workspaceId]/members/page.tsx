@@ -5,6 +5,7 @@ import { SpaceNavbar } from "@/components/workspace/space-navbar";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { MembersTab } from "./_tabs/members";
+import { DepartmentsTab } from "./_tabs/departments";
 
 export default async function WorkspaceMembersPage({
   params,
@@ -33,6 +34,7 @@ export default async function WorkspaceMembersPage({
           profile: true,
         },
       },
+      departments: true,
     },
   });
 
@@ -41,8 +43,8 @@ export default async function WorkspaceMembersPage({
   }
   return (
     <div className="h-full w-full flex flex-col">
-      <SpaceNavbar spaceName="Workspace members">
-        <NavbarButton workspace={workspace} />
+      <SpaceNavbar spaceName="Members">
+        <NavbarButton workspace={workspace} profileId={profile.id} />
       </SpaceNavbar>
       <div className="p-5">
         <Tabs defaultValue="members">
@@ -51,14 +53,18 @@ export default async function WorkspaceMembersPage({
             <TabsTrigger value="departments">Departments</TabsTrigger>
             <TabsTrigger value="organization">Organization</TabsTrigger>
           </TabsList>
-          <TabsContent
-            value="members"
-            className="h-full pt-2 overflow-y-scroll"
-          >
-            <MembersTab members={workspace.members} />
-          </TabsContent>
-          <TabsContent value="departments"></TabsContent>
-          <TabsContent value="organization"></TabsContent>
+          <div className="p-5">
+            <TabsContent value="members">
+              <MembersTab
+                members={workspace.members}
+                departments={workspace.departments}
+              />
+            </TabsContent>
+            <TabsContent value="departments">
+              <DepartmentsTab departmants={workspace.departments} />
+            </TabsContent>
+            <TabsContent value="organization"></TabsContent>
+          </div>
         </Tabs>
       </div>
     </div>

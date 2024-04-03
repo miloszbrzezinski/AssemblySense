@@ -126,3 +126,9 @@ export const CreateProcessSchema = z.object({
     message: "Project name is required",
   }),
 });
+
+export const CreateDepartmentSchema = z.object({
+  departmentName: z.string().min(1, {
+    message: "Department name is required",
+  }),
+});

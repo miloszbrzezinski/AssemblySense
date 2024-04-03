@@ -5,14 +5,21 @@ import { useModal } from "@/hooks/use-modal-store";
 import { Workspace } from "@prisma/client";
 
 interface NavbarButtonProps {
+  profileId: string;
   workspace: Workspace;
 }
 
-export const NavbarButton = ({ workspace }: NavbarButtonProps) => {
+export const NavbarButton = ({ profileId, workspace }: NavbarButtonProps) => {
   const { onOpen } = useModal();
   return (
     <>
-      <Button variant="outline" className="space-x-2 px-3">
+      <Button
+        onClick={() => {
+          onOpen("addDepartment", { workspace, profileId });
+        }}
+        variant="outline"
+        className="space-x-2 px-3"
+      >
         <p>Add department</p>
       </Button>
       <Button
