@@ -6,7 +6,7 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ProjectMemberWithProfile } from "@/types";
-import { Crown, X } from "lucide-react";
+import { Crown, ShipWheel, X } from "lucide-react";
 import { startTransition, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -60,7 +60,7 @@ export const ProjectMemberItem = ({
             leader && "bg-amber-400/50 hover:bg-amber-400/70 hover:text-white",
           )}
         >
-          <Crown strokeWidth={1} className="" />
+          <ShipWheel strokeWidth={1} className="" />
         </Button>
       </div>
       <div className="flex w-full min-h-14 bg-stone-200 items-center p-2 space-x-2 hover:bg-stone-300">

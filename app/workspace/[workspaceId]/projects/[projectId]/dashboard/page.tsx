@@ -35,10 +35,20 @@ export default async function ProjectDashboardPage({
       },
     },
     include: {
-      members: {
+      projects: {
+        where: {
+          id: params.projectId,
+        },
         include: {
-          profile: true,
-          projectMembers: true,
+          projectMembers: {
+            include: {
+              workspaceMember: {
+                include: {
+                  profile: true,
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -47,25 +57,23 @@ export default async function ProjectDashboardPage({
   if (!workspace) {
     return;
   }
+
+  const project = workspace.projects[0];
+
+  if (!project) {
+    return;
+  }
+
   return (
     <div className="h-full w-full flex flex-col p-2 gap-2">
       <div className="flex h-2/3 w-full gap-2">
         <DashboardCard
           icon={<Target strokeWidth={1} />}
           title="Project targets"
-          addButton={
-            <Button variant="ghost" className="rounded-full p-2 h-min">
-              <Plus strokeWidth={1} />
-            </Button>
-          }
         >
           Test
         </DashboardCard>
-        <ProjectMembersCard
-          profileId={profile.id}
-          projectId={params.projectId}
-          workspaceMembers={workspace.members}
-        />
+        <ProjectMembersCard projectMembers={project.projectMembers} />
         <DashboardCard
           icon={<SquareCheck strokeWidth={1} />}
           title="Project tasks"
