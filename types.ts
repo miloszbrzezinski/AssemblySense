@@ -27,22 +27,24 @@ export type MemberWithProfile = Member & {
   profile: Profile;
 };
 
-// export type ProjectMemberWithProfile = ProjectMember & {
-//   workSpaceMember: Member & { profile: Profile } & {
-//     department?: Department;
-//   };
-// };
+export type MemberWithProfileWithProjects = MemberWithProfile & {
+  projectMembers: ProjectMember[];
+};
 
 export type ProjectMemberWithProfile = ProjectMember & {
-  workSpaceMember: MemberWithProfile & {
+  workspaceMember: MemberWithProfile & {
     department?: Department;
   };
 };
 
 export type WokrspaceMemberWithData = Member & {
   profile: Profile;
-} & { department?: Department } & { ProjectMember: ProjectMember[] };
+} & { department?: Department } & { projectMembers: ProjectMember[] };
 
 export type DepartmentWithMembers = Department & {
   members: MemberWithProfile[];
+};
+
+export type DepartmentWithMembersWithProjects = Department & {
+  members: MemberWithProfileWithProjects[];
 };

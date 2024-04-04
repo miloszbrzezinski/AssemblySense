@@ -50,9 +50,14 @@ export default async function ProjectsPage({
           </Button>
         </Link>
       </SpaceNavbar>
-      <div className="p-5 overflow-y-scroll">
+      <div className="p-5 overflow-y-scroll h-full">
         {workspace.projects.length === 0 && (
-          <p className="text-4xl font-light text-stone-500">No projects</p>
+          <div className="h-full w-full flex flex-col items-center justify-center">
+            <div className="flex w-96 h-96">
+              <Image src="/robot.svg" alt="Logo" width={1000} height={1000} />
+            </div>
+            <p className="text-6xl font-thin">No projects</p>
+          </div>
         )}
         <div className="space-y-[1px] overflow-y-scroll shadow-lg bg-neutral-300">
           {workspace.projects.length > 0 &&

@@ -38,7 +38,7 @@ export default async function ProjectDashboardPage({
       members: {
         include: {
           profile: true,
-          ProjectMember: true,
+          projectMembers: true,
         },
       },
     },
@@ -64,7 +64,7 @@ export default async function ProjectDashboardPage({
         <ProjectMembersCard
           profileId={profile.id}
           projectId={params.projectId}
-          workspaceMembars={workspace.members}
+          workspaceMembers={workspace.members}
         />
         <DashboardCard
           icon={<SquareCheck strokeWidth={1} />}

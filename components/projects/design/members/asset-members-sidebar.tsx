@@ -1,31 +1,31 @@
 "use client";
-import { User } from "lucide-react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
-import { useParams, useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../ui/accordion";
-import { DepartmentWithMembers, MemberWithProfile } from "@/types";
-import { Avatar, AvatarImage } from "../ui/avatar";
+} from "../../../ui/accordion";
+import {
+  DepartmentWithMembers,
+  DepartmentWithMembersWithProjects,
+  MemberWithProfile,
+  MemberWithProfileWithProjects,
+} from "@/types";
+import { WorkspaceMemberItem } from "./workspace-member-item";
 
 interface AssetMembersSidebarProps {
-  departments: DepartmentWithMembers[];
-  members: MemberWithProfile[];
+  profileId: string;
+  departments: DepartmentWithMembersWithProjects[];
+  members: MemberWithProfileWithProjects[];
+  projectId: string;
 }
 
 export const AssetMembersSidebar = ({
+  profileId,
   departments,
   members,
+  projectId,
 }: AssetMembersSidebarProps) => {
-  const params = useParams();
-  const router = useRouter();
-  const { onOpen } = useModal();
-
   const otherMembers = members.filter((m) => !m.departmentId);
 
   return (
@@ -46,7 +46,12 @@ export const AssetMembersSidebar = ({
             </div>
             <AccordionContent className="pb-0">
               {department.members.map((member) => (
-                <MemberItem key={member.id} member={member} />
+                <WorkspaceMemberItem
+                  key={member.id}
+                  addingId={profileId}
+                  projectId={projectId}
+                  member={member}
+                />
               ))}
             </AccordionContent>
           </AccordionItem>
@@ -62,28 +67,16 @@ export const AssetMembersSidebar = ({
           </div>
           <AccordionContent className="pb-0">
             {otherMembers.map((member) => (
-              <MemberItem key={member.id} member={member} />
+              <WorkspaceMemberItem
+                key={member.id}
+                addingId={profileId}
+                projectId={projectId}
+                member={member}
+              />
             ))}
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-    </div>
-  );
-};
-
-const MemberItem = ({ member }: { member: MemberWithProfile }) => {
-  return (
-    <div
-      key={member.id}
-      className="flex w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none p-2 items-center"
-    >
-      <div className="flex items-center space-x-2">
-        <Avatar>
-          <AvatarImage src={member.profile.imageUrl} />
-        </Avatar>
-        <p className="font-light text-lg">{member.profile.name}</p>
-      </div>
-      <Button variant="outline">Add</Button>
     </div>
   );
 };

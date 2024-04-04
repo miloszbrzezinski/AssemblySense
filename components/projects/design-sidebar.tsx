@@ -135,7 +135,7 @@ export const DesignSidebar = ({
             </div>
           </div>
 
-          <AccordionContent className="pl-4 pb-2">
+          <AccordionContent className="pl-4 py-2">
             {newGroup && (
               <NewAssemblyGroup
                 hide={hideNewGroup}

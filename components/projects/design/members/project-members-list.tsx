@@ -1,0 +1,64 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ProjectMemberItem } from "./project-member-item";
+import { Department } from "@prisma/client";
+import { ProjectMemberWithProfile } from "@/types";
+
+interface ProjectMembersListProps {
+  departments: Department[];
+  projectMembers: ProjectMemberWithProfile[];
+}
+
+export const ProjectMembersList = ({
+  departments,
+  projectMembers,
+}: ProjectMembersListProps) => {
+  const otherMembers = projectMembers.filter(
+    (m) => !m.workspaceMember.departmentId,
+  );
+  return (
+    <div>
+      <div className="border-b text-xl items-center p-2 bg-white shadow-md">
+        <p>Project members</p>
+      </div>
+      {departments.map((department) => (
+        <Accordion key={department.id} type="multiple">
+          <AccordionItem value="project">
+            <div className="flex items-center justify-between pr-3 w-full shadow-sm shadow-stone-300">
+              <AccordionTrigger className="">
+                <p className="text-lg pl-1 font-normal">{department.name}</p>
+              </AccordionTrigger>
+              <p className="text-lg pl-1 font-light">
+                {/* {department.members.length} */}
+              </p>
+            </div>
+            <AccordionContent className="pb-0">
+              {projectMembers.map((member) => (
+                <ProjectMemberItem key={member.id} member={member} />
+              ))}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      ))}
+      <Accordion type="multiple">
+        <AccordionItem value="project">
+          <div className="flex items-center justify-between pr-3 w-full shadow-sm shadow-stone-300">
+            <AccordionTrigger className="">
+              <p className="text-lg pl-1 font-normal">Other</p>
+            </AccordionTrigger>
+            <p className="text-lg pl-1 font-light">{otherMembers.length}</p>
+          </div>
+          <AccordionContent className="pb-0 space-y-[1px] bg-stone-400">
+            {otherMembers.map((member) => (
+              <ProjectMemberItem key={member.id} member={member} />
+            ))}
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+  );
+};
