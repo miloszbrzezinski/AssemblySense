@@ -1,3 +1,4 @@
+import { ProjectMemberWithProfile, WokrspaceMemberWithData } from "@/types";
 import {
   AssemblyGroup,
   ComponentCategory,
@@ -14,10 +15,13 @@ export type ModalType =
   | "addAssemblyGroup"
   | "addProcess"
   | "addComponent"
-  | "addDepartment";
+  | "addDepartment"
+  | "addProjectMember";
 
 interface ModalData {
   projectId?: string;
+  projectMembersWithProfile?: ProjectMemberWithProfile[];
+  workspaceMembersWithData?: WokrspaceMemberWithData[];
   profileId?: string;
   workspace?: Workspace;
   workspaceMember?: Member;

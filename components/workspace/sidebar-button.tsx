@@ -18,8 +18,6 @@ const SidebarButton = ({ buttonName, path, children }: SidebarButtonProps) => {
     router.push(`/workspace/${params.workspaceId}/${path}`);
   };
 
-  console.log(pathname.split("/")[3]);
-
   return (
     <Hint description={buttonName} side="right">
       <div

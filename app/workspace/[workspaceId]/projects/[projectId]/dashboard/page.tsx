@@ -1,19 +1,71 @@
 import { DashboardCard } from "@/components/projects/dasboard-card";
-import { CalendarRange, Flag, SquareCheck, Target, Users } from "lucide-react";
+import { ProjectMembersCard } from "@/components/projects/project-members-card";
+import { Button } from "@/components/ui/button";
+import { currentProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
+import {
+  CalendarRange,
+  Flag,
+  Plus,
+  SquareCheck,
+  Target,
+  Users,
+} from "lucide-react";
 
-export default function ProjectDashboardPage() {
+export default async function ProjectDashboardPage({
+  params,
+}: {
+  params: {
+    workspaceId: string;
+    projectId: string;
+  };
+}) {
+  const profile = await currentProfile();
+
+  if (!profile) {
+    return;
+  }
+  const workspace = await db.workspace.findUnique({
+    where: {
+      id: params.workspaceId,
+      members: {
+        some: {
+          profileId: profile.id,
+        },
+      },
+    },
+    include: {
+      members: {
+        include: {
+          profile: true,
+          ProjectMember: true,
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return;
+  }
   return (
     <div className="h-full w-full flex flex-col p-2 gap-2">
       <div className="flex h-2/3 w-full gap-2">
         <DashboardCard
           icon={<Target strokeWidth={1} />}
           title="Project targets"
+          addButton={
+            <Button variant="ghost" className="rounded-full p-2 h-min">
+              <Plus strokeWidth={1} />
+            </Button>
+          }
         >
           Test
         </DashboardCard>
-        <DashboardCard icon={<Users strokeWidth={1} />} title="Project members">
-          Test
-        </DashboardCard>
+        <ProjectMembersCard
+          profileId={profile.id}
+          projectId={params.projectId}
+          workspaceMembars={workspace.members}
+        />
         <DashboardCard
           icon={<SquareCheck strokeWidth={1} />}
           title="Project tasks"

@@ -58,9 +58,14 @@ export const ComponentCategoryComponent = ({
       <ContextMenuTrigger>
         <Accordion type="multiple">
           <AccordionItem value="group">
-            <AccordionTrigger className="justify-start items-center space-x-1">
-              <Folder strokeWidth={1} className="w-5 h-5" />{" "}
-              <p>{componentGroup.name}</p>
+            <AccordionTrigger className="justify-between items-center w-full pr-2">
+              <div className="flex items-center space-x-1">
+                <Folder strokeWidth={1} className="w-5 h-5" />
+                <p>{componentGroup.name}</p>
+              </div>
+              <p className="text-sm font-extralight">
+                {componentGroup.components.length}
+              </p>
             </AccordionTrigger>
             <AccordionContent className="w-full">
               {newComponent && (

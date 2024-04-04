@@ -5,6 +5,7 @@ import { AddComponentModal } from "../modals/add-component-modal";
 import { AddProcessModal } from "../modals/add-process-modal";
 import { InviteUsersModal } from "../modals/invite-modal";
 import { AddDepartmentModal } from "../modals/add-department-modal";
+import { AddProjectMemberModal } from "../modals/add-project-members-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -23,6 +24,7 @@ export const ModalProvider = () => {
       <AddProcessModal />
       <InviteUsersModal />
       <AddDepartmentModal />
+      <AddProjectMemberModal />
     </>
   );
 };

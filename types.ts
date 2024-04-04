@@ -4,9 +4,11 @@ import {
   Component,
   ComponentCategory,
   Customer,
+  Department,
   Member,
   Profile,
   Project,
+  ProjectMember,
 } from "@prisma/client";
 
 export type ProjectWithCustomer = Project & {
@@ -23,4 +25,24 @@ export type AssemblyGroupWithProcesses = AssemblyGroup & {
 
 export type MemberWithProfile = Member & {
   profile: Profile;
+};
+
+// export type ProjectMemberWithProfile = ProjectMember & {
+//   workSpaceMember: Member & { profile: Profile } & {
+//     department?: Department;
+//   };
+// };
+
+export type ProjectMemberWithProfile = ProjectMember & {
+  workSpaceMember: MemberWithProfile & {
+    department?: Department;
+  };
+};
+
+export type WokrspaceMemberWithData = Member & {
+  profile: Profile;
+} & { department?: Department } & { ProjectMember: ProjectMember[] };
+
+export type DepartmentWithMembers = Department & {
+  members: MemberWithProfile[];
 };

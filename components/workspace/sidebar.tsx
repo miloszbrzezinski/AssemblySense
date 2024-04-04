@@ -4,6 +4,8 @@ import SidebarButton from "./sidebar-button";
 import {
   Factory,
   Home,
+  Library,
+  LibraryBig,
   PencilRuler,
   Puzzle,
   Settings,
@@ -26,8 +28,8 @@ const Sidebar = () => {
           <SidebarButton buttonName="Projects" path="projects">
             <PencilRuler strokeWidth={1} />
           </SidebarButton>
-          <SidebarButton buttonName="Components library" path="library">
-            <Puzzle strokeWidth={1} />
+          <SidebarButton buttonName="Library" path="library">
+            <LibraryBig strokeWidth={1} />
           </SidebarButton>
           <SidebarButton buttonName="Customers" path="customers">
             <Factory strokeWidth={1} />

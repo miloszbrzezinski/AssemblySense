@@ -51,14 +51,16 @@ export const DesignSidebar = ({
     <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll">
       <Accordion type="multiple">
         <AccordionItem value="project">
-          <AccordionTrigger>
-            <p className="text-lg pl-1 font-normal">Project</p>
-          </AccordionTrigger>
+          <div className="shadow-sm shadow-stone-300 w-full">
+            <AccordionTrigger>
+              <p className="text-lg pl-1 font-normal">Project</p>
+            </AccordionTrigger>
+          </div>
           <AccordionContent className="pb-0">
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/network`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/members`,
                 );
               }}
               variant="secondary"
@@ -108,7 +110,7 @@ export const DesignSidebar = ({
       </Accordion>
       <Accordion type="multiple">
         <AccordionItem value="project">
-          <div className="flex w-full justify-between items-center">
+          <div className="flex w-full justify-between items-center shadow-sm shadow-stone-300">
             <AccordionTrigger>
               <div className="flex justify-between w-full">
                 <p className="text-lg pl-1 font-normal">Processes</p>

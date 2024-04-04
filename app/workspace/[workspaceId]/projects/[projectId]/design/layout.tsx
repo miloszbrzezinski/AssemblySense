@@ -72,8 +72,8 @@ export default async function ProjectDesignLayout({
           />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel className="min-w-[50%]" defaultSize={85}>
-          <div className="w-full transition-all bg-stone-100 dark:bg-zinc-800">
+        <ResizablePanel className="min-w-[50%] h-full" defaultSize={85}>
+          <div className="w-full h-full transition-all bg-stone-100 dark:bg-zinc-800">
             {children}
           </div>
         </ResizablePanel>
