@@ -85,6 +85,7 @@ export default async function ProjectDesignNetworkPage({
       <ResizablePanelGroup direction="horizontal" className="h-full">
         <ResizablePanel className="min-w-[50%] h-full" defaultSize={85}>
           <ProjectMembersList
+            userId={profile.id}
             projectMembers={projectMembers}
             departments={workspace.departments}
           />

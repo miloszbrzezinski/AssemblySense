@@ -9,11 +9,13 @@ import { Department } from "@prisma/client";
 import { ProjectMemberWithProfile } from "@/types";
 
 interface ProjectMembersListProps {
+  userId: string;
   departments: Department[];
   projectMembers: ProjectMemberWithProfile[];
 }
 
 export const ProjectMembersList = ({
+  userId,
   departments,
   projectMembers,
 }: ProjectMembersListProps) => {
@@ -37,9 +39,16 @@ export const ProjectMembersList = ({
               </p>
             </div>
             <AccordionContent className="pb-0">
-              {projectMembers.map((member) => (
-                <ProjectMemberItem key={member.id} member={member} />
-              ))}
+              {projectMembers.map(
+                (member) =>
+                  member.workspaceMember.departmentId === department.id && (
+                    <ProjectMemberItem
+                      key={member.id}
+                      userId={userId}
+                      member={member}
+                    />
+                  ),
+              )}
             </AccordionContent>
           </AccordionItem>
         </Accordion>
@@ -54,7 +63,11 @@ export const ProjectMembersList = ({
           </div>
           <AccordionContent className="pb-0 space-y-[1px] bg-stone-400">
             {otherMembers.map((member) => (
-              <ProjectMemberItem key={member.id} member={member} />
+              <ProjectMemberItem
+                key={member.id}
+                userId={userId}
+                member={member}
+              />
             ))}
           </AccordionContent>
         </AccordionItem>
