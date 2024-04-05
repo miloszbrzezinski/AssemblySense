@@ -89,3 +89,38 @@ export const createDepartment = async (
 
   return workspace;
 };
+
+export const changeMemberDepartment = async (
+  profileId: string,
+  workspaceId: string,
+  memberId: string,
+  departmentId?: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      members: {
+        update: {
+          where: {
+            id: memberId,
+          },
+          data: {
+            departmentId,
+          },
+        },
+      },
+    },
+  });
+
+  return workspace;
+};

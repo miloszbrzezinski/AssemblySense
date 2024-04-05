@@ -5,11 +5,12 @@ import {
   Network,
   Plus,
   Puzzle,
+  Target,
   Users,
   Waypoints,
 } from "lucide-react";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
+import { Button } from "../../ui/button";
+import { Separator } from "../../ui/separator";
 import { useParams, useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 import {
@@ -17,12 +18,12 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../ui/accordion";
+} from "../../ui/accordion";
 import { AssemblyGroupWithProcesses } from "@/types";
-import { AssemblyGroupItem } from "./assembly-group-item";
-import { NewCategory } from "../library/new-category";
+import { AssemblyGroupItem } from "../assembly-group-item";
+import { NewCategory } from "../../library/new-category";
 import { useState } from "react";
-import { NewAssemblyGroup } from "./new-assembly-group";
+import { NewAssemblyGroup } from "../new-assembly-group";
 
 interface DesignSidebarProps {
   profileId: string;
@@ -57,6 +58,18 @@ export const DesignSidebar = ({
             </AccordionTrigger>
           </div>
           <AccordionContent className="pb-0">
+            <Button
+              onClick={() => {
+                router.push(
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/targets`,
+                );
+              }}
+              variant="secondary"
+              className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
+            >
+              <Target strokeWidth={1} />
+              <p className="font-light">Project targets</p>
+            </Button>
             <Button
               onClick={() => {
                 router.push(

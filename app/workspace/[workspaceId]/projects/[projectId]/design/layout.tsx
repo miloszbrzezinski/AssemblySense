@@ -1,4 +1,4 @@
-import { DesignSidebar } from "@/components/projects/design-sidebar";
+import { DesignSidebar } from "@/components/projects/design/design-sidebar";
 import ProjectNavbar from "@/components/projects/project-navbar";
 import {
   ResizableHandle,

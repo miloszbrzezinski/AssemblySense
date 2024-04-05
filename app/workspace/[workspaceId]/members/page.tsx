@@ -32,6 +32,8 @@ export default async function WorkspaceMembersPage({
       members: {
         include: {
           profile: true,
+          department: true,
+          projectMembers: true,
         },
       },
       departments: true,
@@ -41,6 +43,7 @@ export default async function WorkspaceMembersPage({
   if (!workspace) {
     return;
   }
+
   return (
     <div className="h-full w-full flex flex-col">
       <SpaceNavbar spaceName="Members">
@@ -56,6 +59,7 @@ export default async function WorkspaceMembersPage({
           <div className="p-5">
             <TabsContent value="members">
               <MembersTab
+                profileId={profile.id}
                 members={workspace.members}
                 departments={workspace.departments}
               />

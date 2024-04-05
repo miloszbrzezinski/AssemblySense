@@ -46,7 +46,7 @@ export const ProjectMembersCard = ({
                     <p className="text-sm font-extralight text-stone-600">
                       {member.workspaceMember.department
                         ? member.workspaceMember.department.name
-                        : "Other"}
+                        : "No department"}
                     </p>
                   </div>
                 </div>

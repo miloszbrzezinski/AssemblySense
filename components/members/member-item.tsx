@@ -1,6 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
-import { MemberWithProfile } from "@/types";
+import { WokrspaceMemberWithData } from "@/types";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import {
@@ -24,26 +23,41 @@ import {
 } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
 import { Department, MemberRole } from "@prisma/client";
+import { startTransition } from "react";
+import { changeMemberDepartment } from "@/actions/workspace";
 
 export const MemberItem = ({
+  profileId,
   member,
   departments,
 }: {
-  member: MemberWithProfile;
+  profileId: string;
+  member: WokrspaceMemberWithData;
   departments: Department[];
 }) => {
   const router = useRouter();
   const { onOpen } = useModal();
   const onClick = () => {
-    router.push(`projects/${member.id}/dashboard`);
+    router.push(`members/${member.id}`);
   };
 
   const onRoleChange = async (memberId: string, role: MemberRole) => {};
 
-  const onDepartmentChange = async (
-    memberId: string,
-    department: Department | null,
-  ) => {};
+  const onDepartmentChange = (department?: Department) => {
+    startTransition(() => {
+      changeMemberDepartment(
+        profileId,
+        member.workspaceId,
+        member.id,
+        department?.id,
+      ).then((data) => {
+        // setError(data.error);
+        if (data) {
+          router.refresh();
+        }
+      });
+    });
+  };
 
   return (
     <div
@@ -56,7 +70,8 @@ export const MemberItem = ({
         </Avatar>
         <div>
           <p className="text-xl space-x-2">
-            <span className="font-light">{member.profile.name}</span>
+            <span className="font-extralight">{member.profile.name}</span>
+            <span className="font-light">{member.profile.lastName}</span>
           </p>
           <p className="font-extralight">{member.profile.email}</p>
         </div>
@@ -105,10 +120,9 @@ export const MemberItem = ({
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
                   <DropdownMenuItem
-                    onClick={() => onDepartmentChange(member.id, null)}
+                    onClick={() => onDepartmentChange(undefined)}
                   >
                     None
-                    <p>{member.department?.id}</p>
                     {!member.departmentId && (
                       <Check className="h-4 w-4 ml-auto" />
                     )}
@@ -116,7 +130,7 @@ export const MemberItem = ({
                   {departments.map((department) => (
                     <DropdownMenuItem
                       key={department.id}
-                      onClick={() => onDepartmentChange(member.id, department)}
+                      onClick={() => onDepartmentChange(department)}
                     >
                       {department.name}
                       {member.departmentId === department.id && (

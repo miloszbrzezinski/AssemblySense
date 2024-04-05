@@ -57,7 +57,7 @@ export const ProjectMembersList = ({
         <AccordionItem value="project">
           <div className="flex items-center justify-between pr-3 w-full shadow-sm shadow-stone-300">
             <AccordionTrigger className="">
-              <p className="text-lg pl-1 font-normal">Other</p>
+              <p className="text-lg pl-1 font-normal">No department</p>
             </AccordionTrigger>
             <p className="text-lg pl-1 font-light">{otherMembers.length}</p>
           </div>

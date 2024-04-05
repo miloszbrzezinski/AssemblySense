@@ -39,7 +39,7 @@ export type ProjectMemberWithProfile = ProjectMember & {
 
 export type WokrspaceMemberWithData = Member & {
   profile: Profile;
-} & { department?: Department } & { projectMembers: ProjectMember[] };
+} & { department: Department | null } & { projectMembers: ProjectMember[] };
 
 export type DepartmentWithMembers = Department & {
   members: MemberWithProfile[];
