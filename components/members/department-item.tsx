@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export const DepartmentItem = ({ department }: { department: Department }) => {
   const router = useRouter();
   const onClick = () => {
-    router.push(`projects/${department.id}/dashboard`);
+    //router.push(`projects/${department.id}/dashboard`);
   };
   return (
     <div

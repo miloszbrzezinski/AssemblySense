@@ -40,6 +40,7 @@ export default async function ProjectDesignLayout({
           id: params.projectId,
         },
         include: {
+          projectMembers: true,
           assemblyGroups: {
             include: {
               assemblyProcesses: true,
@@ -60,6 +61,12 @@ export default async function ProjectDesignLayout({
     return;
   }
 
+  const project = workspace.projects[0];
+
+  if (!project) {
+    return <p>No project</p>;
+  }
+
   return (
     <div className="h-full flex bg-stone-100 dark:bg-zinc-800">
       <ResizablePanelGroup direction="horizontal">
@@ -68,7 +75,8 @@ export default async function ProjectDesignLayout({
             profileId={profile.id}
             workspaceId={params.workspaceId}
             projectId={params.projectId}
-            assemblyGroups={workspace.projects[0].assemblyGroups}
+            assemblyGroups={project.assemblyGroups}
+            projectMembers={project.projectMembers}
           />
         </ResizablePanel>
         <ResizableHandle />

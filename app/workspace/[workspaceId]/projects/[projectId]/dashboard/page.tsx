@@ -45,6 +45,7 @@ export default async function ProjectDashboardPage({
               workspaceMember: {
                 include: {
                   profile: true,
+                  department: true,
                 },
               },
             },

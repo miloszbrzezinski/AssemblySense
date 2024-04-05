@@ -43,13 +43,13 @@ export const MemberItem = ({
 
   const onRoleChange = async (memberId: string, role: MemberRole) => {};
 
-  const onDepartmentChange = (department?: Department) => {
+  const onDepartmentChange = (departmentId: string | null) => {
     startTransition(() => {
       changeMemberDepartment(
         profileId,
         member.workspaceId,
         member.id,
-        department?.id,
+        departmentId,
       ).then((data) => {
         // setError(data.error);
         if (data) {
@@ -62,7 +62,7 @@ export const MemberItem = ({
   return (
     <div
       onClick={onClick}
-      className="group bg-white h-16 items-center justify-between flex p-5 hover:bg-slate-50 dark:bg-neutral-900 dark:hover:bg-neutral-900/80 select-none"
+      className="group bg-white items-center justify-between flex p-3 hover:bg-slate-50 dark:bg-neutral-900 dark:hover:bg-neutral-900/80 select-none"
     >
       <div className="flex items-center space-x-5">
         <Avatar>
@@ -73,7 +73,9 @@ export const MemberItem = ({
             <span className="font-extralight">{member.profile.name}</span>
             <span className="font-light">{member.profile.lastName}</span>
           </p>
-          <p className="font-extralight">{member.profile.email}</p>
+          <p className="font-extralight">
+            {member.department ? member.department.name : "No department"}
+          </p>
         </div>
       </div>
 
@@ -119,9 +121,7 @@ export const MemberItem = ({
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent>
-                  <DropdownMenuItem
-                    onClick={() => onDepartmentChange(undefined)}
-                  >
+                  <DropdownMenuItem onClick={() => onDepartmentChange(null)}>
                     None
                     {!member.departmentId && (
                       <Check className="h-4 w-4 ml-auto" />
@@ -130,7 +130,7 @@ export const MemberItem = ({
                   {departments.map((department) => (
                     <DropdownMenuItem
                       key={department.id}
-                      onClick={() => onDepartmentChange(department)}
+                      onClick={() => onDepartmentChange(department.id)}
                     >
                       {department.name}
                       {member.departmentId === department.id && (

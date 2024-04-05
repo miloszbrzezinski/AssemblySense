@@ -34,9 +34,9 @@ export const ProjectMembersList = ({
               <AccordionTrigger className="">
                 <p className="text-lg pl-1 font-normal">{department.name}</p>
               </AccordionTrigger>
-              <p className="text-lg pl-1 font-light">
-                {/* {department.members.length} */}
-              </p>
+              {/* <p className="text-lg pl-1 font-light">
+                {department.members.length}
+              </p> */}
             </div>
             <AccordionContent className="pb-0">
               {projectMembers.map(
@@ -59,7 +59,7 @@ export const ProjectMembersList = ({
             <AccordionTrigger className="">
               <p className="text-lg pl-1 font-normal">No department</p>
             </AccordionTrigger>
-            <p className="text-lg pl-1 font-light">{otherMembers.length}</p>
+            {/* <p className="text-lg pl-1 font-light">{otherMembers.length}</p> */}
           </div>
           <AccordionContent className="pb-0 space-y-[1px] bg-stone-400">
             {otherMembers.map((member) => (

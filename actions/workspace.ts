@@ -94,7 +94,7 @@ export const changeMemberDepartment = async (
   profileId: string,
   workspaceId: string,
   memberId: string,
-  departmentId?: string,
+  departmentId: string | null,
 ) => {
   const workspace = await db.workspace.update({
     where: {
@@ -115,7 +115,7 @@ export const changeMemberDepartment = async (
             id: memberId,
           },
           data: {
-            departmentId,
+            departmentId: departmentId,
           },
         },
       },

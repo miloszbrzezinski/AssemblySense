@@ -33,7 +33,7 @@ export type MemberWithProfileWithProjects = MemberWithProfile & {
 
 export type ProjectMemberWithProfile = ProjectMember & {
   workspaceMember: MemberWithProfile & {
-    department?: Department;
+    department: Department | null;
   };
 };
 

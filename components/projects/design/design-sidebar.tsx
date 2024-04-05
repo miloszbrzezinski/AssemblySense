@@ -24,12 +24,14 @@ import { AssemblyGroupItem } from "../assembly-group-item";
 import { NewCategory } from "../../library/new-category";
 import { useState } from "react";
 import { NewAssemblyGroup } from "../new-assembly-group";
+import { ProjectMember } from "@prisma/client";
 
 interface DesignSidebarProps {
   profileId: string;
   workspaceId: string;
   projectId: string;
   assemblyGroups: AssemblyGroupWithProcesses[];
+  projectMembers: ProjectMember[];
 }
 
 export const DesignSidebar = ({
@@ -37,6 +39,7 @@ export const DesignSidebar = ({
   workspaceId,
   projectId,
   assemblyGroups,
+  projectMembers,
 }: DesignSidebarProps) => {
   const params = useParams();
   const router = useRouter();
@@ -77,10 +80,13 @@ export const DesignSidebar = ({
                 );
               }}
               variant="secondary"
-              className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
             >
-              <Users strokeWidth={1} />
-              <p className="font-light">Members</p>
+              <div className="flex items-center justify-start space-x-2">
+                <Users strokeWidth={1} />
+                <p className="font-light">Members</p>
+              </div>
+              <p className="font-light">{projectMembers.length}</p>
             </Button>
             <Button
               onClick={() => {
