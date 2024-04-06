@@ -5,6 +5,7 @@ import { Component } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import { startTransition } from "react";
 import { addProjectComponent } from "@/actions/project-components";
+import { toast } from "sonner";
 
 interface ComponentItemProps {
   profileId: string;
@@ -27,6 +28,13 @@ export const ComponentItem = ({
         (data) => {
           // setError(data.error);
           if (data.success) {
+            toast(data.success, {
+              description: `${component.manufacturer} ${component.name} added to the project`,
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
             router.refresh();
           }
         },

@@ -206,6 +206,96 @@ export const setProjectComponentsName = async (
   return { success: `Project component symbol changed!` };
 };
 
+export const setProjectComponentDescription = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponent: ProjectComponent,
+  description: string,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponent.id,
+                },
+                data: {
+                  description,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Project component comment changed!` };
+};
+
+export const setProjectComponentStatus = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponent: ProjectComponent,
+  status: string,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponent.id,
+                },
+                data: {
+                  status,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Project component status changed!` };
+};
+
 export const removeProjectComponent = async (
   profileId: string,
   projectMember: ProjectMemberWithProfile,
