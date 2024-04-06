@@ -41,7 +41,11 @@ export default async function ProjectDesignComponentsPage({
           id: params.projectId,
         },
         include: {
-          assemblyGroups: true,
+          assemblyGroups: {
+            include: {
+              assemblyProcesses: true,
+            },
+          },
           projectComponents: {
             include: {
               component: true,

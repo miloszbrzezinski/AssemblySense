@@ -1,13 +1,14 @@
 "use client";
-import { AssemblyGroup } from "@prisma/client";
+import { AssemblyGroup, AssemblyProcess } from "@prisma/client";
 import AssemblyGroupPopover from "./assembly-groups-popover";
-import { ProjectComponentWithData } from "@/types";
+import { AssemblyGroupWithProcesses, ProjectComponentWithData } from "@/types";
 import { ProjectComponentItem } from "./project-component-name";
+import { AssemblyProcessPopover } from "./assembly-process-popover";
 
 interface ComponentTableItemProps {
   profileId: string;
   workspaceId: string;
-  assemblyGroups: AssemblyGroup[];
+  assemblyGroups: AssemblyGroupWithProcesses[];
   projectComponent: ProjectComponentWithData;
 }
 
@@ -18,7 +19,7 @@ const ComponentTableItem = ({
   projectComponent,
 }: ComponentTableItemProps) => {
   return (
-    <div className="group flex w-full h-10 bg-stone-500 space-x-[1px]">
+    <div className="group flex w-full h-10 bg-stone-300 space-x-[1px]">
       <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
         <AssemblyGroupPopover
           profileId={profileId}
@@ -28,7 +29,12 @@ const ComponentTableItem = ({
         />
       </div>
       <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
-        <h3 className="text-base font-light pl-2"></h3>
+        <AssemblyProcessPopover
+          profileId={profileId}
+          workspaceId={workspaceId}
+          assemblyGroups={assemblyGroups}
+          projectComponent={projectComponent}
+        />
       </div>
       <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
         <ProjectComponentItem

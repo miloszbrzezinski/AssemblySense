@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 import { ProjectMemberWithProfile } from "@/types";
 import {
+  AssemblyProcess,
   Component,
   Member,
   MemberRole,
@@ -93,7 +94,71 @@ export const setComponentsAssemblyGroup = async (
     },
   });
 
-  return { success: `Project component assembly group changed!` };
+  return { success: `Project component group changed!` };
+};
+
+export const setComponentsAssemblyProcess = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponent: ProjectComponent,
+  assemblyProcess: AssemblyProcess | null | undefined,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.findUnique({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    include: {
+      projects: {
+        where: { id: projectId },
+        include: {
+          projectComponents: {
+            where: {
+              id: projectComponent.id,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: `Workspace not found!` };
+  }
+
+  if (!workspace.projects[0]) {
+    return { error: `Project not found!` };
+  }
+
+  if (!workspace.projects[0].projectComponents[0]) {
+    return { error: `Project component not found!` };
+  }
+
+  let groupId = workspace.projects[0].projectComponents[0].assemblyGroupId;
+
+  if (assemblyProcess) {
+    groupId = assemblyProcess.assemblyGroupId;
+  }
+
+  await db.projectComponent.update({
+    where: {
+      id: projectComponent.id,
+    },
+    data: {
+      assemblyGroupId: groupId,
+      assemblyProcessId: assemblyProcess?.id,
+    },
+  });
+
+  return { success: `Project component process changed!` };
 };
 
 export const setProjectComponentsName = async (
@@ -138,7 +203,7 @@ export const setProjectComponentsName = async (
     },
   });
 
-  return { success: `Project component added!` };
+  return { success: `Project component symbol changed!` };
 };
 
 export const removeProjectComponent = async (

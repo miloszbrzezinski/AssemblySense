@@ -3,6 +3,7 @@ import { setProjectComponentsName } from "@/actions/project-components";
 import { ProjectComponentWithData } from "@/types";
 import { useRouter } from "next/navigation";
 import { FormEvent, startTransition, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface ProjectComponentItemProps {
   profileId: string;
@@ -39,12 +40,20 @@ export const ProjectComponentItem = ({
         ).then((data) => {
           // setError(data.error);
           if (data.success) {
+            toast(data.success, {
+              description: `New name: ${componentName}`,
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
             router.refresh();
           }
         });
       });
     }
     if (event.key === "Escape") {
+      setComponentName(projectComponent.name);
     }
   };
 
