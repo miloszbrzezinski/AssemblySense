@@ -1,10 +1,14 @@
 "use client";
 import {
+  Binary,
+  Circle,
   FilePlus,
   FolderPlus,
   Network,
   Plus,
   Puzzle,
+  Slash,
+  Tally1,
   Target,
   Users,
   Waypoints,
@@ -24,7 +28,7 @@ import { AssemblyGroupItem } from "../assembly-group-item";
 import { NewCategory } from "../../library/new-category";
 import { useState } from "react";
 import { NewAssemblyGroup } from "../new-assembly-group";
-import { ProjectMember } from "@prisma/client";
+import { ProjectComponent, ProjectMember } from "@prisma/client";
 
 interface DesignSidebarProps {
   profileId: string;
@@ -32,6 +36,7 @@ interface DesignSidebarProps {
   projectId: string;
   assemblyGroups: AssemblyGroupWithProcesses[];
   projectMembers: ProjectMember[];
+  projectComponents: ProjectComponent[];
 }
 
 export const DesignSidebar = ({
@@ -40,6 +45,7 @@ export const DesignSidebar = ({
   projectId,
   assemblyGroups,
   projectMembers,
+  projectComponents,
 }: DesignSidebarProps) => {
   const params = useParams();
   const router = useRouter();
@@ -107,10 +113,28 @@ export const DesignSidebar = ({
                 );
               }}
               variant="secondary"
-              className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
             >
-              <Puzzle strokeWidth={1} />
-              <p className="font-light">Components</p>
+              <div className="flex items-center justify-start space-x-2">
+                <Puzzle strokeWidth={1} />
+                <p className="font-light">Components</p>
+              </div>
+              <p className="font-light">{projectComponents.length}</p>
+            </Button>
+
+            <Button
+              onClick={() => {
+                router.push(
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/members`,
+                );
+              }}
+              variant="secondary"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+            >
+              <div className="flex items-center justify-start space-x-2">
+                <Binary strokeWidth={1} />
+                <p className="font-light">I/O table</p>
+              </div>
             </Button>
             <Button
               onClick={() => {
@@ -135,18 +159,13 @@ export const DesignSidebar = ({
                 <p className="text-lg pl-1 font-normal">Processes</p>
               </div>
             </AccordionTrigger>
-            <div className="space-x-1 px-2">
+            <div className="space-x-1 px-2 items-center">
               <button>
                 <FilePlus strokeWidth={1} />
               </button>
               <button
                 onClick={() => {
                   setNewGroup(true);
-                  // onOpen("addAssemblyGroup", {
-                  //   profileId,
-                  //   projectId,
-                  //   workspaceId,
-                  // });
                 }}
               >
                 <FolderPlus strokeWidth={1} />

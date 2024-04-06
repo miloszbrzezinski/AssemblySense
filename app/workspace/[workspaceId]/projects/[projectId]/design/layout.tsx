@@ -40,6 +40,7 @@ export default async function ProjectDesignLayout({
           id: params.projectId,
         },
         include: {
+          projectComponents: true,
           projectMembers: true,
           assemblyGroups: {
             include: {
@@ -77,6 +78,7 @@ export default async function ProjectDesignLayout({
             projectId={params.projectId}
             assemblyGroups={project.assemblyGroups}
             projectMembers={project.projectMembers}
+            projectComponents={project.projectComponents}
           />
         </ResizablePanel>
         <ResizableHandle />

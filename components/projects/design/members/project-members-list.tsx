@@ -23,7 +23,7 @@ export const ProjectMembersList = ({
     (m) => !m.workspaceMember.departmentId,
   );
   return (
-    <div>
+    <div className="bg-stone-50 h-full">
       <div className="border-b text-xl items-center p-2 bg-white shadow-md">
         <p>Project members</p>
       </div>

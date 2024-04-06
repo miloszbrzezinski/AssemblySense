@@ -1,18 +1,8 @@
 "use client";
-import {
-  FilePlus,
-  Folder,
-  FolderPlus,
-  ListCollapse,
-  RefreshCw,
-} from "lucide-react";
+import { FolderPlus } from "lucide-react";
 import { Button } from "../ui/button";
 import { ComponentCategoryComponent } from "./component-category";
-import { db } from "@/lib/db";
-import { currentProfile } from "@/lib/current-profile";
-import { ComponentCategory } from "@prisma/client";
 import { useState } from "react";
-import { Input } from "../ui/input";
 import { NewCategory } from "./new-category";
 import { ComponentCategoryWithComponents } from "@/types";
 
@@ -36,12 +26,6 @@ export const LibrarySidebar = ({
   return (
     <div className="relative w-full h-full border-r border-stone-300 shadow-md">
       <div className="absolute z-10 flex p-1 space-x-1 w-full justify-end border-b shadow-sm bg-stone-300/10 backdrop-blur-sm">
-        {/* <Button
-          variant="ghost"
-          className="h-min p-0 hover:bg-white rounded-none"
-        >
-          <FilePlus strokeWidth={0.8} className="w-6 h-6" />
-        </Button> */}
         <Button
           onClick={() => {
             setNewCategory(true);
@@ -51,18 +35,6 @@ export const LibrarySidebar = ({
         >
           <FolderPlus strokeWidth={0.8} className="w-6 h-6" />
         </Button>
-        {/* <Button
-          variant="ghost"
-          className="h-min p-0 hover:bg-white rounded-none"
-        >
-          <RefreshCw strokeWidth={0.8} className="w-6 h-6" />
-        </Button>
-        <Button
-          variant="ghost"
-          className="h-min p-0 hover:bg-white rounded-none"
-        >
-          <ListCollapse strokeWidth={0.8} className="w-6 h-6" />
-        </Button> */}
       </div>
       {!newCategory && componentCategories.length === 0 && (
         <p className="pt-10 pl-2 text-stone-500">Library empty</p>

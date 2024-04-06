@@ -8,6 +8,7 @@ import {
   Member,
   Profile,
   Project,
+  ProjectComponent,
   ProjectMember,
 } from "@prisma/client";
 
@@ -47,4 +48,10 @@ export type DepartmentWithMembers = Department & {
 
 export type DepartmentWithMembersWithProjects = Department & {
   members: MemberWithProfileWithProjects[];
+};
+
+export type ProjectComponentWithData = ProjectComponent & {
+  component: Component;
+} & { assemblyGroup: AssemblyGroup | null } & {
+  assemblyProcess: AssemblyProcess | null;
 };

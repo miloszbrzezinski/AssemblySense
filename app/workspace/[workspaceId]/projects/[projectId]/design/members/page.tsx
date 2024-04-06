@@ -83,7 +83,7 @@ export default async function ProjectDesignNetworkPage({
   return (
     <div className="h-full w-full flex">
       <ResizablePanelGroup direction="horizontal" className="h-full">
-        <ResizablePanel className="min-w-[50%] h-full" defaultSize={85}>
+        <ResizablePanel className="min-w-[50%] h-full" defaultSize={70}>
           <ProjectMembersList
             userId={profile.id}
             projectMembers={projectMembers}
@@ -91,7 +91,7 @@ export default async function ProjectDesignNetworkPage({
           />
         </ResizablePanel>
         <ResizableHandle className="shadow-lg shadow-black bg-stone-300" />
-        <ResizablePanel className="min-w-72 h-full" defaultSize={15}>
+        <ResizablePanel className="min-w-72 h-full" defaultSize={30}>
           <AssetMembersSidebar
             profileId={profile.id}
             projectId={params.projectId}

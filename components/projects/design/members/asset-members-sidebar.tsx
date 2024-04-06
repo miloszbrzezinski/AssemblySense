@@ -29,7 +29,7 @@ export const AssetMembersSidebar = ({
   const otherMembers = members.filter((m) => !m.departmentId);
 
   return (
-    <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll bg-stone-50">
+    <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll ">
       <div className="border-b text-xl items-center p-2 bg-white shadow-md">
         <p>Workspace members</p>
       </div>

@@ -135,8 +135,9 @@ model Project {
   customerId String
   customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
 
-  assemblyGroups AssemblyGroup[]
-  projectMembers ProjectMember[]
+  assemblyGroups    AssemblyGroup[]
+  projectMembers    ProjectMember[]
+  projectComponents ProjectComponent[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -206,17 +207,30 @@ model Component {
 }
 
 model ProjectComponent {
-  id           String @id @default(uuid())
-  manufacturer String
-  name         String
+  id          String  @id @default(uuid())
+  name        String
+  description String? @db.Text
+  status      String
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   componentId String
   component   Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
 
+  assemblyGroupId String?
+  assemblyGroup   AssemblyGroup? @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
+
+  assemblyProcessId String?
+  assemblyProcess   AssemblyProcess? @relation(fields: [assemblyProcessId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([projectId])
   @@index([componentId])
+  @@index([assemblyGroupId])
+  @@index([assemblyProcessId])
 }
 
 model AssemblyGroup {
@@ -228,6 +242,7 @@ model AssemblyGroup {
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   assemblyProcesses AssemblyProcess[]
+  projectComponents ProjectComponent[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -240,6 +255,8 @@ model AssemblyProcess {
   processId   String
   name        String
   description String? @db.Text
+
+  projectComponents ProjectComponent[]
 
   assemblyGroupId String
   assemblyGroup   AssemblyGroup @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
