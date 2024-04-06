@@ -2,6 +2,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { UseCaseProject } from "@/components/library/use-case-project-item";
 
 export default async function ComponentsLibraryPage({
   params,
@@ -22,11 +29,34 @@ export default async function ComponentsLibraryPage({
       },
     },
     include: {
+      projects: {
+        include: {
+          projectComponents: {
+            where: {
+              componentId: params.componentId,
+            },
+            include: {
+              assemblyGroup: true,
+              assemblyProcess: true,
+              component: true,
+            },
+          },
+        },
+      },
       componentCategories: {
         include: {
           components: {
             where: {
               id: params.componentId,
+            },
+            include: {
+              projectComponents: {
+                include: {
+                  project: true,
+                  assemblyGroup: true,
+                  assemblyProcess: true,
+                },
+              },
             },
           },
         },
@@ -48,6 +78,8 @@ export default async function ComponentsLibraryPage({
 
   const component = tmpComponent[0].components[0];
 
+  const projects = workspace.projects;
+
   return (
     <div className="h-full w-full flex flex-col p-4">
       <div className="pb-4 flex space-x-3">
@@ -61,7 +93,16 @@ export default async function ComponentsLibraryPage({
           <TabsTrigger value="problems">Problems</TabsTrigger>
         </TabsList>
         <TabsContent value="overview"></TabsContent>
-        <TabsContent value="use_cases"></TabsContent>
+        <TabsContent value="use_cases">
+          <div className="flex flex-col space-y-[1px]">
+            {projects.map(
+              (project) =>
+                project.projectComponents.length > 0 && (
+                  <UseCaseProject key={project.id} project={project} />
+                ),
+            )}
+          </div>
+        </TabsContent>
         <TabsContent value="problems"></TabsContent>
       </Tabs>
     </div>

@@ -55,3 +55,7 @@ export type ProjectComponentWithData = ProjectComponent & {
 } & { assemblyGroup: AssemblyGroup | null } & {
   assemblyProcess: AssemblyProcess | null;
 };
+
+export type ProjectWithComponents = Project & {
+  projectComponents: ProjectComponentWithData[];
+};
