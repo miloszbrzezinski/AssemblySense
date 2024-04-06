@@ -93,6 +93,51 @@ export const setComponentsAssemblyGroup = async (
     },
   });
 
+  return { success: `Project component assembly group changed!` };
+};
+
+export const setProjectComponentsName = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponent: ProjectComponent,
+  name: string,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponent.id,
+                },
+                data: {
+                  name,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
   return { success: `Project component added!` };
 };
 

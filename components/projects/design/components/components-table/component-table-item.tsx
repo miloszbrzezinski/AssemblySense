@@ -31,7 +31,11 @@ const ComponentTableItem = ({
         <h3 className="text-base font-light pl-2"></h3>
       </div>
       <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
-        <ProjectComponentItem projectComponent={projectComponent} />
+        <ProjectComponentItem
+          profileId={profileId}
+          workspaceId={workspaceId}
+          projectComponent={projectComponent}
+        />
       </div>
       <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
         <h3 className="text-base font-light pl-2">
