@@ -27,22 +27,22 @@ const ComponentsTable = ({
           <Puzzle strokeWidth={1} />
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-lg font-light">Group</h3>
+          <h3 className="text-base font-light">Group</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-lg font-light">Process</h3>
+          <h3 className="text-base font-light">Process</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-lg font-light">Component symbol</h3>
+          <h3 className="text-base font-light">Component symbol</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-lg font-light">Component</h3>
+          <h3 className="text-base font-light">Component</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-lg font-light">Status</h3>
+          <h3 className="text-base font-light">Status</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-lg font-light">Comment</h3>
+          <h3 className="text-base font-light">Comment</h3>
         </div>
       </div>
       {projectComponents.map((component) => (
