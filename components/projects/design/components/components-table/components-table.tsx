@@ -1,4 +1,4 @@
-import { Hash } from "lucide-react";
+import { Hash, Puzzle } from "lucide-react";
 import ComponentTableItem from "./component-table-item";
 import {
   AssemblyGroup,
@@ -23,6 +23,9 @@ const ComponentsTable = ({
   return (
     <div className="flex flex-col w-full bg-stone-300 space-y-[1px] shadow-md">
       <div className="flex w-full h-14 bg-stone-300 space-x-[1px]">
+        <div className="flex w-10 h-14 bg-white items-center p-2">
+          <Puzzle strokeWidth={1} />
+        </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
           <h3 className="text-lg font-light">Group</h3>
         </div>

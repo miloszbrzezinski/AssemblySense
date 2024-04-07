@@ -59,6 +59,10 @@ export const setComponentsAssemblyGroup = async (
   assemblyGroupId: string | null | undefined,
   projectId: string,
 ) => {
+  const assemblyProcessId = assemblyGroupId
+    ? projectComponent.assemblyProcessId
+    : null;
+
   const workspace = await db.workspace.update({
     where: {
       id: workspaceId,
@@ -84,7 +88,8 @@ export const setComponentsAssemblyGroup = async (
                   id: projectComponent.id,
                 },
                 data: {
-                  assemblyGroupId: assemblyGroupId,
+                  assemblyGroupId,
+                  assemblyProcessId,
                 },
               },
             },

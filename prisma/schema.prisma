@@ -139,8 +139,9 @@ model Project {
   projectMembers    ProjectMember[]
   projectComponents ProjectComponent[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  ProjectNetwork ProjectNetwork[]
 
   @@index([workspaceId])
   @@index([customerId])
@@ -212,6 +213,8 @@ model ProjectComponent {
   description String? @db.Text
   status      String
 
+  componentEvents ComponentEvent[]
+
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
@@ -224,13 +227,94 @@ model ProjectComponent {
   assemblyProcessId String?
   assemblyProcess   AssemblyProcess? @relation(fields: [assemblyProcessId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  ComponentConnection ComponentConnection[]
 
   @@index([projectId])
   @@index([componentId])
   @@index([assemblyGroupId])
   @@index([assemblyProcessId])
+}
+
+enum EventType {
+  STATUS
+  ACTION
+}
+
+model AddressIO {
+  id         String @id @default(uuid())
+  symbol     String
+  byteAdress String
+  bitAdress  String
+
+  componentEventId String          @unique
+  componentEvent   ComponentEvent? @relation(fields: [componentEventId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([componentEventId])
+}
+
+model ComponentEvent {
+  id          String    @id @default(uuid())
+  name        String
+  description String?   @db.Text
+  eventType   EventType @default(STATUS)
+
+  addressIO AddressIO?
+
+  projectComponentId String
+  projectComponent   ProjectComponent? @relation(fields: [projectComponentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectComponentId])
+}
+
+model ProjectNetwork {
+  id             String  @id @default(uuid())
+  name           String
+  subnetMast     String
+  networkPortion String
+  description    String? @db.Text
+
+  componentConnections ComponentConnection[]
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  assemblyGroupId String?
+  assemblyGroup   AssemblyGroup? @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
+
+  assemblyProcessId String?
+  assemblyProcess   AssemblyProcess? @relation(fields: [assemblyProcessId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+model ComponentConnection {
+  id          String  @id @default(uuid())
+  name        String
+  hostPortion String
+  description String? @db.Text
+
+  projectComponentId String
+  projectComponent   ProjectComponent @relation(fields: [projectComponentId], references: [id], onDelete: Cascade)
+
+  projectNetworkId String
+  projectNetwork   ProjectNetwork @relation(fields: [projectNetworkId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectComponentId])
+  @@index([projectNetworkId])
 }
 
 model AssemblyGroup {
@@ -244,8 +328,9 @@ model AssemblyGroup {
   assemblyProcesses AssemblyProcess[]
   projectComponents ProjectComponent[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  ProjectNetwork ProjectNetwork[]
 
   @@index([projectId])
 }
@@ -261,8 +346,9 @@ model AssemblyProcess {
   assemblyGroupId String
   assemblyGroup   AssemblyGroup @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  ProjectNetwork ProjectNetwork[]
 
   @@index([assemblyGroupId])
 }

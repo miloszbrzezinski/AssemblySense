@@ -7,6 +7,7 @@ import {
   Network,
   Plus,
   Puzzle,
+  Shield,
   Slash,
   Tally1,
   Target,
@@ -125,7 +126,7 @@ export const DesignSidebar = ({
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/members`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/io-list`,
                 );
               }}
               variant="secondary"
@@ -133,7 +134,21 @@ export const DesignSidebar = ({
             >
               <div className="flex items-center justify-start space-x-2">
                 <Binary strokeWidth={1} />
-                <p className="font-light">I/O table</p>
+                <p className="font-light">I/O list</p>
+              </div>
+            </Button>
+            <Button
+              onClick={() => {
+                router.push(
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/io-list`,
+                );
+              }}
+              variant="secondary"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+            >
+              <div className="flex items-center justify-start space-x-2">
+                <Shield strokeWidth={1} />
+                <p className="font-light">Action enables</p>
               </div>
             </Button>
             <Button

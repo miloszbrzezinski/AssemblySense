@@ -70,7 +70,7 @@ export const ProjectComponentStatus = ({
       onChange={handleInput}
       value={componentStatus}
       onKeyDown={handleKeyDown}
-      className="group-hover:bg-slate-100 w-full h-10 text-base font-light focus:outline-none focus:bg-slate-200 focus:rounded-none pl-2"
+      className="group-hover:bg-slate-100 w-full h-10 text-sm font-light focus:outline-none focus:bg-slate-200 focus:rounded-none pl-2"
     />
   );
 };

@@ -113,7 +113,7 @@ const AssemblyGroupPopover = ({
   return (
     <Popover>
       <PopoverTrigger className="text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
-        <h3 className="text-base font-light pl-2">{selectedValue}</h3>
+        <h3 className="text-sm font-light pl-2">{selectedValue}</h3>
       </PopoverTrigger>
       <PopoverContent className="rounded-none p-0 bg-stone-200 space-y-[1px]">
         <div className="bg-white flex items-center pl-2">
