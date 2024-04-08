@@ -167,3 +167,64 @@ export const setComponentEventDescription = async (
 
   return { success: `Component event description changed!` };
 };
+
+export const setComponentEventSymbol = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponentId: string,
+  componentEventId: string,
+  symbol: string,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponentId,
+                },
+                data: {
+                  componentEvents: {
+                    update: {
+                      where: {
+                        id: componentEventId,
+                      },
+                      data: {
+                        addressIO: {
+                          update: {
+                            data: {
+                              symbol,
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Component event symbol changed!` };
+};
