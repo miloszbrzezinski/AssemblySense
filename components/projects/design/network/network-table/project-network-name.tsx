@@ -1,21 +1,22 @@
 "use client";
 import { setProjectComponentsName } from "@/actions/project-components";
-import { ProjectComponentWithData } from "@/types";
+import { setProjectNetworkName } from "@/actions/project-network";
+import { ProjectComponentWithData, ProjectNetworkWithData } from "@/types";
 import { useRouter } from "next/navigation";
 import { FormEvent, startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-interface ProjectComponentNameProps {
+interface ProjectNetworkNameProps {
   profileId: string;
   workspaceId: string;
-  projectComponent: ProjectComponentWithData;
+  projectNetwork: ProjectNetworkWithData;
 }
 
-export const ProjectComponentName = ({
+export const ProjectNetworkName = ({
   profileId,
   workspaceId,
-  projectComponent,
-}: ProjectComponentNameProps) => {
+  projectNetwork,
+}: ProjectNetworkNameProps) => {
   const [componentName, setComponentName] = useState("");
   const router = useRouter();
 
@@ -25,18 +26,18 @@ export const ProjectComponentName = ({
   };
 
   useEffect(() => {
-    setComponentName(projectComponent.name);
-  }, [projectComponent]);
+    setComponentName(projectNetwork.name);
+  }, [projectNetwork]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       startTransition(() => {
-        setProjectComponentsName(
+        setProjectNetworkName(
           profileId,
           workspaceId,
-          projectComponent,
+          projectNetwork,
           componentName,
-          projectComponent.projectId,
+          projectNetwork.projectId,
         ).then((data) => {
           // setError(data.error);
           if (data.success) {
@@ -53,7 +54,7 @@ export const ProjectComponentName = ({
       });
     }
     if (event.key === "Escape") {
-      setComponentName(projectComponent.name);
+      setComponentName(projectNetwork.name);
     }
   };
 

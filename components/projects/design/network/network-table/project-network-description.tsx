@@ -3,22 +3,23 @@ import {
   setProjectComponentDescription,
   setProjectComponentsName,
 } from "@/actions/project-components";
-import { ProjectComponentWithData } from "@/types";
+import { setProjectNetworkDescription } from "@/actions/project-network";
+import { ProjectComponentWithData, ProjectNetworkWithData } from "@/types";
 import { useRouter } from "next/navigation";
 import { FormEvent, startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-interface ProjectComponentDescriptionProps {
+interface ProjectNetworkDescriptionProps {
   profileId: string;
   workspaceId: string;
-  projectComponent: ProjectComponentWithData;
+  projectNetwork: ProjectNetworkWithData;
 }
 
-export const ProjectComponentDescription = ({
+export const ProjectNetworkDescription = ({
   profileId,
   workspaceId,
-  projectComponent,
-}: ProjectComponentDescriptionProps) => {
+  projectNetwork,
+}: ProjectNetworkDescriptionProps) => {
   const [componentDescription, setComponentDescription] = useState("");
   const router = useRouter();
 
@@ -28,25 +29,25 @@ export const ProjectComponentDescription = ({
   };
 
   useEffect(() => {
-    if (projectComponent.description) {
-      setComponentDescription(projectComponent.description);
+    if (projectNetwork.description) {
+      setComponentDescription(projectNetwork.description);
     }
-  }, [projectComponent]);
+  }, [projectNetwork]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       startTransition(() => {
-        setProjectComponentDescription(
+        setProjectNetworkDescription(
           profileId,
           workspaceId,
-          projectComponent,
+          projectNetwork,
           componentDescription,
-          projectComponent.projectId,
+          projectNetwork.projectId,
         ).then((data) => {
           // setError(data.error);
           if (data.success) {
             toast(data.success, {
-              description: `New comment: ${componentDescription}`,
+              description: `New description: ${componentDescription}`,
               action: {
                 label: "Undo",
                 onClick: () => console.log("Undo"),
@@ -58,8 +59,8 @@ export const ProjectComponentDescription = ({
       });
     }
     if (event.key === "Escape") {
-      if (projectComponent.description) {
-        setComponentDescription(projectComponent.description);
+      if (projectNetwork.description) {
+        setComponentDescription(projectNetwork.description);
       }
     }
   };

@@ -56,8 +56,8 @@ export const ProjectMemberItem = ({
           onClick={onClickLeader}
           variant="ghost"
           className={cn(
-            "h-14 rounded-none hover:bg-stone-300 hover:text-amber-600",
-            leader && "bg-amber-400/50 hover:bg-amber-400/70 hover:text-white",
+            "h-14 rounded-none hover:bg-stone-300 hover:text-slate-600",
+            leader && "bg-slate-400/60 hover:bg-slate-400/70 hover:text-white",
           )}
         >
           <ShipWheel strokeWidth={1} className="" />

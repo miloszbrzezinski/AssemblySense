@@ -171,10 +171,10 @@ export const DesignSidebar = ({
           <div className="flex w-full justify-between items-center shadow-sm shadow-stone-300">
             <AccordionTrigger>
               <div className="flex justify-between w-full">
-                <p className="text-lg pl-1 font-normal">Processes</p>
+                <p className="text-lg pl-1 font-normal">Control groups</p>
               </div>
             </AccordionTrigger>
-            <div className="space-x-1 px-2 items-center">
+            <div className="space-x-1 px-2 items-center flex">
               <button>
                 <FilePlus strokeWidth={1} />
               </button>

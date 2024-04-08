@@ -138,10 +138,10 @@ model Project {
   assemblyGroups    AssemblyGroup[]
   projectMembers    ProjectMember[]
   projectComponents ProjectComponent[]
+  projectNetworks   ProjectNetwork[]
 
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  ProjectNetwork ProjectNetwork[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([workspaceId])
   @@index([customerId])
@@ -213,7 +213,8 @@ model ProjectComponent {
   description String? @db.Text
   status      String
 
-  componentEvents ComponentEvent[]
+  componentEvents      ComponentEvent[]
+  componentConnections ComponentConnection[]
 
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -227,9 +228,8 @@ model ProjectComponent {
   assemblyProcessId String?
   assemblyProcess   AssemblyProcess? @relation(fields: [assemblyProcessId], references: [id], onDelete: Cascade)
 
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  ComponentConnection ComponentConnection[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([projectId])
   @@index([componentId])
@@ -277,7 +277,7 @@ model ComponentEvent {
 model ProjectNetwork {
   id             String  @id @default(uuid())
   name           String
-  subnetMast     String
+  subnetMask     String
   networkPortion String
   description    String? @db.Text
 
@@ -288,9 +288,6 @@ model ProjectNetwork {
 
   assemblyGroupId String?
   assemblyGroup   AssemblyGroup? @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
-
-  assemblyProcessId String?
-  assemblyProcess   AssemblyProcess? @relation(fields: [assemblyProcessId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -326,11 +323,11 @@ model AssemblyGroup {
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   assemblyProcesses AssemblyProcess[]
+  projectNetworks   ProjectNetwork[]
   projectComponents ProjectComponent[]
 
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  ProjectNetwork ProjectNetwork[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([projectId])
 }
@@ -346,9 +343,8 @@ model AssemblyProcess {
   assemblyGroupId String
   assemblyGroup   AssemblyGroup @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
 
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  ProjectNetwork ProjectNetwork[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([assemblyGroupId])
 }

@@ -1,6 +1,7 @@
 import { ProjectComponentNavbar } from "@/components/projects/design/components/component-navbar";
 import ComponentsTable from "@/components/projects/design/components/components-table/components-table";
 import { ProjectComponentName } from "@/components/projects/design/components/components-table/project-component-name";
+import { ComponentConnectionList } from "@/components/projects/design/components/connection-list";
 import { ComponentEventList } from "@/components/projects/design/components/events-list";
 import { DesignLibrarySidebar } from "@/components/projects/design/components/library-sidebar";
 import {
@@ -79,8 +80,14 @@ export default async function ProjectDesignComponentsPage({
   return (
     <div className="h-full w-full flex flex-col">
       <ProjectComponentNavbar projectComponent={component} />
-      <div className="p-2 w-full h-full flex">
+      <div className="p-2 w-full h-full flex space-x-2">
         <ComponentEventList
+          profileId={profile.id}
+          workspaceId={workspace.id}
+          projectComponent={component}
+          events={component.componentEvents}
+        />
+        <ComponentConnectionList
           profileId={profile.id}
           workspaceId={workspace.id}
           projectComponent={component}

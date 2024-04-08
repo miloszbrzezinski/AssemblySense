@@ -1,24 +1,26 @@
-import { Hash, Network, Puzzle } from "lucide-react";
-import ComponentTableItem from "./component-table-item";
+import { Network } from "lucide-react";
 import {
-  AssemblyGroup,
-  AssemblyProcess,
-  ProjectComponent,
-} from "@prisma/client";
-import { AssemblyGroupWithProcesses, ProjectComponentWithData } from "@/types";
+  AssemblyGroupWithProcesses,
+  ProjectComponentWithData,
+  ProjectNetworkWithData,
+} from "@/types";
+import { NetworkTableNewItem } from "./network-table-new-item";
+import { NetworkTableItem } from "./network-table-item";
 
 interface NetworkTableProps {
   profileId: string;
   workspaceId: string;
-  projectComponents: ProjectComponentWithData[];
+  projectId: string;
   assemblyGroups: AssemblyGroupWithProcesses[];
+  projectNetworks: ProjectNetworkWithData[];
 }
 
 export const NetworkTable = ({
   profileId,
   workspaceId,
+  projectId,
   assemblyGroups,
-  projectComponents,
+  projectNetworks,
 }: NetworkTableProps) => {
   return (
     <div className="flex flex-col w-full bg-stone-300 space-y-[1px] shadow-md">
@@ -27,24 +29,31 @@ export const NetworkTable = ({
           <Network strokeWidth={1} />
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-base font-light">Group</h3>
+          <h3 className="text-base font-light">Control group</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-base font-light">Process</h3>
+          <h3 className="text-base font-light">Name</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-base font-light">Component symbol</h3>
+          <h3 className="text-base font-light">Subnet Mask</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-base font-light">Component</h3>
+          <h3 className="text-base font-light">Network Portion</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-base font-light">Status</h3>
-        </div>
-        <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-base font-light">Comment</h3>
+          <h3 className="text-base font-light">Description</h3>
         </div>
       </div>
+      {projectNetworks.map((network) => (
+        <NetworkTableItem
+          key={network.id}
+          profileId={profileId}
+          workspaceId={workspaceId}
+          assemblyGroups={assemblyGroups}
+          projectNetwork={network}
+        />
+      ))}
+      <NetworkTableNewItem />
     </div>
   );
 };

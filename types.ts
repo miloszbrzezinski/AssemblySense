@@ -66,7 +66,7 @@ export type ProjectWithComponents = Project & {
 
 export type ProjectNetworkWithData = ProjectNetwork & {
   componentConnections: ComponentConnectionWithData[];
-};
+} & { assemblyGroup: AssemblyGroup | null };
 
 export type ComponentConnectionWithData = ComponentConnection & {
   projectComponent: ProjectComponentWithData;

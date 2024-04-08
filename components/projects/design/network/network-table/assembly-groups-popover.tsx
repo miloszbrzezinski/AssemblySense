@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
   PopoverClose,
 } from "@/components/ui/popover";
-import { ProjectComponentWithData } from "@/types";
+import { ProjectComponentWithData, ProjectNetworkWithData } from "@/types";
 import { AssemblyGroup } from "@prisma/client";
 import { Folder, Goal, Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -25,14 +25,14 @@ interface AssemblyGroupPopoverProps {
   profileId: string;
   workspaceId: string;
   assemblyGroups: AssemblyGroup[];
-  projectComponent: ProjectComponentWithData;
+  projectNetwork: ProjectNetworkWithData;
 }
 
 const AssemblyGroupPopover = ({
   profileId,
   workspaceId,
   assemblyGroups,
-  projectComponent,
+  projectNetwork,
 }: AssemblyGroupPopoverProps) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedValue, setSelectedValue] = useState("General");
@@ -51,19 +51,19 @@ const AssemblyGroupPopover = ({
   );
 
   useEffect(() => {
-    if (projectComponent.assemblyGroup) {
-      setSelectedValue(projectComponent.assemblyGroup.name);
+    if (projectNetwork.assemblyGroup) {
+      setSelectedValue(projectNetwork.assemblyGroup.name);
     }
-  }, [projectComponent.assemblyGroup]);
+  }, [projectNetwork.assemblyGroup]);
 
   const onClick = (group: AssemblyGroup) => {
     startTransition(() => {
       setComponentsAssemblyGroup(
         profileId,
         workspaceId,
-        projectComponent,
+        projectNetwork,
         group.id,
-        projectComponent.projectId,
+        projectNetwork.projectId,
       ).then((data) => {
         // setError(data.error);
         if (data.success) {
@@ -87,9 +87,9 @@ const AssemblyGroupPopover = ({
       setComponentsAssemblyGroup(
         profileId,
         workspaceId,
-        projectComponent,
+        projectNetwork,
         null,
-        projectComponent.projectId,
+        projectNetwork.projectId,
       ).then((data) => {
         // setError(data.error);
         if (data.success) {
