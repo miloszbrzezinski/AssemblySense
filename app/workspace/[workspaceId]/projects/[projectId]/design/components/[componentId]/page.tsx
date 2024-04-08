@@ -2,7 +2,7 @@ import { ProjectComponentNavbar } from "@/components/projects/design/components/
 import ComponentsTable from "@/components/projects/design/components/components-table/components-table";
 import { ProjectComponentName } from "@/components/projects/design/components/components-table/project-component-name";
 import { ComponentConnectionList } from "@/components/projects/design/components/connection-list";
-import { ComponentEventList } from "@/components/projects/design/components/events-list";
+import { ComponentEventList } from "@/components/projects/design/components/events-list/events-list";
 import { DesignLibrarySidebar } from "@/components/projects/design/components/library-sidebar";
 import {
   ResizableHandle,
@@ -49,6 +49,12 @@ export default async function ProjectDesignComponentsPage({
               component: true,
               assemblyGroup: true,
               assemblyProcess: true,
+              componentConnections: {
+                include: {
+                  projectNetwork: true,
+                  projectComponent: true,
+                },
+              },
               componentEvents: {
                 include: {
                   addressIO: true,
@@ -91,7 +97,7 @@ export default async function ProjectDesignComponentsPage({
           profileId={profile.id}
           workspaceId={workspace.id}
           projectComponent={component}
-          events={component.componentEvents}
+          connections={component.componentConnections}
         />
       </div>
     </div>

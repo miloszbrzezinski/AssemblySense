@@ -149,7 +149,7 @@ export const DesignSidebar = ({
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/io-list`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/enables`,
                 );
               }}
               variant="secondary"
@@ -163,7 +163,7 @@ export const DesignSidebar = ({
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/sequence`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/layout`,
                 );
               }}
               variant="secondary"

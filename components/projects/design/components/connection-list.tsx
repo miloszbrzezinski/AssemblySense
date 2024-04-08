@@ -1,6 +1,10 @@
 "use client";
 import { addProjectComponentEvent } from "@/actions/component-event";
-import { ComponentEventWithData, ProjectComponentWithData } from "@/types";
+import {
+  ComponentConnectionWithData,
+  ComponentEventWithData,
+  ProjectComponentWithData,
+} from "@/types";
 import { EventType } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { startTransition } from "react";
@@ -10,14 +14,14 @@ interface ComponentConnectionListProps {
   profileId: string;
   workspaceId: string;
   projectComponent: ProjectComponentWithData;
-  events: ComponentEventWithData[];
+  connections: ComponentConnectionWithData[];
 }
 
 export const ComponentConnectionList = ({
   profileId,
   workspaceId,
   projectComponent,
-  events,
+  connections,
 }: ComponentConnectionListProps) => {
   const router = useRouter();
 
@@ -48,52 +52,41 @@ export const ComponentConnectionList = ({
       <div className=" space-y-[1px] w-full flex flex-col">
         <div className="bg-stone-300 space-x-[1px] flex w-full h-10">
           <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            <p>Event</p>
+            <p>Network</p>
           </div>
           <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
             <p>Address</p>
           </div>
           <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            <p>Symbol</p>
-          </div>
-          <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            Comment
+            Description
           </div>
         </div>
-        {events.map((event) => (
+        {connections.map((connection) => (
           <div
-            key={event.id}
+            key={connection.id}
             className="bg-stone-300 space-x-[1px] flex w-full h-10"
           >
             <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>{event.name}</p>
+              <p>{connection.name}</p>
             </div>
             <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
               <p>
-                <span>{event.eventType === EventType.ACTION && "O"}</span>
-                <span>{event.eventType === EventType.STATUS && "I"}</span>
-                <span>{event.addressIO?.byteAdress}</span>.
-                <span>{event.addressIO?.bitAdress}</span>
+                <span>{connection.hostPortion}</span>
               </p>
             </div>
             <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>
-                <span>{event.addressIO?.symbol}</span>
-              </p>
-            </div>
-            <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>{event.description}</p>
+              <p>{connection.description}</p>
             </div>
           </div>
         ))}
+        <button
+          onClick={onAdd}
+          className="w-full p-2 bg-white hover:bg-stone-100"
+        >
+          Add connection
+        </button>
       </div>
       <div className="flex w-full h-full bg-white" />
-      <button
-        onClick={onAdd}
-        className="w-full p-2 bg-white hover:bg-stone-100"
-      >
-        Add I/O
-      </button>
     </div>
   );
 };

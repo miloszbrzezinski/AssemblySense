@@ -5,6 +5,7 @@ import { EventType } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { toast } from "sonner";
+import { EventListItem } from "./event-item";
 
 interface ComponentEventListProps {
   profileId: string;
@@ -47,44 +48,27 @@ export const ComponentEventList = ({
       </div>
       <div className=" space-y-[1px] w-full flex flex-col">
         <div className="bg-stone-300 space-x-[1px] flex w-full h-10">
-          <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            <p>Event</p>
+          <div className="bg-white h-10 w-full items-center justify-start flex">
+            <p className="pl-2">Event</p>
           </div>
-          <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            <p>Address</p>
+          <div className="bg-white h-10 min-w-32 items-center justify-start flex">
+            <p className="pl-2">Address</p>
           </div>
-          <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            <p>Symbol</p>
+          <div className="bg-white h-10 min-w-32 items-center justify-start flex">
+            <p className="pl-2">Symbol</p>
           </div>
-          <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            Comment
+          <div className="bg-white h-10 w-full items-center justify-start flex">
+            <p className="pl-2">Description</p>
           </div>
         </div>
         {events.map((event) => (
-          <div
+          <EventListItem
             key={event.id}
-            className="bg-stone-300 space-x-[1px] flex w-full h-10"
-          >
-            <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>{event.name}</p>
-            </div>
-            <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>
-                <span>{event.eventType === EventType.ACTION && "O"}</span>
-                <span>{event.eventType === EventType.STATUS && "I"}</span>
-                <span>{event.addressIO?.byteAdress}</span>.
-                <span>{event.addressIO?.bitAdress}</span>
-              </p>
-            </div>
-            <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>
-                <span>{event.addressIO?.symbol}</span>
-              </p>
-            </div>
-            <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>{event.description}</p>
-            </div>
-          </div>
+            profileId={profileId}
+            workspaceId={workspaceId}
+            event={event}
+            projectComponent={projectComponent}
+          />
         ))}
       </div>
       <div className="flex w-full h-full bg-white" />

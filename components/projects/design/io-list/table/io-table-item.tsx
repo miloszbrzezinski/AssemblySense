@@ -1,5 +1,10 @@
 "use client";
-import { AssemblyGroup, AssemblyProcess, ComponentEvent } from "@prisma/client";
+import {
+  AssemblyGroup,
+  AssemblyProcess,
+  ComponentEvent,
+  EventType,
+} from "@prisma/client";
 import {
   AssemblyGroupWithProcesses,
   ComponentEventWithData,
@@ -11,7 +16,7 @@ import { Button } from "@/components/ui/button";
 interface IOTableItemProps {
   profileId: string;
   workspaceId: string;
-  componentEvent: ComponentEvent;
+  componentEvent: ComponentEventWithData;
 }
 
 export const IOTableItem = ({
@@ -46,6 +51,8 @@ export const IOTableItem = ({
       <div className="group-hover:bg-slate-100 flex min-w-28 h-10 bg-white items-center">
         <div className="text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
           <h3 className="text-base font-medium pl-2">
+            {componentEvent.eventType == EventType.STATUS && "I"}
+            {componentEvent.eventType == EventType.ACTION && "O"}
             {componentEvent.addressIO?.byteAdress}.
             {componentEvent.addressIO?.bitAdress}
           </h3>

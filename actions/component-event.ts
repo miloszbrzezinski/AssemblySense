@@ -57,3 +57,113 @@ export const addProjectComponentEvent = async (
 
   return { success: `Event added!` };
 };
+
+export const setComponentEventName = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponentId: string,
+  componentEventId: string,
+  name: string,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponentId,
+                },
+                data: {
+                  componentEvents: {
+                    update: {
+                      where: {
+                        id: componentEventId,
+                      },
+                      data: {
+                        name,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Component event changed!` };
+};
+
+export const setComponentEventDescription = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponentId: string,
+  componentEventId: string,
+  description: string,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponentId,
+                },
+                data: {
+                  componentEvents: {
+                    update: {
+                      where: {
+                        id: componentEventId,
+                      },
+                      data: {
+                        description,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Component event description changed!` };
+};
