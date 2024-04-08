@@ -1,4 +1,5 @@
-import { IOTable } from "@/components/projects/design/io-table/table/io-table";
+import { ProjectComponentSidebar } from "@/components/projects/design/io-list/project-components-sidebar";
+import { IOTable } from "@/components/projects/design/io-list/table/io-table";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -50,6 +51,12 @@ export default async function IOListPage({
               component: true,
               assemblyGroup: true,
               assemblyProcess: true,
+              componentEvents: {
+                include: {
+                  addressIO: true,
+                  projectComponent: true,
+                },
+              },
             },
             orderBy: {
               name: "asc",
@@ -80,16 +87,18 @@ export default async function IOListPage({
             <IOTable
               profileId={profile.id}
               workspaceId={workspace.id}
-              assemblyGroups={project.assemblyGroups}
               projectComponents={project.projectComponents}
             />
           </div>
         </ResizablePanel>
         <ResizableHandle className="shadow-lg shadow-black bg-stone-300" />
-        <ResizablePanel
-          className="min-w-72 h-full"
-          defaultSize={20}
-        ></ResizablePanel>
+        <ResizablePanel className="min-w-72 h-full" defaultSize={20}>
+          <ProjectComponentSidebar
+            profileId={profile.id}
+            projectId={params.projectId}
+            projectComponents={project.projectComponents}
+          />
+        </ResizablePanel>
       </ResizablePanelGroup>
     </div>
   );

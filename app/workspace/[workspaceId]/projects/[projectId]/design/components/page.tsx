@@ -51,6 +51,7 @@ export default async function ProjectDesignComponentsPage({
               component: true,
               assemblyGroup: true,
               assemblyProcess: true,
+              componentEvents: true,
             },
             orderBy: {
               name: "asc",

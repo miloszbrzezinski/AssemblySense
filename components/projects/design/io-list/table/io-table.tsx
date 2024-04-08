@@ -1,6 +1,10 @@
 import { Binary, Hash, Puzzle } from "lucide-react";
 
-import { AssemblyGroupWithProcesses, ProjectComponentWithData } from "@/types";
+import {
+  AssemblyGroupWithProcesses,
+  ComponentEventWithData,
+  ProjectComponentWithData,
+} from "@/types";
 import { IOTableItem } from "./io-table-item";
 import { IOTableNewItem } from "./io-table-new-item";
 
@@ -8,13 +12,11 @@ interface IOTableProps {
   profileId: string;
   workspaceId: string;
   projectComponents: ProjectComponentWithData[];
-  assemblyGroups: AssemblyGroupWithProcesses[];
 }
 
 export const IOTable = ({
   profileId,
   workspaceId,
-  assemblyGroups,
   projectComponents,
 }: IOTableProps) => {
   return (
@@ -33,14 +35,22 @@ export const IOTable = ({
           <h3 className="text-lg font-light">Adress</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-lg font-light">Action</h3>
+          <h3 className="text-lg font-light">Event</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
           <h3 className="text-lg font-light">Comment</h3>
         </div>
       </div>
-      <IOTableItem />
-      <IOTableNewItem />
+      {projectComponents.map((component) =>
+        component.componentEvents.map((event) => (
+          <IOTableItem
+            key={event.id}
+            profileId={profileId}
+            workspaceId={workspaceId}
+            componentEvent={event}
+          />
+        )),
+      )}
     </div>
   );
 };

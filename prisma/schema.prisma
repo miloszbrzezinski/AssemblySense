@@ -266,7 +266,7 @@ model ComponentEvent {
   addressIO AddressIO?
 
   projectComponentId String
-  projectComponent   ProjectComponent? @relation(fields: [projectComponentId], references: [id], onDelete: Cascade)
+  projectComponent   ProjectComponent @relation(fields: [projectComponentId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

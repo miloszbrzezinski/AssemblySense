@@ -80,7 +80,7 @@ export default function ProjectTimelinePage() {
                 style={{ minWidth: "100px" }}
               >
                 <div className="flex items-center justify-center bg-white text-stone-300">
-                  <p>CW {getWeek(week[0])}</p>
+                  <p>CW {getWeek(week[0]) - 1}</p>
                 </div>
                 <div className="flex space-x-[0.5px] h-full bg-stone-200">
                   {week.map((day) => (

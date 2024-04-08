@@ -1,8 +1,11 @@
 import {
+  AddressIO,
   AssemblyGroup,
   AssemblyProcess,
   Component,
   ComponentCategory,
+  ComponentConnection,
+  ComponentEvent,
   Customer,
   Department,
   Member,
@@ -10,6 +13,7 @@ import {
   Project,
   ProjectComponent,
   ProjectMember,
+  ProjectNetwork,
 } from "@prisma/client";
 
 export type ProjectWithCustomer = Project & {
@@ -54,8 +58,28 @@ export type ProjectComponentWithData = ProjectComponent & {
   component: Component;
 } & { assemblyGroup: AssemblyGroup | null } & {
   assemblyProcess: AssemblyProcess | null;
-};
+} & { componentEvents: ComponentEvent[] };
 
 export type ProjectWithComponents = Project & {
   projectComponents: ProjectComponentWithData[];
+};
+
+export type ProjectNetworkWithData = ProjectNetwork & {
+  componentConnections: ComponentConnectionWithData[];
+};
+
+export type ComponentConnectionWithData = ComponentConnection & {
+  projectComponent: ProjectComponentWithData;
+} & {
+  projectNetwork: ProjectNetwork;
+};
+
+export type ComponentEventWithData = ComponentEvent & {
+  addressIO: AddressIO | null;
+} & {
+  projectComponent: ProjectComponentWithGroup;
+};
+
+export type ProjectComponentWithGroup = ProjectComponent & {
+  assemblyGroup: AssemblyGroup | null;
 };

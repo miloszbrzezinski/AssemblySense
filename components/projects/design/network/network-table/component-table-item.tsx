@@ -8,7 +8,6 @@ import { ProjectComponentDescription } from "./project-component-description";
 import { ProjectComponentStatus } from "./project-component-status";
 import { MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
 interface ComponentTableItemProps {
   profileId: string;
@@ -23,17 +22,10 @@ const ComponentTableItem = ({
   assemblyGroups,
   projectComponent,
 }: ComponentTableItemProps) => {
-  const router = useRouter();
-
-  const onClick = () => {
-    router.push(`components/${projectComponent.id}`);
-  };
-
   return (
     <div className="group flex w-full h-10 bg-stone-300 space-x-[1px]">
       <div className="flex min-w-10 h-10 bg-white items-center group-hover:bg-slate-100">
         <Button
-          onClick={onClick}
           variant="ghost"
           className="w-full h-full rounded-none p-0 hover:bg-slate-200  transition-none"
         >
