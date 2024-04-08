@@ -42,6 +42,7 @@ export default async function ProjectDesignLayout({
         include: {
           projectComponents: true,
           projectMembers: true,
+          projectNetworks: true,
           assemblyGroups: {
             include: {
               assemblyProcesses: true,
@@ -79,6 +80,7 @@ export default async function ProjectDesignLayout({
             assemblyGroups={project.assemblyGroups}
             projectMembers={project.projectMembers}
             projectComponents={project.projectComponents}
+            projectNetworks={project.projectNetworks}
           />
         </ResizablePanel>
         <ResizableHandle />

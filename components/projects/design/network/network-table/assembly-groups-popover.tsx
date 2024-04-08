@@ -1,5 +1,6 @@
 "use client";
 import { setComponentsAssemblyGroup } from "@/actions/project-components";
+import { setProjectNetworkAssembyGroup } from "@/actions/project-network";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -58,7 +59,7 @@ const AssemblyGroupPopover = ({
 
   const onClick = (group: AssemblyGroup) => {
     startTransition(() => {
-      setComponentsAssemblyGroup(
+      setProjectNetworkAssembyGroup(
         profileId,
         workspaceId,
         projectNetwork,
@@ -84,7 +85,7 @@ const AssemblyGroupPopover = ({
 
   const removeGroup = () => {
     startTransition(() => {
-      setComponentsAssemblyGroup(
+      setProjectNetworkAssembyGroup(
         profileId,
         workspaceId,
         projectNetwork,

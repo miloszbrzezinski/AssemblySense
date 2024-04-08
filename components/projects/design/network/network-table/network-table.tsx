@@ -53,7 +53,11 @@ export const NetworkTable = ({
           projectNetwork={network}
         />
       ))}
-      <NetworkTableNewItem />
+      <NetworkTableNewItem
+        profileId={profileId}
+        workspaceId={workspaceId}
+        projectId={projectId}
+      />
     </div>
   );
 };

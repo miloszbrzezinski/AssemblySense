@@ -44,6 +44,51 @@ export const addProjectNetwork = async (
   return { success: `Network added` };
 };
 
+export const setProjectNetworkAssembyGroup = async (
+  profileId: string,
+  workspaceId: string,
+  projectNetwork: ProjectNetwork,
+  assemblyGroupId: string | null,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectNetworks: {
+              update: {
+                where: {
+                  id: projectNetwork.id,
+                },
+                data: {
+                  assemblyGroupId,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Network control group changed!` };
+};
+
 export const setProjectNetworkName = async (
   profileId: string,
   workspaceId: string,

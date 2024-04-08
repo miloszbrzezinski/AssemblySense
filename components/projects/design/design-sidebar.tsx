@@ -29,7 +29,11 @@ import { AssemblyGroupItem } from "../assembly-group-item";
 import { NewCategory } from "../../library/new-category";
 import { useState } from "react";
 import { NewAssemblyGroup } from "../new-assembly-group";
-import { ProjectComponent, ProjectMember } from "@prisma/client";
+import {
+  ProjectComponent,
+  ProjectMember,
+  ProjectNetwork,
+} from "@prisma/client";
 
 interface DesignSidebarProps {
   profileId: string;
@@ -38,6 +42,7 @@ interface DesignSidebarProps {
   assemblyGroups: AssemblyGroupWithProcesses[];
   projectMembers: ProjectMember[];
   projectComponents: ProjectComponent[];
+  projectNetworks: ProjectNetwork[];
 }
 
 export const DesignSidebar = ({
@@ -47,6 +52,7 @@ export const DesignSidebar = ({
   assemblyGroups,
   projectMembers,
   projectComponents,
+  projectNetworks,
 }: DesignSidebarProps) => {
   const params = useParams();
   const router = useRouter();
@@ -102,10 +108,13 @@ export const DesignSidebar = ({
                 );
               }}
               variant="secondary"
-              className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
             >
-              <Network strokeWidth={1} />
-              <p className="font-light">Network</p>
+              <div className="flex items-center justify-start space-x-2">
+                <Network strokeWidth={1} />
+                <p className="font-light">Networks</p>
+              </div>
+              <p className="font-light">{projectNetworks.length}</p>
             </Button>
             <Button
               onClick={() => {
@@ -161,7 +170,7 @@ export const DesignSidebar = ({
               className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
             >
               <Waypoints strokeWidth={1} />
-              <p className="font-light">Sequence</p>
+              <p className="font-light">Layout</p>
             </Button>
           </AccordionContent>
         </AccordionItem>

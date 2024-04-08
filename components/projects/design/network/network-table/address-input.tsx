@@ -40,7 +40,7 @@ export const NetworkAddressInput = ({
   return (
     <Popover>
       <PopoverTrigger className="text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
-        <h3 className="text-sm font-light pl-2">
+        <h3 className="text-base font-light pl-2">
           {projectNetwork.networkPortion}
         </h3>
       </PopoverTrigger>
