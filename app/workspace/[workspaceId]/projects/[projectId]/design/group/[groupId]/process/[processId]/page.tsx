@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -57,7 +58,27 @@ export default async function ProcessPage({
           <TabsTrigger value="use_cases">Use cases</TabsTrigger>
           <TabsTrigger value="problems">Problems</TabsTrigger>
         </TabsList>
-        <TabsContent value="overview"></TabsContent>
+        <TabsContent value="overview">
+          <div>
+            <div className="flex flex-col border border-stone-400 w-36 h-24 bg-white shadow-md">
+              <div className="flex w-full h-min p-1 items-center justify-center">
+                <p>Step 1</p>
+              </div>
+              <Separator />
+            </div>
+            <div className="flex flex-col w-36 h-48 items-center justify-center">
+              <div className="flex w-full h-full justify-center">
+                <Separator orientation="vertical" className="bg-stone-400" />
+              </div>
+              <div className="flex w-full h-[1px] px-10 ">
+                <div className="flex w-full h-[1px] bg-stone-500"></div>
+              </div>
+              <div className="flex w-full h-full justify-center">
+                <Separator orientation="vertical" className="bg-stone-400" />
+              </div>
+            </div>
+          </div>
+        </TabsContent>
         <TabsContent value="use_cases"></TabsContent>
         <TabsContent value="problems"></TabsContent>
       </Tabs>

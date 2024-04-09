@@ -1,3 +1,4 @@
+import { EnableTable } from "@/components/projects/design/action-enables/table/enable-table";
 import { ProjectComponentSidebar } from "@/components/projects/design/io-list/project-components-sidebar";
 import { IOTable } from "@/components/projects/design/io-list/table/io-table";
 import {
@@ -84,7 +85,7 @@ export default async function DesignEnablesPage({
             <p>Action enables</p>
           </div>
           <div className="p-2">
-            <IOTable
+            <EnableTable
               profileId={profile.id}
               workspaceId={workspace.id}
               projectComponents={project.projectComponents}

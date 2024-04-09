@@ -37,6 +37,7 @@ export const addProjectComponentEvent = async (
                   componentEvents: {
                     create: {
                       name: "new event",
+                      eventEnableFormula: "",
                       addressIO: {
                         create: {
                           symbol: "I0.0",
