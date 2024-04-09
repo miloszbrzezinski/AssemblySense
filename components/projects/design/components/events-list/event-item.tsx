@@ -3,6 +3,7 @@ import { EventType, ProjectComponent } from "@prisma/client";
 import { ComponentEventName } from "./event-name";
 import { ComponentEventDescription } from "./event-description";
 import { ComponentEventSymbol } from "./event-symbol";
+import { ComponentEventAddress } from "./event-address";
 
 interface EventListItemProps {
   profileId: string;
@@ -27,15 +28,15 @@ export const EventListItem = ({
           projectComponent={projectComponent}
         />
       </div>
-      <div className="bg-white h-10 min-w-32 items-center justify-start pl-2 flex">
-        <p>
-          <span>{event.eventType === EventType.ACTION && "O"}</span>
-          <span>{event.eventType === EventType.STATUS && "I"}</span>
-          <span>{event.addressIO?.byteAdress}</span>.
-          <span>{event.addressIO?.bitAdress}</span>
-        </p>
+      <div className="bg-white h-10 min-w-24 items-center justify-start flex">
+        <ComponentEventAddress
+          profileId={profileId}
+          workspaceId={workspaceId}
+          componentEvent={event}
+          projectComponent={projectComponent}
+        />
       </div>
-      <div className="bg-white h-10 min-w-32 items-center justify-start flex">
+      <div className="bg-white h-10 min-w-40 items-center justify-start flex">
         <ComponentEventSymbol
           profileId={profileId}
           workspaceId={workspaceId}

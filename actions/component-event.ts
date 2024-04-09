@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { MemberRole, ProjectComponent } from "@prisma/client";
+import { EventType, MemberRole, ProjectComponent } from "@prisma/client";
 import { z } from "zod";
 
 export const addProjectComponentEvent = async (
@@ -227,4 +227,71 @@ export const setComponentEventSymbol = async (
   });
 
   return { success: `Component event symbol changed!` };
+};
+
+export const setComponentEventAddress = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponentId: string,
+  componentEventId: string,
+  address: string,
+  projectId: string,
+) => {
+  const eventType = address[0] === "I" ? EventType.STATUS : EventType.ACTION;
+  const byteAdress = address.split(".")[0].substring(1);
+  const bitAdress = address.split(".")[1];
+
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponentId,
+                },
+                data: {
+                  componentEvents: {
+                    update: {
+                      where: {
+                        id: componentEventId,
+                      },
+                      data: {
+                        eventType: eventType,
+                        addressIO: {
+                          update: {
+                            data: {
+                              byteAdress,
+                              bitAdress,
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Component event address changed!` };
 };

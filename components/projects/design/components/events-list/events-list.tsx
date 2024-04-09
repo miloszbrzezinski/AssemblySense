@@ -51,10 +51,10 @@ export const ComponentEventList = ({
           <div className="bg-white h-10 w-full items-center justify-start flex">
             <p className="pl-2">Event</p>
           </div>
-          <div className="bg-white h-10 min-w-32 items-center justify-start flex">
+          <div className="bg-white h-10 min-w-24 items-center justify-start flex">
             <p className="pl-2">Address</p>
           </div>
-          <div className="bg-white h-10 min-w-32 items-center justify-start flex">
+          <div className="bg-white h-10 min-w-40 items-center justify-start flex">
             <p className="pl-2">Symbol</p>
           </div>
           <div className="bg-white h-10 w-full items-center justify-start flex">
