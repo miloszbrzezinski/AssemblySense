@@ -52,11 +52,23 @@ export default async function ProjectDesignComponentsPage({
               componentConnections: {
                 include: {
                   projectNetwork: true,
-                  projectComponent: true,
+                  projectComponent: {
+                    include: {
+                      component: true,
+                      assemblyGroup: true,
+                      assemblyProcess: true,
+                      componentEvents: true,
+                    },
+                  },
                 },
               },
               componentEvents: {
                 include: {
+                  projectComponent: {
+                    include: {
+                      assemblyGroup: true,
+                    },
+                  },
                   addressIO: true,
                 },
               },

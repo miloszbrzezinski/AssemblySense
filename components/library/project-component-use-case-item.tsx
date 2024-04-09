@@ -1,8 +1,8 @@
 "use client";
-import { ProjectComponentWithData } from "@/types";
+import { ProjectComponentWithComponentWithAssemblyGroups } from "@/types";
 
 interface ProjectComponentUseCaseProps {
-  projectComponent: ProjectComponentWithData;
+  projectComponent: ProjectComponentWithComponentWithAssemblyGroups;
 }
 
 export const ProjectComponentUseCase = ({

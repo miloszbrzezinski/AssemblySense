@@ -55,6 +55,7 @@ export default async function ComponentsLibraryPage({
                   project: true,
                   assemblyGroup: true,
                   assemblyProcess: true,
+                  componentEvents: true,
                 },
               },
             },

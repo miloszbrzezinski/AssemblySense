@@ -43,7 +43,19 @@ export default async function ProjectDesignNetworkPage({
           projectNetworks: {
             include: {
               assemblyGroup: true,
-              componentConnections: true,
+              componentConnections: {
+                include: {
+                  projectComponent: {
+                    include: {
+                      component: true,
+                      assemblyGroup: true,
+                      assemblyProcess: true,
+                      componentEvents: true,
+                    },
+                  },
+                  projectNetwork: true,
+                },
+              },
             },
           },
           assemblyGroups: {

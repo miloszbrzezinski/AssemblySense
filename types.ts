@@ -61,7 +61,7 @@ export type ProjectComponentWithData = ProjectComponent & {
 } & { componentEvents: ComponentEvent[] };
 
 export type ProjectWithComponents = Project & {
-  projectComponents: ProjectComponentWithData[];
+  projectComponents: ProjectComponentWithComponentWithAssemblyGroups[];
 };
 
 export type ProjectNetworkWithData = ProjectNetwork & {
@@ -83,3 +83,12 @@ export type ComponentEventWithData = ComponentEvent & {
 export type ProjectComponentWithGroup = ProjectComponent & {
   assemblyGroup: AssemblyGroup | null;
 };
+
+//new types
+
+export type ProjectComponentWithComponentWithAssemblyGroups =
+  ProjectComponent & {
+    component: Component;
+  } & { assemblyGroup: AssemblyGroup | null } & {
+    assemblyProcess: AssemblyProcess | null;
+  };
