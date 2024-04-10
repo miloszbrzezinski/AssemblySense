@@ -16,7 +16,7 @@ import {
   ComponentEventWithData,
   ProjectComponentWithData,
 } from "@/types";
-import { AssemblyGroup, AssemblyProcess } from "@prisma/client";
+import { AssemblyGroup, AssemblyProcess, ComponentEvent } from "@prisma/client";
 import {
   AlertTriangle,
   ComponentIcon,
@@ -42,7 +42,7 @@ interface EnableFormulaPopoverProps {
   profileId: string;
   workspaceId: string;
   componentEvent: ComponentEventWithData;
-  componentStatuses: ComponentEventWithData[];
+  componentStatuses: ComponentEvent[];
 }
 
 export const EnableFormulaPopover = ({
@@ -68,57 +68,57 @@ export const EnableFormulaPopover = ({
     }
   }, [componentEvent.eventEnableFormula]);
 
-  const onClick = (process: AssemblyProcess) => {
-    startTransition(() => {
-      setComponentsAssemblyProcess(
-        profileId,
-        workspaceId,
-        projectComponent,
-        process,
-        projectComponent.projectId,
-      ).then((data) => {
-        // setError(data.error);
-        if (data.success) {
-          setSelectedValue(`${process.processId} ${process.name}`);
-          toast(data.success, {
-            description: `New process: ${process.processId} ${process.name}`,
-            action: {
-              label: "Undo",
-              onClick: () => console.log("Undo"),
-            },
-          });
-          closeRef.current?.click();
-          router.refresh();
-        }
-      });
-    });
-  };
+  // const onClick = (process: AssemblyProcess) => {
+  //   startTransition(() => {
+  //     setComponentsAssemblyProcess(
+  //       profileId,
+  //       workspaceId,
+  //       projectComponent,
+  //       process,
+  //       projectComponent.projectId,
+  //     ).then((data) => {
+  //       // setError(data.error);
+  //       if (data.success) {
+  //         setSelectedValue(`${process.processId} ${process.name}`);
+  //         toast(data.success, {
+  //           description: `New process: ${process.processId} ${process.name}`,
+  //           action: {
+  //             label: "Undo",
+  //             onClick: () => console.log("Undo"),
+  //           },
+  //         });
+  //         closeRef.current?.click();
+  //         router.refresh();
+  //       }
+  //     });
+  //   });
+  // };
 
-  const removeGroup = () => {
-    startTransition(() => {
-      setComponentsAssemblyProcess(
-        profileId,
-        workspaceId,
-        projectComponent,
-        null,
-        projectComponent.projectId,
-      ).then((data) => {
-        // setError(data.error);
-        if (data.success) {
-          setSelectedValue("General");
-          closeRef.current?.click();
-          toast(data.success, {
-            description: `New group: ${"General"}`,
-            action: {
-              label: "Undo",
-              onClick: () => console.log("Undo"),
-            },
-          });
-          router.refresh();
-        }
-      });
-    });
-  };
+  // const removeGroup = () => {
+  //   startTransition(() => {
+  //     setComponentsAssemblyProcess(
+  //       profileId,
+  //       workspaceId,
+  //       projectComponent,
+  //       null,
+  //       projectComponent.projectId,
+  //     ).then((data) => {
+  //       // setError(data.error);
+  //       if (data.success) {
+  //         setSelectedValue("General");
+  //         closeRef.current?.click();
+  //         toast(data.success, {
+  //           description: `New group: ${"General"}`,
+  //           action: {
+  //             label: "Undo",
+  //             onClick: () => console.log("Undo"),
+  //           },
+  //         });
+  //         router.refresh();
+  //       }
+  //     });
+  //   });
+  // };
 
   return (
     <Popover>

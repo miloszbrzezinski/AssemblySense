@@ -1,17 +1,18 @@
-import { Binary, Hash, Puzzle, Shield } from "lucide-react";
+import { Shield } from "lucide-react";
 
 import {
+  ActionEnableTableData,
   AssemblyGroupWithProcesses,
   ComponentEventWithData,
   ProjectComponentWithData,
 } from "@/types";
 import { EnableTableItem } from "./enable-table-item";
-import { EventType } from "@prisma/client";
+import { EventType, ComponentEvent, $Enums } from "@prisma/client";
 
 interface EnableTableProps {
   profileId: string;
   workspaceId: string;
-  projectComponents: ProjectComponentWithData[];
+  projectComponents: ActionEnableTableData[];
 }
 
 export const EnableTable = ({
@@ -19,6 +20,16 @@ export const EnableTable = ({
   workspaceId,
   projectComponents,
 }: EnableTableProps) => {
+  let events: ComponentEvent[] = [];
+
+  projectComponents.forEach(
+    (comp) => (events = [...events, ...comp.componentEvents]),
+  );
+
+  const statuses = events.filter(
+    (event) => event.eventType === EventType.STATUS,
+  );
+
   return (
     <div className="flex flex-col w-full bg-stone-300 space-y-[1px] shadow-md">
       <div className="flex w-full h-14 bg-stone-300 space-x-[1px]">
@@ -47,7 +58,7 @@ export const EnableTable = ({
                 profileId={profileId}
                 workspaceId={workspaceId}
                 componentEvent={event}
-                componentEvents={component.componentEvents}
+                componentEvents={statuses}
               />
             ),
         ),

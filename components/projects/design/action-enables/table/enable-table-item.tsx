@@ -18,7 +18,7 @@ interface EnableTableItemProps {
   profileId: string;
   workspaceId: string;
   componentEvent: ComponentEventWithData;
-  componentEvents: ComponentEventWithData[];
+  componentEvents: ComponentEvent[];
 }
 
 export const EnableTableItem = ({

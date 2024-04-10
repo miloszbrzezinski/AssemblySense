@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface TimerProps {
   duration: number; // Duration in minutes
@@ -11,23 +11,26 @@ const Timer: React.FC<TimerProps> = ({ duration }) => {
   const animationFrameRef = useRef<number>(0);
   const startTimeRef = useRef<DOMHighResTimeStamp | null>(null);
 
-  const updateProgress = (timestamp: DOMHighResTimeStamp) => {
-    if (!startTimeRef.current) startTimeRef.current = timestamp;
-    const elapsed = timestamp - startTimeRef.current;
+  const updateProgress = useCallback(
+    (timestamp: DOMHighResTimeStamp) => {
+      if (!startTimeRef.current) startTimeRef.current = timestamp;
+      const elapsed = timestamp - startTimeRef.current;
 
-    if (elapsed < durationInSeconds) {
-      setElapsedTime(elapsed);
-      animationFrameRef.current = requestAnimationFrame(updateProgress);
-    } else {
-      setElapsedTime(durationInSeconds); // Ensure we don't go over the duration
-    }
-  };
+      if (elapsed < durationInSeconds) {
+        setElapsedTime(elapsed);
+        animationFrameRef.current = requestAnimationFrame(updateProgress);
+      } else {
+        setElapsedTime(durationInSeconds); // Ensure we don't go over the duration
+      }
+    },
+    [durationInSeconds],
+  );
 
   useEffect(() => {
     animationFrameRef.current = requestAnimationFrame(updateProgress);
 
     return () => cancelAnimationFrame(animationFrameRef.current);
-  }, [durationInSeconds]);
+  }, [durationInSeconds, updateProgress]);
 
   // Calculate progress percentage
   const progress = (elapsedTime / durationInSeconds) * 100;

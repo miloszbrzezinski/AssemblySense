@@ -3,15 +3,15 @@ import { Binary, Hash, Puzzle } from "lucide-react";
 import {
   AssemblyGroupWithProcesses,
   ComponentEventWithData,
+  ComponentsEventsTableData,
   ProjectComponentWithData,
 } from "@/types";
 import { IOTableItem } from "./io-table-item";
-import { IOTableNewItem } from "./io-table-new-item";
 
 interface IOTableProps {
   profileId: string;
   workspaceId: string;
-  projectComponents: ProjectComponentWithData[];
+  projectComponents: ComponentsEventsTableData[];
 }
 
 export const IOTable = ({

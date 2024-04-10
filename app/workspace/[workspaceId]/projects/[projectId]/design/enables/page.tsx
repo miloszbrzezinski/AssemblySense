@@ -55,7 +55,11 @@ export default async function DesignEnablesPage({
               componentEvents: {
                 include: {
                   addressIO: true,
-                  projectComponent: true,
+                  projectComponent: {
+                    include: {
+                      assemblyGroup: true,
+                    },
+                  },
                 },
               },
             },

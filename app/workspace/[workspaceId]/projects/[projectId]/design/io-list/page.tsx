@@ -54,7 +54,11 @@ export default async function IOListPage({
               componentEvents: {
                 include: {
                   addressIO: true,
-                  projectComponent: true,
+                  projectComponent: {
+                    include: {
+                      assemblyGroup: true,
+                    },
+                  },
                 },
               },
             },
