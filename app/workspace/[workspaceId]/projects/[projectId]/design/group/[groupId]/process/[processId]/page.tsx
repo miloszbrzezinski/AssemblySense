@@ -1,4 +1,5 @@
 import { EnableFormulaPopover } from "@/components/projects/design/action-enables/table/enable-formula-popover";
+import { ProcessSequence } from "@/components/projects/design/sequence/sequence";
 import { StepItem } from "@/components/projects/design/sequence/step-item";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -65,12 +66,7 @@ export default async function ProcessPage({
           value="overview"
           className="w-full justify-center items-center flex p-5 overflow-y-scroll"
         >
-          <div className="flex flex-col overflow-y-scroll">
-            <StepItem />
-            <StepItem />
-            <StepItem />
-            <StepItem />
-          </div>
+          <ProcessSequence />
         </TabsContent>
         <TabsContent value="use_cases"></TabsContent>
         <TabsContent value="problems"></TabsContent>
