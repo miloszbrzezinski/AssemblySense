@@ -1,7 +1,10 @@
+import { EnableFormulaPopover } from "@/components/projects/design/action-enables/table/enable-formula-popover";
+import { StepItem } from "@/components/projects/design/sequence/step-item";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
+import { Circle } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default async function ProcessPage({
@@ -47,7 +50,7 @@ export default async function ProcessPage({
   }
 
   return (
-    <div className="h-full w-full flex flex-col p-4">
+    <div className="h-full w-full flex flex-col p-4 overflow-y-scroll">
       <div className="pb-4 flex space-x-3">
         <p className="text-4xl font-light">{process.processId}</p>
         <p className="text-4xl font-extralight">{process.name}</p>
@@ -58,25 +61,15 @@ export default async function ProcessPage({
           <TabsTrigger value="use_cases">Use cases</TabsTrigger>
           <TabsTrigger value="problems">Problems</TabsTrigger>
         </TabsList>
-        <TabsContent value="overview">
-          <div>
-            <div className="flex flex-col border border-stone-400 w-36 h-24 bg-white shadow-md">
-              <div className="flex w-full h-min p-1 items-center justify-center">
-                <p>Step 1</p>
-              </div>
-              <Separator />
-            </div>
-            <div className="flex flex-col w-36 h-48 items-center justify-center">
-              <div className="flex w-full h-full justify-center">
-                <Separator orientation="vertical" className="bg-stone-400" />
-              </div>
-              <div className="flex w-full h-[1px] px-10 ">
-                <div className="flex w-full h-[1px] bg-stone-500"></div>
-              </div>
-              <div className="flex w-full h-full justify-center">
-                <Separator orientation="vertical" className="bg-stone-400" />
-              </div>
-            </div>
+        <TabsContent
+          value="overview"
+          className="w-full justify-center items-center flex p-5 overflow-y-scroll"
+        >
+          <div className="flex flex-col overflow-y-scroll">
+            <StepItem />
+            <StepItem />
+            <StepItem />
+            <StepItem />
           </div>
         </TabsContent>
         <TabsContent value="use_cases"></TabsContent>

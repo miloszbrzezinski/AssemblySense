@@ -266,6 +266,8 @@ model ComponentEvent {
   eventEnableFormula String  @db.Text
   eventEnableComment String? @db.Text
 
+  sequenceSteps SequenceStep[]
+
   addressIO AddressIO?
 
   projectComponentId String
@@ -275,6 +277,42 @@ model ComponentEvent {
   updatedAt DateTime @updatedAt
 
   @@index([projectComponentId])
+}
+
+model Sequence {
+  id          String  @id @default(uuid())
+  name        String
+  description String? @db.Text
+
+  stepNextReqFormula String @db.Text
+
+  sequenceStep SequenceStep[]
+
+  assemblyProcessId String
+  assemblyProcess   AssemblyProcess @relation(fields: [assemblyProcessId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([assemblyProcessId])
+}
+
+model SequenceStep {
+  id          String  @id @default(uuid())
+  name        String
+  description String? @db.Text
+
+  stepNextReqFormula String @db.Text
+
+  componentsEvents ComponentEvent[]
+
+  sequencepId String
+  sequence    Sequence @relation(fields: [sequencepId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sequencepId])
 }
 
 model ProjectNetwork {
@@ -296,6 +334,7 @@ model ProjectNetwork {
   updatedAt DateTime @updatedAt
 
   @@index([projectId])
+  @@index([assemblyGroupId])
 }
 
 model ComponentConnection {
@@ -342,6 +381,7 @@ model AssemblyProcess {
   description String? @db.Text
 
   projectComponents ProjectComponent[]
+  sequences         Sequence[]
 
   assemblyGroupId String
   assemblyGroup   AssemblyGroup @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
