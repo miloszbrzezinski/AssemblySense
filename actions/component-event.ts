@@ -114,6 +114,61 @@ export const setComponentEventName = async (
   return { success: `Component event changed!` };
 };
 
+export const setComponentEventEnable = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponentId: string,
+  componentEventId: string,
+  eventEnableFormula: string,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponentId,
+                },
+                data: {
+                  componentEvents: {
+                    update: {
+                      where: {
+                        id: componentEventId,
+                      },
+                      data: {
+                        eventEnableFormula,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Component event changed!` };
+};
+
 export const setComponentEventDescription = async (
   profileId: string,
   workspaceId: string,

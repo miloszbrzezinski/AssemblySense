@@ -20,6 +20,7 @@ import { AssemblyGroup, AssemblyProcess, ComponentEvent } from "@prisma/client";
 import {
   AlertTriangle,
   ComponentIcon,
+  Delete,
   Folder,
   Goal,
   LucideAlignHorizontalSpaceBetween,
@@ -37,6 +38,8 @@ import {
   useState,
 } from "react";
 import { toast } from "sonner";
+import { EnableFormula } from "./enable-formula";
+import { setComponentEventEnable } from "@/actions/component-event";
 
 interface EnableFormulaPopoverProps {
   profileId: string;
@@ -52,73 +55,65 @@ export const EnableFormulaPopover = ({
   componentStatuses,
 }: EnableFormulaPopoverProps) => {
   const [searchInput, setSearchInput] = useState("");
-  const [selectedValue, setSelectedValue] = useState("General");
+  const [formula, setFormula] = useState("");
+  const [formulaItems, setFormulaItems] = useState<String[]>([]);
   const closeRef = useRef<ElementRef<"button">>(null);
   const router = useRouter();
 
   // Handler for search input changes
   const handleInput = (event: FormEvent<HTMLInputElement>) => {
-    const nameInput = event.currentTarget.value.toLowerCase();
-    setSearchInput(nameInput);
+    setFormula(event.currentTarget.value);
   };
 
   useEffect(() => {
     if (componentEvent.eventEnableFormula) {
-      setSelectedValue(`${componentEvent.eventEnableFormula}`);
+      setFormula(componentEvent.eventEnableFormula);
     }
   }, [componentEvent.eventEnableFormula]);
 
-  // const onClick = (process: AssemblyProcess) => {
-  //   startTransition(() => {
-  //     setComponentsAssemblyProcess(
-  //       profileId,
-  //       workspaceId,
-  //       projectComponent,
-  //       process,
-  //       projectComponent.projectId,
-  //     ).then((data) => {
-  //       // setError(data.error);
-  //       if (data.success) {
-  //         setSelectedValue(`${process.processId} ${process.name}`);
-  //         toast(data.success, {
-  //           description: `New process: ${process.processId} ${process.name}`,
-  //           action: {
-  //             label: "Undo",
-  //             onClick: () => console.log("Undo"),
-  //           },
-  //         });
-  //         closeRef.current?.click();
-  //         router.refresh();
-  //       }
-  //     });
-  //   });
-  // };
+  const onClick = (item: string) => {
+    setFormula(`${formula}+${item}`);
+    startTransition(() => {
+      setComponentEventEnable(
+        profileId,
+        workspaceId,
+        componentEvent.projectComponent.id,
+        componentEvent.id,
+        formula,
+        componentEvent.projectComponent.projectId,
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          router.refresh();
+        }
+      });
+    });
+  };
 
-  // const removeGroup = () => {
-  //   startTransition(() => {
-  //     setComponentsAssemblyProcess(
-  //       profileId,
-  //       workspaceId,
-  //       projectComponent,
-  //       null,
-  //       projectComponent.projectId,
-  //     ).then((data) => {
-  //       // setError(data.error);
-  //       if (data.success) {
-  //         setSelectedValue("General");
-  //         closeRef.current?.click();
-  //         toast(data.success, {
-  //           description: `New group: ${"General"}`,
-  //           action: {
-  //             label: "Undo",
-  //             onClick: () => console.log("Undo"),
-  //           },
-  //         });
-  //         router.refresh();
-  //       }
-  //     });
-  //   });
-  // };
+  const remove = () => {
+    let tmpFormula = formula;
+    let arrayFormula = tmpFormula.split("+");
+    arrayFormula.pop();
+    let stringFormula = arrayFormula.toString();
+    tmpFormula = stringFormula.replaceAll(",", "+");
+
+    setFormula(tmpFormula);
+    startTransition(() => {
+      setComponentEventEnable(
+        profileId,
+        workspaceId,
+        componentEvent.projectComponent.id,
+        componentEvent.id,
+        formula,
+        componentEvent.projectComponent.projectId,
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          router.refresh();
+        }
+      });
+    });
+  };
 
   return (
     <Popover>
@@ -137,49 +132,83 @@ export const EnableFormulaPopover = ({
           )}
         />
         <h3 className="text-sm font-light pl-2">
-          {componentEvent.eventEnableFormula.length > 2
-            ? selectedValue
-            : "Always enable"}
+          {componentEvent.eventEnableFormula.length > 2 ? (
+            <EnableFormula formula={formula} />
+          ) : (
+            "Always enable"
+          )}
         </h3>
       </PopoverTrigger>
-      <PopoverContent className="rounded-none p-0 w-96 bg-stone-200 space-y-[1px]">
+      <PopoverContent className="rounded-none p-0 min-w-96 w-full bg-stone-200 space-y-[1px]">
         <div className="bg-white flex items-center pl-2">
           <Shield strokeWidth={1} />
-          <input
-            onChange={handleInput}
-            className="w-full h-10 text-base font-light focus:outline-none focus:rounded-none pl-2"
-          />
+          <EnableFormula formula={formula} />
+          <Button
+            onClick={remove}
+            className="h-auto w-auto p-2 text-neutral-600 rounded-none"
+            variant="ghost"
+          >
+            <Delete strokeWidth={1} />
+          </Button>
           <PopoverClose ref={closeRef} asChild>
             <Button
-              className="h-auto w-auto p-2 text-neutral-600 rounded-none"
+              className="h-auto w-auto p-0 text-neutral-600 rounded-none"
               variant="ghost"
             >
-              <X strokeWidth={1} />
+              <X strokeWidth={1} className="hidden" />
             </Button>
           </PopoverClose>
         </div>
 
         <div className="bg-stone-200 space-y-[1px]">
           <div className="flex space-x-[1px] select-none">
-            <button className="w-full p-2 bg-white hover:bg-stone-100">
+            <button
+              onClick={() => {
+                onClick("AND");
+              }}
+              className="w-full p-2 bg-white hover:bg-stone-100"
+            >
               AND
             </button>
-            <button className="w-full p-2 bg-white hover:bg-stone-100">
+            <button
+              onClick={() => {
+                onClick("OR");
+              }}
+              className="w-full p-2 bg-white hover:bg-stone-100"
+            >
               OR
             </button>
-            <button className="w-full p-2 bg-white hover:bg-stone-100">
+            <button
+              onClick={() => {
+                onClick("NOT");
+              }}
+              className="w-full p-2 bg-white hover:bg-stone-100"
+            >
               NOT
             </button>
-            <button className="w-full p-2  bg-white hover:bg-stone-100">
+            <button
+              onClick={() => {
+                onClick("(");
+              }}
+              className="w-full p-2  bg-white hover:bg-stone-100"
+            >
               (
             </button>
-            <button className="w-full p-2 bg-white hover:bg-stone-100">
+            <button
+              onClick={() => {
+                onClick(")");
+              }}
+              className="w-full p-2 bg-white hover:bg-stone-100"
+            >
               )
             </button>
           </div>
           {componentStatuses.map((status) => (
             <div
               key={status.id}
+              onClick={() => {
+                onClick(`$${status.name}`);
+              }}
               className="w-full p-2 bg-white font-light hover:bg-stone-100 select-none"
             >
               {status.name}

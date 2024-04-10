@@ -47,7 +47,7 @@ export const EnableTableItem = ({
       <div className="group-hover:bg-slate-100 flex min-w-48 h-10 bg-white items-center">
         <h3 className="text-sm font-light pl-2">{componentEvent.name}</h3>
       </div>
-      <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
+      <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center overflow-x-scroll">
         <EnableFormulaPopover
           profileId={profileId}
           workspaceId={workspaceId}
