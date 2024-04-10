@@ -258,11 +258,13 @@ model AddressIO {
 }
 
 model ComponentEvent {
-  id                 String    @id @default(uuid())
-  name               String
-  eventEnableFormula String    @db.Text
-  description        String?   @db.Text
-  eventType          EventType @default(STATUS)
+  id          String    @id @default(uuid())
+  name        String
+  description String?   @db.Text
+  eventType   EventType @default(STATUS)
+
+  eventEnableFormula String  @db.Text
+  eventEnableComment String? @db.Text
 
   addressIO AddressIO?
 

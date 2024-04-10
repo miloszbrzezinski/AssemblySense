@@ -28,14 +28,17 @@ export const IOTable = ({
         <div className="flex min-w-28 h-14 bg-white items-center p-2">
           <h3 className="text-lg font-light">Process</h3>
         </div>
-        <div className="flex w-full h-14 bg-white items-center p-2">
+        <div className="flex min-w-52 h-14 bg-white items-center p-2">
           <h3 className="text-lg font-light">Component</h3>
+        </div>
+        <div className="flex min-w-72 h-14 bg-white items-center p-2">
+          <h3 className="text-lg font-light">Event</h3>
         </div>
         <div className="flex min-w-28 h-14 bg-white items-center p-2">
           <h3 className="text-lg font-light">Adress</h3>
         </div>
-        <div className="flex w-full h-14 bg-white items-center p-2">
-          <h3 className="text-lg font-light">Event</h3>
+        <div className="flex min-w-40 h-14 bg-white items-center p-2">
+          <h3 className="text-lg font-light">Symbol</h3>
         </div>
         <div className="flex w-full h-14 bg-white items-center p-2">
           <h3 className="text-lg font-light">Comment</h3>

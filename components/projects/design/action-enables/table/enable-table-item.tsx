@@ -13,6 +13,7 @@ import {
 import { GripVertical, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { EnableFormulaPopover } from "./enable-formula-popover";
+import { ComponentEnableDescription } from "./enable-description";
 
 interface EnableTableItemProps {
   profileId: string;
@@ -56,11 +57,12 @@ export const EnableTableItem = ({
         />
       </div>
       <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
-        <div className="text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
-          <h3 className="text-sm font-light pl-2">
-            {componentEvent.description}
-          </h3>
-        </div>
+        <ComponentEnableDescription
+          profileId={profileId}
+          workspaceId={workspaceId}
+          componentEvent={componentEvent}
+          componentStatuses={componentEvents}
+        />
       </div>
     </div>
   );

@@ -166,7 +166,62 @@ export const setComponentEventEnable = async (
     },
   });
 
-  return { success: `Component event changed!` };
+  return { success: `Component action enabled changed!` };
+};
+
+export const setComponentEventEnableComment = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponentId: string,
+  componentEventId: string,
+  eventEnableComment: string,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponentId,
+                },
+                data: {
+                  componentEvents: {
+                    update: {
+                      where: {
+                        id: componentEventId,
+                      },
+                      data: {
+                        eventEnableComment,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Comment changed!` };
 };
 
 export const setComponentEventDescription = async (
