@@ -3,6 +3,8 @@ import { ComponentEventWithData, SequenceStepWithEvents } from "@/types";
 import { Plus, Trash, X } from "lucide-react";
 import { StepActionTitle } from "./step-action-title";
 import { ComponentEvent, EventType } from "@prisma/client";
+import { StepActionItem } from "./step-action-item";
+import { ActionsPopover } from "./actions-popover";
 
 interface StepActionsProps {
   index: number;
@@ -25,13 +27,13 @@ export const StepActions = ({
   step,
   componentEvents,
 }: StepActionsProps) => {
-  const statuses = componentEvents.filter(
+  const actions = componentEvents.filter(
     (event) => event.eventType === EventType.ACTION,
   );
 
   return (
     <div className="flex w-2/6 min-h-48  transition-all">
-      <div className="flex w-full flex-col border border-stone-400 bg-white shadow-md">
+      <div className="flex w-full flex-col border border-stone-400 bg-stone-50 shadow-md">
         <StepActionTitle
           index={index}
           profileId={profileId}
@@ -43,16 +45,27 @@ export const StepActions = ({
         />
         <Separator className="bg-stone-400" />
         <div className="flex flex-col space-y-[1px] w-full bg-stone-300">
-          <div className="flex w-full h-8 bg-white pl-2 items-center justify-between font-light group">
-            <p>Z2000 to Home</p>
-            <button className="hover:bg-red-500/30 text-red-900 h-8 w-8 items-center justify-center group-hover:flex hidden">
-              <X strokeWidth={1} />
-            </button>
-          </div>
-          <button className="flex bg-white hover:bg-stone-100 w-full items-center justify-start pl-2 h-8 font-light">
-            <Plus strokeWidth={1} />
-            <span>New action</span>
-          </button>
+          {step.componentsEvents.map((event) => (
+            <StepActionItem
+              key={event.id}
+              profileId={profileId}
+              workspaceId={workspaceId}
+              projectId={projectId}
+              groupId={groupId}
+              processId={processId}
+              step={step}
+              componentEvent={event}
+            />
+          ))}
+          <ActionsPopover
+            profileId={profileId}
+            workspaceId={workspaceId}
+            projectId={projectId}
+            groupId={groupId}
+            processId={processId}
+            step={step}
+            componentEvents={actions}
+          />
         </div>
       </div>
     </div>

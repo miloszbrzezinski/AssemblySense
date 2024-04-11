@@ -99,7 +99,7 @@ export const StepActionTitle = ({
   };
 
   return (
-    <div className="group flex w-full h-8 items-center justify-between pl-2">
+    <div className="group flex w-full h-8 items-center justify-between pl-2 bg-white">
       <div className="flex w-full space-x-1">
         <p className="whitespace-nowrap">Step {index}:</p>
         <input
