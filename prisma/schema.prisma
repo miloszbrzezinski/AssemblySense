@@ -284,8 +284,6 @@ model Sequence {
   name        String
   description String? @db.Text
 
-  stepNextReqFormula String @db.Text
-
   sequenceStep SequenceStep[]
 
   assemblyProcessId String

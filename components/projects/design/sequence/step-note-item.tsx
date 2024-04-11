@@ -1,6 +1,21 @@
+import { SequenceStepWithEvents } from "@/types";
 import { StickyNote } from "lucide-react";
 
-export const StepNote = () => {
+interface StepNoteProps {
+  profileId: string;
+  workspaceId: string;
+  projectId: string;
+  processId: string;
+  step: SequenceStepWithEvents;
+}
+
+export const StepNote = ({
+  profileId,
+  workspaceId,
+  projectId,
+  processId,
+  step,
+}: StepNoteProps) => {
   return (
     <div className="flex flex-col w-full">
       <div className="flex border h-min p-1 items-center space-x-1 justify-start">

@@ -1,11 +1,13 @@
 import { EnableFormulaPopover } from "@/components/projects/design/action-enables/table/enable-formula-popover";
+import { TabsListItem } from "@/components/projects/design/group/process/tab-list";
 import { ProcessSequence } from "@/components/projects/design/sequence/sequence";
 import { StepItem } from "@/components/projects/design/sequence/step-item";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { Circle } from "lucide-react";
+import { Circle, Plus } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default async function ProcessPage({
@@ -31,24 +33,69 @@ export default async function ProcessPage({
         },
       },
     },
+    include: {
+      projects: {
+        where: {
+          id: params.projectId,
+        },
+        include: {
+          assemblyGroups: {
+            where: {
+              id: params.groupId,
+            },
+            include: {
+              assemblyProcesses: {
+                where: {
+                  id: params.processId,
+                },
+                include: {
+                  projectComponents: {
+                    include: {
+                      componentEvents: true,
+                    },
+                  },
+                  sequences: {
+                    include: {
+                      sequenceStep: {
+                        include: {
+                          componentsEvents: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!workspace) {
     return <p className="p-5">Workspace not found!</p>;
   }
 
-  const process = await db.assemblyProcess.findUnique({
-    where: {
-      id: params.processId,
-    },
-    include: {
-      assemblyGroup: true,
-    },
-  });
+  const project = workspace.projects[0];
+
+  if (!project) {
+    return <p className="p-5">Project not found!</p>;
+  }
+
+  const group = project.assemblyGroups[0];
+
+  if (!group) {
+    return <p className="p-5">Group not found!</p>;
+  }
+
+  const process = group.assemblyProcesses[0];
 
   if (!process) {
     return <p className="p-5">Process not found!</p>;
   }
+
+  const sequences = process.sequences;
+  const componentEvents = process.projectComponents;
 
   return (
     <div className="h-full w-full flex flex-col p-4 overflow-y-scroll">
@@ -57,19 +104,30 @@ export default async function ProcessPage({
         <p className="text-4xl font-extralight">{process.name}</p>
       </div>
       <Tabs defaultValue="overview">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="use_cases">Use cases</TabsTrigger>
-          <TabsTrigger value="problems">Problems</TabsTrigger>
-        </TabsList>
+        <TabsListItem
+          profileId={profile.id}
+          workspaceId={params.workspaceId}
+          projectId={params.projectId}
+          groupId={params.groupId}
+          processId={params.processId}
+          sequences={sequences}
+        />
         <TabsContent
           value="overview"
-          className="w-full justify-center items-center flex p-5 overflow-y-scroll"
-        >
-          <ProcessSequence />
-        </TabsContent>
-        <TabsContent value="use_cases"></TabsContent>
-        <TabsContent value="problems"></TabsContent>
+          className="w-full justify-center items-center flex overflow-y-scroll"
+        ></TabsContent>
+        {sequences.map((seq) => (
+          <TabsContent value={seq.id} key={seq.id}>
+            <ProcessSequence
+              profileId={profile.id}
+              workspaceId={params.workspaceId}
+              projectId={params.projectId}
+              processId={params.processId}
+              sequence={seq}
+              componentEvents={componentEvents}
+            />
+          </TabsContent>
+        ))}
       </Tabs>
     </div>
   );

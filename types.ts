@@ -14,6 +14,8 @@ import {
   ProjectComponent,
   ProjectMember,
   ProjectNetwork,
+  Sequence,
+  SequenceStep,
 } from "@prisma/client";
 
 export type ProjectWithCustomer = Project & {
@@ -99,4 +101,12 @@ export type ActionEnableTableData = ProjectComponent & {
 
 export type ComponentsEventsTableData = ProjectComponent & {
   componentEvents: ComponentEventWithData[];
+};
+
+export type SequenceStepWithEvents = SequenceStep & {
+  componentsEvents: ComponentEvent[];
+};
+
+export type SequenceWithSteps = Sequence & {
+  sequenceStep: SequenceStepWithEvents[];
 };

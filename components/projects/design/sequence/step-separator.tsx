@@ -7,9 +7,9 @@ export const StepSeparator = () => {
       <div className="flex w-full h-full justify-center">
         <Separator orientation="vertical" className="bg-stone-400" />
       </div>
-      <div className="flex w-full h-[1px] pl-20 items-center">
-        <OctagonPause strokeWidth={1.5} className="text-sky-500" />
-        <div className="flex w-full h-[1.5px] bg-sky-500" />
+      <div className="flex w-full h-8 pl-8 items-center justify-end">
+        <OctagonPause strokeWidth={1.5} className="text-sky-500 w-8 h-8" />
+        <div className="flex w-1/2 h-[1.5px] bg-sky-500" />
       </div>
       <div className="flex w-full h-full justify-center">
         <Separator orientation="vertical" className="bg-stone-400" />
