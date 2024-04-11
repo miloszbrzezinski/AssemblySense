@@ -2,7 +2,7 @@ import { setSequenceStepNote } from "@/actions/process-sequence";
 import { SequenceStepWithEvents } from "@/types";
 import { StickyNote } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { startTransition, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface StepNoteProps {
@@ -27,7 +27,13 @@ export const StepNote = ({
   const router = useRouter();
   const [note, setNote] = useState("");
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    if (step.description) {
+      setNote(step.description);
+    }
+  }, [step.description]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter") {
       saveNote();
     }
@@ -75,6 +81,7 @@ export const StepNote = ({
         onChange={(e) => {
           setNote(e.target.value);
         }}
+        onKeyDown={handleKeyDown}
         onBlur={saveNote}
         className="flex w-full resize-none min-h-80 max-h-80 border p-1 focus:outline-none focus:rounded-none focus:bg-slate-200 focus:text-slate-500 text-stone-400/80"
       />

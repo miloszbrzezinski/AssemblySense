@@ -48,6 +48,7 @@ export const StepItem = ({
             profileId={profileId}
             workspaceId={workspaceId}
             projectId={projectId}
+            groupId={groupId}
             processId={processId}
             step={step}
             componentEvents={componentEvents}
