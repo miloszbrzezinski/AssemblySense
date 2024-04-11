@@ -25,7 +25,9 @@ export const StepActions = ({
     <div className="flex w-2/6 min-h-48  transition-all">
       <div className="flex w-full flex-col border border-stone-400 bg-white shadow-md">
         <div className="group flex w-full h-8 items-center justify-between pl-2">
-          <p>Step {index}</p>
+          <p>
+            Step {index}: <span className="font-light">{step.name}</span>
+          </p>
           <button className="hover:bg-red-500/30 text-red-900 h-8 w-8 items-center justify-center group-hover:flex hidden">
             <Trash strokeWidth={1} />
           </button>

@@ -5,12 +5,14 @@ import { StepActions } from "./step-actions-item";
 import { StepSeparator } from "./step-separator";
 import { NextStepConditionItem } from "./next-step-condition-item";
 import { ComponentEventWithData, SequenceStepWithEvents } from "@/types";
+import { group } from "console";
 
 interface StepItemProps {
   index: number;
   profileId: string;
   workspaceId: string;
   projectId: string;
+  groupId: string;
   processId: string;
   step: SequenceStepWithEvents;
   componentEvents: ComponentEventWithData[];
@@ -21,6 +23,7 @@ export const StepItem = ({
   profileId,
   workspaceId,
   projectId,
+  groupId,
   processId,
   step,
   componentEvents,
@@ -33,6 +36,7 @@ export const StepItem = ({
           profileId={profileId}
           workspaceId={workspaceId}
           projectId={projectId}
+          groupId={groupId}
           processId={processId}
           step={step}
         />
