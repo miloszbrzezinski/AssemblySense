@@ -1,6 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { ComponentEventWithData, SequenceStepWithEvents } from "@/types";
-import { Plus, Trash, X } from "lucide-react";
+import { SequenceStepWithEvents } from "@/types";
 import { StepActionTitle } from "./step-action-title";
 import { ComponentEvent, EventType } from "@prisma/client";
 import { StepActionItem } from "./step-action-item";

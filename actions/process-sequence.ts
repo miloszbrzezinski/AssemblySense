@@ -774,5 +774,5 @@ export const removeSequenceStepAction = async (
     },
   });
 
-  return { success: `Step action added!` };
+  return { success: `Step action removed!` };
 };
