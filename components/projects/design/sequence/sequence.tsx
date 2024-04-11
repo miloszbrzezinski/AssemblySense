@@ -9,6 +9,7 @@ import { startTransition } from "react";
 import { addSequenceStep } from "@/actions/process-sequence";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { SequenceTitle } from "./sequence-title";
 
 interface ProcessSequenceProps {
   profileId: string;
@@ -57,13 +58,14 @@ export const ProcessSequence = ({
 
   return (
     <div className="w-full flex flex-col bg-white border shadow-lg">
-      <div className="flex w-full border-b ">
-        <p className="p-2 text-lg">{sequence.name}</p>
-      </div>
-      <div className="flex flex-col w-full border-b ">
-        <p className="p-2 text-lg font-light">Description</p>
-        <p className="px-2 text-base font-light">{sequence.description}</p>
-      </div>
+      <SequenceTitle
+        profileId={profileId}
+        workspaceId={workspaceId}
+        projectId={projectId}
+        groupId={groupId}
+        processId={processId}
+        sequence={sequence}
+      />
       <div className="flex flex-col overflow-y-scroll  p-5  w-full">
         {sequence.sequenceStep.map((step, i) => (
           <StepItem
