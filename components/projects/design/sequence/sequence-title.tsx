@@ -5,6 +5,7 @@ import { startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { SequenceDescription } from "./seq-description";
 import { Trash } from "lucide-react";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface SequenceTitleProps {
   profileId: string;
@@ -25,6 +26,7 @@ export const SequenceTitle = ({
 }: SequenceTitleProps) => {
   const router = useRouter();
   const [name, setName] = useState("");
+  const { onOpen } = useModal();
 
   useEffect(() => {
     if (sequence.name) {
@@ -68,7 +70,16 @@ export const SequenceTitle = ({
     });
   };
 
-  const onDelete = () => {};
+  const onDelete = () => {
+    onOpen("removeSequence", {
+      profileId,
+      workspaceId,
+      projectId,
+      groupId,
+      processId,
+      sequenceId: sequence.id,
+    });
+  };
 
   return (
     <>

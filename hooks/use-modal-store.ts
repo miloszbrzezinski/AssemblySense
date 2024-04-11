@@ -14,20 +14,24 @@ export type ModalType =
   | "removeWorkspaceMember"
   | "addAssemblyGroup"
   | "addProcess"
+  | "removeSequence"
   | "addComponent"
   | "addDepartment"
   | "addProjectMember";
 
 interface ModalData {
-  projectId?: string;
   projectMembersWithProfile?: ProjectMemberWithProfile[];
   workspaceMembersWithData?: WokrspaceMemberWithData[];
   profileId?: string;
+  workspaceId?: string;
+  projectId?: string;
+  groupId?: string;
+  processId?: string;
+  sequenceId?: string;
   workspace?: Workspace;
   workspaceMember?: Member;
   componentCategory?: ComponentCategory;
   assemblyGroup?: AssemblyGroup;
-  workspaceId?: string;
   apiUrl?: string;
   query?: Record<string, any>;
 }
