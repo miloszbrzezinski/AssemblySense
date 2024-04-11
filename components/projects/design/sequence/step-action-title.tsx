@@ -99,7 +99,7 @@ export const StepActionTitle = ({
   };
 
   return (
-    <div className="group flex w-full h-8 items-center justify-between pl-2 bg-white">
+    <div className="group flex w-full h-8 items-center justify-between pl-2 bg-white dark:bg-neutral-950">
       <div className="flex w-full space-x-1">
         <p className="whitespace-nowrap">Step {index}:</p>
         <input
@@ -109,7 +109,7 @@ export const StepActionTitle = ({
           }}
           onKeyDown={handleKeyDown}
           onBlur={saveName}
-          className="group-hover:bg-slate-100 w-full text-sm font-light focus:outline-none focus:bg-slate-200 focus:rounded-none pl-2"
+          className="group-hover:bg-slate-100 dark:group-hover:bg-neutral-900 dark:bg-neutral-950 w-full text-sm font-light focus:outline-none focus:bg-slate-200 dark:focus:bg-slate-900 focus:rounded-none pl-2"
         />
       </div>
       <button

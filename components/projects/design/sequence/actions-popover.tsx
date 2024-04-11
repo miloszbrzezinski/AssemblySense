@@ -86,17 +86,17 @@ export const ActionsPopover = ({
 
   return (
     <Popover>
-      <PopoverTrigger className="text-base h-10 w-full flex items-center justify-start bg-stone-50 hover:bg-slate-200 mb-[1px]">
+      <PopoverTrigger className="text-base h-10 w-full flex items-center justify-start bg-stone-50 dark:bg-neutral-900 hover:bg-slate-200 mb-[1px]">
         <h3 className="text-sm font-light pl-2 flex items-center space-x-2">
           <Plus strokeWidth={1} /> <span>Add action</span>
         </h3>
       </PopoverTrigger>
-      <PopoverContent className="rounded-none p-0 bg-stone-200 space-y-[1px]">
-        <div className="bg-white flex items-center pl-2">
+      <PopoverContent className="rounded-none p-0 bg-stone-200 dark:bg-neutral-500 space-y-[1px]">
+        <div className="bg-white dark:bg-neutral-950 flex items-center pl-2">
           <Search strokeWidth={1} />
           <input
             onChange={handleInput}
-            className="w-full h-10 text-base font-light focus:outline-none focus:rounded-none pl-2"
+            className="w-full h-10 dark:bg-neutral-950 text-base font-light focus:outline-none focus:rounded-none pl-2"
           />
           <PopoverClose ref={closeRef} asChild>
             <Button
@@ -115,7 +115,7 @@ export const ActionsPopover = ({
                 onClick(event.id);
               }}
               key={event.id}
-              className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
+              className="w-full flex items-center space-x-2 p-2 bg-white dark:bg-neutral-950 dark:hover:bg-neutral-900 hover:bg-stone-50 font-light select-none"
             >
               <h3>{event.name}</h3>
             </div>

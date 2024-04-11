@@ -57,11 +57,11 @@ export const StepActionItem = ({
   };
 
   return (
-    <div className="flex w-full h-8 bg-stone-50 pl-2 items-center justify-between font-light group">
+    <div className="flex w-full h-8 bg-stone-50 dark:bg-neutral-900 pl-2 items-center justify-between font-light group">
       <p>{componentEvent.name}</p>
       <button
         onClick={onClick}
-        className="hover:bg-red-500/30 text-red-900 h-8 w-8 items-center justify-center group-hover:flex hidden"
+        className="hover:bg-red-500/30 dark:text-white text-red-900 h-8 w-8 items-center justify-center group-hover:flex hidden"
       >
         <X strokeWidth={1} />
       </button>

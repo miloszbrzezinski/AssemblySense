@@ -58,7 +58,7 @@ export const ProcessSequence = ({
   };
 
   return (
-    <div className="w-full flex flex-col bg-white border shadow-lg">
+    <div className="w-full flex flex-col bg-white dark:bg-neutral-900 border shadow-lg">
       <SequenceTitle
         profileId={profileId}
         workspaceId={workspaceId}

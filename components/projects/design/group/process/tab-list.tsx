@@ -50,20 +50,25 @@ export const TabsListItem = ({
   };
 
   return (
-    <TabsList>
-      <TabsTrigger value="overview">Overview</TabsTrigger>
-      {sequences.map((seq) => (
-        <TabsTrigger key={seq.id} value={seq.id}>
-          {seq.name}
-        </TabsTrigger>
-      ))}
+    <div className="flex items-center justify-between bg-stone-200 dark:bg-neutral-900 shadow-md rounded-md space-x-1">
+      <div className="flex overflow-x-scroll no-scrollbar">
+        <TabsList className="bg-stone-200 dark:bg-neutral-900">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          {sequences.map((seq) => (
+            <TabsTrigger key={seq.id} value={seq.id}>
+              {seq.name}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </div>
+
       <button
         onClick={onAdd}
-        className="mx-2 h-min inline-flex items-center justify-center whitespace-nowrap text-white bg-stone-500  hover:shadow-md hover:shadow-stone-300 border border-stone-300 rounded-sm px-3 py-1 text-sm font-medium ring-offset-background transition-all"
+        className="flex space-x-1 px-2 bg-white border border-stone-300 shadow-md text-stone-900 h-full py-2 rounded-r-md whitespace-nowrap"
       >
         <Plus strokeWidth={1} />
-        Add sequence
+        <p>Add sequence</p>
       </button>
-    </TabsList>
+    </div>
   );
 };

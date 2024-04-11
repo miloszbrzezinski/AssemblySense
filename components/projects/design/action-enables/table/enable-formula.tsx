@@ -8,22 +8,32 @@ export const EnableFormula = ({ formula }: EnableFormulaProps) => {
       {formula.split("+").map((item, i) => (
         <div key={i}>
           {item === "AND" && (
-            <span className="bg-sky-900/30 rounded-sm flex px-2">AND</span>
+            <span className="bg-sky-900/30 dark:bg-sky-500/50 rounded-sm flex px-2">
+              AND
+            </span>
           )}
           {item === "OR" && (
-            <span className="bg-sky-900/30 rounded-sm flex px-2">OR</span>
+            <span className="bg-sky-900/30 dark:bg-sky-500/50 rounded-sm flex px-2">
+              OR
+            </span>
           )}
           {item === "NOT" && (
-            <span className="bg-red-900/30 rounded-sm flex px-2">NOT</span>
+            <span className="bg-red-900/30 dark:bg-red-500/50 rounded-sm flex px-2">
+              NOT
+            </span>
           )}
           {item === "(" && (
-            <span className="bg-stone-900/30 rounded-sm flex px-2">(</span>
+            <span className="bg-stone-900/30 dark:bg-neutral-500/50 rounded-sm flex px-2">
+              (
+            </span>
           )}
           {item === ")" && (
-            <span className="bg-stone-900/30 rounded-sm flex px-2">)</span>
+            <span className="bg-stone-900/30 dark:bg-neutral-500/50 rounded-sm flex px-2">
+              )
+            </span>
           )}
           {item[0] === "$" && (
-            <span className="bg-amber-900/30 rounded-sm flex px-2 whitespace-nowrap">
+            <span className="bg-amber-900/30 dark:bg-amber-500/50 rounded-sm flex px-2 whitespace-nowrap">
               {item}
             </span>
           )}

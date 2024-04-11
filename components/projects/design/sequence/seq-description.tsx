@@ -74,7 +74,7 @@ export const SequenceDescription = ({
       }}
       onKeyDown={handleKeyDown}
       onBlur={saveDescription}
-      className="p-2 pl-1 text-lg font-extralight flex w-full resize-none focus:outline-none focus:rounded-none focus:bg-slate-200 focus:text-slate-500 text-stone-400/80"
+      className="p-2 pl-1 text-lg font-extralight flex w-full resize-none focus:outline-none focus:rounded-none dark:bg-neutral-900 focus:bg-slate-200 focus:text-slate-500 text-stone-400/80"
     />
   );
 };

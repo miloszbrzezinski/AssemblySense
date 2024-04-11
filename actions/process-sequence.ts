@@ -123,7 +123,7 @@ export const removeProcessSequence = async (
     },
   });
 
-  return { success: `New sequence added!` };
+  return { success: `Sequence removed!` };
 };
 
 export const setProcessSequenceName = async (

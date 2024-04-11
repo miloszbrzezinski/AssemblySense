@@ -119,7 +119,7 @@ export const EnableFormulaPopover = ({
     <Popover>
       <PopoverTrigger
         className={cn(
-          "text-base h-10 w-full flex items-center justify-start hover:bg-slate-200",
+          "text-base h-10 w-full flex items-center justify-start hover:bg-slate-200 dark:hover:bg-slate-900",
           formula.length < 1 && "bg-amber-500/10 hover:bg-amber-200/50",
         )}
       >
@@ -135,13 +135,13 @@ export const EnableFormulaPopover = ({
           )}
         </h3>
       </PopoverTrigger>
-      <PopoverContent className="rounded-none p-0 min-w-[50rem] max-w-[50rem] max-h-[50rem] w-full bg-stone-200 space-y-[1px]">
-        <div className="bg-white flex items-center pl-0">
+      <PopoverContent className="rounded-none p-0 min-w-[50rem] max-w-[50rem] max-h-[50rem] w-full bg-stone-200 dark:bg-neutral-500 space-y-[1px]">
+        <div className="bg-white dark:bg-neutral-950 flex items-center pl-0">
           <EnableFormula formula={formula} />
           <div className="flex h-full">
             <Button
               onClick={remove}
-              className="h-auto w-auto p-2 text-neutral-600 rounded-none hover:bg-red-100"
+              className="h-auto w-auto p-2 text-neutral-600 dark:text-white dark:bg-neutral-950 rounded-none hover:bg-red-100 dark:hover:bg-neutral-900"
               variant="ghost"
             >
               <Delete strokeWidth={1} />
@@ -158,13 +158,13 @@ export const EnableFormulaPopover = ({
           </div>
         </div>
 
-        <div className="bg-stone-200 space-y-[1px]">
+        <div className="bg-stone-200 dark:bg-neutral-500 space-y-[1px]">
           <div className="flex space-x-[1px] select-none">
             <button
               onClick={() => {
                 onClick("AND");
               }}
-              className="w-full p-2 bg-white hover:bg-stone-100"
+              className="w-full p-2 bg-white dark:bg-neutral-950 hover:bg-stone-100 dark:hover:bg-neutral-900"
             >
               AND
             </button>
@@ -172,7 +172,7 @@ export const EnableFormulaPopover = ({
               onClick={() => {
                 onClick("OR");
               }}
-              className="w-full p-2 bg-white hover:bg-stone-100"
+              className="w-full p-2 bg-white dark:bg-neutral-950 hover:bg-stone-100 dark:hover:bg-neutral-900"
             >
               OR
             </button>
@@ -180,7 +180,7 @@ export const EnableFormulaPopover = ({
               onClick={() => {
                 onClick("NOT");
               }}
-              className="w-full p-2 bg-white hover:bg-stone-100"
+              className="w-full p-2 bg-white dark:bg-neutral-950 hover:bg-stone-100 dark:hover:bg-neutral-900"
             >
               NOT
             </button>
@@ -188,7 +188,7 @@ export const EnableFormulaPopover = ({
               onClick={() => {
                 onClick("(");
               }}
-              className="w-full p-2  bg-white hover:bg-stone-100"
+              className="w-full p-2  bg-white dark:bg-neutral-950 hover:bg-stone-100 dark:hover:bg-neutral-900"
             >
               (
             </button>
@@ -196,7 +196,7 @@ export const EnableFormulaPopover = ({
               onClick={() => {
                 onClick(")");
               }}
-              className="w-full p-2 bg-white hover:bg-stone-100"
+              className="w-full p-2 bg-white dark:bg-neutral-950 hover:bg-stone-100 dark:hover:bg-neutral-900"
             >
               )
             </button>
@@ -207,7 +207,7 @@ export const EnableFormulaPopover = ({
               onClick={() => {
                 onClick(`$${status.name}`);
               }}
-              className="w-full p-2 bg-white font-light hover:bg-stone-100 select-none"
+              className="w-full p-2 bg-white dark:bg-neutral-950 font-light hover:bg-stone-100 dark:hover:bg-neutral-900 select-none"
             >
               {status.name}
             </div>

@@ -83,7 +83,7 @@ export const StepNote = ({
         }}
         onKeyDown={handleKeyDown}
         onBlur={saveNote}
-        className="flex w-full resize-none min-h-80 max-h-80 border p-1 focus:outline-none focus:rounded-none focus:bg-slate-200 focus:text-slate-500 text-stone-400/80"
+        className="flex w-full resize-none min-h-80 max-h-80 border p-1 focus:outline-none focus:rounded-none dark:bg-neutral-900 dark:focus:bg-slate-900 focus:bg-slate-200 focus:text-slate-500 text-stone-400/80"
       />
     </div>
   );

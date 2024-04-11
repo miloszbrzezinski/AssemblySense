@@ -91,11 +91,11 @@ export const SequenceTitle = ({
           }}
           onKeyDown={handleKeyDown}
           onBlur={saveName}
-          className="group-hover:bg-slate-100 w-full text-lg font-medium focus:outline-none focus:bg-slate-200 focus:rounded-none p-2"
+          className="group-hover:bg-slate-100 dark:group-hover:bg-slate-900/50 dark:bg-neutral-900 w-full text-lg font-medium focus:outline-none dark:focus:bg-slate-800 focus:bg-slate-200 focus:rounded-none p-2"
         />
         <button
           onClick={onDelete}
-          className="hover:bg-red-500/30 text-red-900 h-10 w-10 items-center justify-center group-hover:flex hidden"
+          className="hover:bg-red-500/30 dark:hover:bg-red-500/30 dark:text-red-100 text-red-900 h-10 w-10 items-center justify-center group-hover:flex hidden"
         >
           <Trash strokeWidth={1} />
         </button>
