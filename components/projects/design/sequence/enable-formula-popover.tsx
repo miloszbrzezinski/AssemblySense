@@ -9,10 +9,20 @@ import {
 import { cn } from "@/lib/utils";
 import { SequenceStepWithEvents } from "@/types";
 import { ComponentEvent } from "@prisma/client";
-import { AlertTriangle, Delete, Shield, X } from "lucide-react";
+import { AlertTriangle, Delete, OctagonPause, Shield, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { ElementRef, FormEvent, useEffect, useRef, useState } from "react";
+import {
+  ElementRef,
+  FormEvent,
+  startTransition,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { EnableFormula } from "../action-enables/table/enable-formula";
+import { setComponentEventEnable } from "@/actions/component-event";
+import { setSequenceStepCondition } from "@/actions/process-sequence";
+import { toast } from "sonner";
 
 interface EnableFormulaPopoverProps {
   profileId: string;
@@ -51,21 +61,33 @@ export const EnableFormulaPopover = ({
 
   const onClick = (item: string) => {
     setFormula(`${formula}+${item}`);
-    // startTransition(() => {
-    //   setComponentEventEnable(
-    //     profileId,
-    //     workspaceId,
-    //     componentEvent.projectComponent.id,
-    //     componentEvent.id,
-    //     formula,
-    //     componentEvent.projectComponent.projectId,
-    //   ).then((data) => {
-    //     // setError(data.error);
-    //     if (data.success) {
-    //       router.refresh();
-    //     }
-    //   });
-    // });
+  };
+
+  const onSave = () => {
+    startTransition(() => {
+      setSequenceStepCondition(
+        profileId,
+        workspaceId,
+        projectId,
+        groupId,
+        processId,
+        step.sequencepId,
+        step.id,
+        formula,
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          toast(data.success, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          closeRef.current?.click();
+          router.refresh();
+        }
+      });
+    });
   };
 
   const remove = () => {
@@ -98,41 +120,42 @@ export const EnableFormulaPopover = ({
       <PopoverTrigger
         className={cn(
           "text-base h-10 w-full flex items-center justify-start hover:bg-slate-200",
-          step.stepNextReqFormula.length < 2 &&
-            "bg-amber-500/10 hover:bg-amber-200/50",
+          formula.length < 1 && "bg-amber-500/10 hover:bg-amber-200/50",
         )}
       >
         <AlertTriangle
           strokeWidth={1}
-          className={cn("ml-4", step.stepNextReqFormula.length > 2 && "hidden")}
+          className={cn("ml-4", formula.length > 2 && "hidden")}
         />
         <h3 className="text-sm font-light pl-2">
-          {step.stepNextReqFormula.length > 2 ? (
+          {formula.length > 1 ? (
             <EnableFormula formula={formula} />
           ) : (
-            "Always enable"
+            "No condition"
           )}
         </h3>
       </PopoverTrigger>
-      <PopoverContent className="rounded-none p-0 min-w-96 w-full bg-stone-200 space-y-[1px]">
-        <div className="bg-white flex items-center pl-2">
-          <Shield strokeWidth={1} />
+      <PopoverContent className="rounded-none p-0 min-w-[50rem] max-w-[50rem] max-h-[50rem] w-full bg-stone-200 space-y-[1px]">
+        <div className="bg-white flex items-center pl-0">
           <EnableFormula formula={formula} />
-          <Button
-            onClick={remove}
-            className="h-auto w-auto p-2 text-neutral-600 rounded-none"
-            variant="ghost"
-          >
-            <Delete strokeWidth={1} />
-          </Button>
-          <PopoverClose ref={closeRef} asChild>
+          <div className="flex h-full">
             <Button
-              className="h-auto w-auto p-0 text-neutral-600 rounded-none"
+              onClick={remove}
+              className="h-auto w-auto p-2 text-neutral-600 rounded-none hover:bg-red-100"
               variant="ghost"
             >
-              <X strokeWidth={1} className="hidden" />
+              <Delete strokeWidth={1} />
             </Button>
-          </PopoverClose>
+            <button
+              onClick={onSave}
+              className="h-full p-2 w-autorounded-none hover:bg-slate-500 bg-sky-900 text-white"
+            >
+              Save
+            </button>
+            <PopoverClose ref={closeRef} asChild>
+              <button className="hidden">c</button>
+            </PopoverClose>
+          </div>
         </div>
 
         <div className="bg-stone-200 space-y-[1px]">
