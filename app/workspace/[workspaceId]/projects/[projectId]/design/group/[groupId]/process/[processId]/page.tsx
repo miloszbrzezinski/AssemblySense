@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
+import { ComponentEvent } from "@prisma/client";
 import { Circle, Plus } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -95,7 +96,11 @@ export default async function ProcessPage({
   }
 
   const sequences = process.sequences;
-  const componentEvents = process.projectComponents;
+  let componentEvents: ComponentEvent[] = [];
+
+  process.projectComponents.forEach(
+    (comp) => (componentEvents = [...componentEvents, ...comp.componentEvents]),
+  );
 
   return (
     <div className="h-full w-full flex flex-col p-4 overflow-y-scroll">

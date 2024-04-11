@@ -6,6 +6,7 @@ import { StepSeparator } from "./step-separator";
 import { NextStepConditionItem } from "./next-step-condition-item";
 import { ComponentEventWithData, SequenceStepWithEvents } from "@/types";
 import { group } from "console";
+import { ComponentEvent } from "@prisma/client";
 
 interface StepItemProps {
   index: number;
@@ -15,7 +16,7 @@ interface StepItemProps {
   groupId: string;
   processId: string;
   step: SequenceStepWithEvents;
-  componentEvents: ComponentEventWithData[];
+  componentEvents: ComponentEvent[];
 }
 
 export const StepItem = ({
@@ -60,6 +61,7 @@ export const StepItem = ({
             profileId={profileId}
             workspaceId={workspaceId}
             projectId={projectId}
+            groupId={groupId}
             processId={processId}
             step={step}
             componentEvents={componentEvents}

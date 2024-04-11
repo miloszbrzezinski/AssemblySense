@@ -2,6 +2,7 @@ import { Separator } from "@/components/ui/separator";
 import { ComponentEventWithData, SequenceStepWithEvents } from "@/types";
 import { Plus, Trash, X } from "lucide-react";
 import { StepActionTitle } from "./step-action-title";
+import { ComponentEvent, EventType } from "@prisma/client";
 
 interface StepActionsProps {
   index: number;
@@ -11,7 +12,7 @@ interface StepActionsProps {
   groupId: string;
   processId: string;
   step: SequenceStepWithEvents;
-  componentEvents: ComponentEventWithData[];
+  componentEvents: ComponentEvent[];
 }
 
 export const StepActions = ({
@@ -24,6 +25,10 @@ export const StepActions = ({
   step,
   componentEvents,
 }: StepActionsProps) => {
+  const statuses = componentEvents.filter(
+    (event) => event.eventType === EventType.ACTION,
+  );
+
   return (
     <div className="flex w-2/6 min-h-48  transition-all">
       <div className="flex w-full flex-col border border-stone-400 bg-white shadow-md">

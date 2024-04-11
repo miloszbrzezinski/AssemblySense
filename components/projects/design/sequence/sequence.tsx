@@ -10,6 +10,7 @@ import { addSequenceStep } from "@/actions/process-sequence";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { SequenceTitle } from "./sequence-title";
+import { ComponentEvent } from "@prisma/client";
 
 interface ProcessSequenceProps {
   profileId: string;
@@ -18,7 +19,7 @@ interface ProcessSequenceProps {
   groupId: string;
   processId: string;
   sequence: SequenceWithSteps;
-  componentEvents: ComponentEventWithData[];
+  componentEvents: ComponentEvent[];
 }
 
 export const ProcessSequence = ({
