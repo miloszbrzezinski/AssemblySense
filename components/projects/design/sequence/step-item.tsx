@@ -7,6 +7,7 @@ import { NextStepConditionItem } from "./next-step-condition-item";
 import { ComponentEventWithData, SequenceStepWithEvents } from "@/types";
 
 interface StepItemProps {
+  index: number;
   profileId: string;
   workspaceId: string;
   projectId: string;
@@ -16,6 +17,7 @@ interface StepItemProps {
 }
 
 export const StepItem = ({
+  index,
   profileId,
   workspaceId,
   projectId,
@@ -27,6 +29,7 @@ export const StepItem = ({
     <div className="flex space-x-5">
       <div className="flex w-1/5">
         <StepNote
+          index={index}
           profileId={profileId}
           workspaceId={workspaceId}
           projectId={projectId}
@@ -37,6 +40,7 @@ export const StepItem = ({
       <div className="flex flex-col w-4/5">
         <div className="flex w-full">
           <StepActions
+            index={index}
             profileId={profileId}
             workspaceId={workspaceId}
             projectId={projectId}

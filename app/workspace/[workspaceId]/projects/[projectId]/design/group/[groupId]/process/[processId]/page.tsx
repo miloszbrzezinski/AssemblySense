@@ -122,6 +122,7 @@ export default async function ProcessPage({
               profileId={profile.id}
               workspaceId={params.workspaceId}
               projectId={params.projectId}
+              groupId={params.groupId}
               processId={params.processId}
               sequence={seq}
               componentEvents={componentEvents}
