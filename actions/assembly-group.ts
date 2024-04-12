@@ -154,3 +154,113 @@ export const removeProcess = async (
 
   return { success: `Process removed!` };
 };
+
+export const setProcessNo = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  assemblyGroupId: string,
+  processId: string,
+  processNo: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            assemblyGroups: {
+              update: {
+                where: {
+                  id: assemblyGroupId,
+                },
+                data: {
+                  assemblyProcesses: {
+                    update: {
+                      where: {
+                        id: processId,
+                      },
+                      data: {
+                        processId: processNo,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Process ID changed!` };
+};
+
+export const setProcessName = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  assemblyGroupId: string,
+  processId: string,
+  name: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            assemblyGroups: {
+              update: {
+                where: {
+                  id: assemblyGroupId,
+                },
+                data: {
+                  assemblyProcesses: {
+                    update: {
+                      where: {
+                        id: processId,
+                      },
+                      data: {
+                        name,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Process name changed!` };
+};

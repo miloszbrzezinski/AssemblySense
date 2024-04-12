@@ -1,9 +1,13 @@
 "use client";
 
+import { setProcessName, setProcessNo } from "@/actions/assembly-group";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
 import { AssemblyProcess } from "@prisma/client";
 import { Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { startTransition, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface TitleBarProps {
   profileId: string;
@@ -21,11 +25,110 @@ export const TitleBar = ({
   process,
 }: TitleBarProps) => {
   const { onOpen } = useModal();
+  const router = useRouter();
+  const [processNo, setProcessNoState] = useState("");
+  const [processName, setProcessNameState] = useState("");
+
+  useEffect(() => {
+    if (process.processId) {
+      setProcessNoState(process.processId);
+    }
+    if (process.name) {
+      setProcessNameState(process.name);
+    }
+  }, [process.name, process.processId]);
+
+  const handleKeyDownNO = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      saveNo();
+    }
+    if (event.key === "Escape") {
+      if (process.processId) {
+        setProcessNoState(process.processId);
+      }
+    }
+  };
+
+  const handleKeyDownName = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      saveName();
+    }
+    if (event.key === "Escape") {
+      if (process.name) {
+        setProcessNameState(process.name);
+      }
+    }
+  };
+
+  const saveNo = () => {
+    startTransition(() => {
+      setProcessNo(
+        profileId,
+        workspaceId,
+        projectId,
+        groupId,
+        process.id,
+        processNo,
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          toast(data.success, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          router.refresh();
+        }
+      });
+    });
+  };
+
+  const saveName = () => {
+    startTransition(() => {
+      setProcessName(
+        profileId,
+        workspaceId,
+        projectId,
+        groupId,
+        process.id,
+        processName,
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          toast(data.success, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          router.refresh();
+        }
+      });
+    });
+  };
+
   return (
     <div className="flex w-full items-center justify-between">
       <div className="flex space-x-3">
-        <p className="text-4xl font-light">{process.processId}</p>
-        <p className="text-4xl font-extralight">{process.name}</p>
+        <input
+          value={processNo}
+          onChange={(e) => {
+            setProcessNoState(e.target.value);
+          }}
+          onKeyDown={handleKeyDownNO}
+          onBlur={saveNo}
+          className="group-hover:bg-slate-100 dark:group-hover:bg-neutral-900 dark:bg-neutral-950 bg-transparent text-4xl font-light max-w-40 focus:outline-none focus:bg-slate-200 dark:focus:bg-slate-900 focus:rounded-none pl-2"
+        />
+        <input
+          value={processName}
+          onChange={(e) => {
+            setProcessNameState(e.target.value);
+          }}
+          onKeyDown={handleKeyDownName}
+          onBlur={saveName}
+          className="group-hover:bg-slate-100 dark:group-hover:bg-neutral-900 dark:bg-neutral-950 bg-transparent text-4xl font-extralight focus:outline-none focus:bg-slate-200 dark:focus:bg-slate-900 focus:rounded-none pl-2"
+        />
       </div>
       <div className="flex items-center h-full">
         <Button
