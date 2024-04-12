@@ -28,6 +28,8 @@ export const TitleBar = ({
   const router = useRouter();
   const [processNo, setProcessNoState] = useState("");
   const [processName, setProcessNameState] = useState("");
+  const [idEditing, setIdEditing] = useState(false);
+  const [nameEditing, setNameEditing] = useState(false);
 
   useEffect(() => {
     if (process.processId) {
@@ -45,6 +47,7 @@ export const TitleBar = ({
     if (event.key === "Escape") {
       if (process.processId) {
         setProcessNoState(process.processId);
+        setIdEditing(false);
       }
     }
   };
@@ -56,6 +59,7 @@ export const TitleBar = ({
     if (event.key === "Escape") {
       if (process.name) {
         setProcessNameState(process.name);
+        setNameEditing(false);
       }
     }
   };
@@ -78,6 +82,7 @@ export const TitleBar = ({
               onClick: () => console.log("Undo"),
             },
           });
+          setIdEditing(false);
           router.refresh();
         }
       });
@@ -102,6 +107,7 @@ export const TitleBar = ({
               onClick: () => console.log("Undo"),
             },
           });
+          setNameEditing(false);
           router.refresh();
         }
       });
@@ -111,24 +117,42 @@ export const TitleBar = ({
   return (
     <div className="flex w-full items-center justify-between">
       <div className="flex space-x-3">
-        <input
-          value={processNo}
-          onChange={(e) => {
-            setProcessNoState(e.target.value);
-          }}
-          onKeyDown={handleKeyDownNO}
-          onBlur={saveNo}
-          className="group-hover:bg-slate-100 dark:group-hover:bg-neutral-900 dark:bg-neutral-950 bg-transparent text-4xl font-light max-w-40 focus:outline-none focus:bg-slate-200 dark:focus:bg-slate-900 focus:rounded-none pl-2"
-        />
-        <input
-          value={processName}
-          onChange={(e) => {
-            setProcessNameState(e.target.value);
-          }}
-          onKeyDown={handleKeyDownName}
-          onBlur={saveName}
-          className="group-hover:bg-slate-100 dark:group-hover:bg-neutral-900 dark:bg-neutral-950 bg-transparent text-4xl font-extralight focus:outline-none focus:bg-slate-200 dark:focus:bg-slate-900 focus:rounded-none pl-2"
-        />
+        {idEditing ? (
+          <input
+            value={processNo}
+            onChange={(e) => {
+              setProcessNoState(e.target.value);
+            }}
+            onKeyDown={handleKeyDownNO}
+            onBlur={saveNo}
+            className="group-hover:bg-slate-100 dark:group-hover:bg-neutral-900 dark:bg-neutral-950 bg-slate-200 text-4xl font-light max-w-40 focus:outline-none focus:bg-slate-300 dark:focus:bg-slate-900 focus:rounded-none pl-2"
+          />
+        ) : (
+          <h3
+            onClick={() => setIdEditing(true)}
+            className="text-4xl font-light"
+          >
+            {processNo}
+          </h3>
+        )}
+        {nameEditing ? (
+          <input
+            value={processName}
+            onChange={(e) => {
+              setProcessNameState(e.target.value);
+            }}
+            onKeyDown={handleKeyDownName}
+            onBlur={saveName}
+            className="group-hover:bg-slate-100 dark:group-hover:bg-neutral-900 dark:bg-neutral-950 bg-slate-200 text-4xl font-extralight focus:outline-none focus:bg-slate-300 dark:focus:bg-slate-900 focus:rounded-none pl-2"
+          />
+        ) : (
+          <h3
+            onClick={() => setNameEditing(true)}
+            className="text-4xl font-extralight"
+          >
+            {processName}
+          </h3>
+        )}
       </div>
       <div className="flex items-center h-full">
         <Button
