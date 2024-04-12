@@ -54,12 +54,27 @@ export const AssemblyGroupItem = ({
   return (
     <ContextMenu>
       <ContextMenuTrigger>
-        <Accordion type="multiple">
+        <Accordion type="multiple" className="group">
           <AccordionItem value="group">
-            <AccordionTrigger className="justify-start items-center space-x-1">
-              <Folder strokeWidth={1} className="w-5 h-5" />{" "}
-              <p>{assemblyGroup.name}</p>
-            </AccordionTrigger>
+            <div className="flex w-full justify-between items-center pr-2">
+              <AccordionTrigger className="justify-start items-center space-x-1">
+                <Folder strokeWidth={1} className="w-5 h-5" />{" "}
+                <p>{assemblyGroup.name}</p>
+              </AccordionTrigger>
+              <button
+                onClick={() => {
+                  onOpen("addProcess", {
+                    assemblyGroup,
+                    workspaceId,
+                    profileId,
+                  });
+                }}
+                className="hidden group-hover:block"
+              >
+                <FilePlus strokeWidth={1} />
+              </button>
+            </div>
+
             <AccordionContent className="w-full">
               <Button
                 variant="secondary"

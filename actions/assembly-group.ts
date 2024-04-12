@@ -103,5 +103,54 @@ export const createProcess = async (
     },
   });
 
-  return { success: `Assembly group ${processName} created` };
+  return { success: `Process ${processName} created` };
+};
+
+export const removeProcess = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  assemblyGroupId: string,
+  processId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            assemblyGroups: {
+              update: {
+                where: {
+                  id: assemblyGroupId,
+                },
+                data: {
+                  assemblyProcesses: {
+                    delete: {
+                      id: processId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Process removed!` };
 };

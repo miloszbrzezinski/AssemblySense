@@ -184,9 +184,6 @@ export const DesignSidebar = ({
               </div>
             </AccordionTrigger>
             <div className="space-x-1 px-2 items-center flex">
-              <button>
-                <FilePlus strokeWidth={1} />
-              </button>
               <button
                 onClick={() => {
                   setNewGroup(true);

@@ -1,7 +1,7 @@
 import { setProcessSequenceName } from "@/actions/process-sequence";
 import { SequenceWithSteps } from "@/types";
 import { useRouter } from "next/navigation";
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SequenceDescription } from "./seq-description";
 import { Trash } from "lucide-react";
@@ -27,6 +27,7 @@ export const SequenceTitle = ({
   const router = useRouter();
   const [name, setName] = useState("");
   const { onOpen } = useModal();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (sequence.name) {
@@ -37,11 +38,13 @@ export const SequenceTitle = ({
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       saveName();
+      inputRef.current?.blur();
     }
     if (event.key === "Escape") {
       if (sequence.name) {
         setName(sequence.name);
       }
+      inputRef.current?.blur();
     }
   };
 
@@ -91,6 +94,7 @@ export const SequenceTitle = ({
           }}
           onKeyDown={handleKeyDown}
           onBlur={saveName}
+          ref={inputRef}
           className="group-hover:bg-slate-100 dark:group-hover:bg-slate-900/50 dark:bg-neutral-900 w-full text-lg font-medium focus:outline-none dark:focus:bg-slate-800 focus:bg-slate-200 focus:rounded-none p-2"
         />
         <button

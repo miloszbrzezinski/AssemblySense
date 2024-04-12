@@ -14,6 +14,7 @@ export type ModalType =
   | "removeWorkspaceMember"
   | "addAssemblyGroup"
   | "addProcess"
+  | "removeProcess"
   | "removeSequence"
   | "addComponent"
   | "addDepartment"

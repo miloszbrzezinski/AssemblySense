@@ -1,5 +1,6 @@
 import { EnableFormulaPopover } from "@/components/projects/design/action-enables/table/enable-formula-popover";
 import { TabsListItem } from "@/components/projects/design/group/process/tab-list";
+import { TitleBar } from "@/components/projects/design/group/process/title-bar";
 import { ProcessSequence } from "@/components/projects/design/sequence/sequence";
 import { StepItem } from "@/components/projects/design/sequence/step-item";
 import { Button } from "@/components/ui/button";
@@ -103,11 +104,14 @@ export default async function ProcessPage({
   );
 
   return (
-    <div className="h-full w-full flex flex-col p-4 overflow-y-scroll">
-      <div className="pb-4 flex space-x-3">
-        <p className="text-4xl font-light">{process.processId}</p>
-        <p className="text-4xl font-extralight">{process.name}</p>
-      </div>
+    <div className="h-full w-full flex flex-col p-4 space-y-4 overflow-y-scroll">
+      <TitleBar
+        profileId={profile.id}
+        workspaceId={params.workspaceId}
+        projectId={params.projectId}
+        groupId={params.groupId}
+        process={process}
+      />
       <Tabs defaultValue="overview">
         <TabsListItem
           profileId={profile.id}
