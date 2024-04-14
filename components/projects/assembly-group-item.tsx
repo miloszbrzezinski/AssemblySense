@@ -1,5 +1,6 @@
 "use client";
 import {
+  Binary,
   Copy,
   Edit,
   File,
@@ -9,6 +10,7 @@ import {
   Network,
   Puzzle,
   Scissors,
+  Shield,
   Trash,
   Users,
 } from "lucide-react";
@@ -33,6 +35,7 @@ import { useModal } from "@/hooks/use-modal-store";
 import { Button } from "../ui/button";
 import { ProcessItem } from "./process-item";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface AssemblyGroupItemProps {
   assemblyGroup: AssemblyGroupWithProcesses;
@@ -46,6 +49,7 @@ export const AssemblyGroupItem = ({
   workspaceId,
 }: AssemblyGroupItemProps) => {
   const [newComponent, setNewComponent] = useState(false);
+  const router = useRouter();
   const { onOpen } = useModal();
 
   const hideNewCategory = () => {
@@ -77,13 +81,11 @@ export const AssemblyGroupItem = ({
 
             <AccordionContent className="w-full">
               <Button
-                variant="secondary"
-                className="w-full h-min p-1 pl-5 justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
-              >
-                <Users strokeWidth={1} className="w-5 h-5" />
-                <p className="font-light">Members</p>
-              </Button>
-              <Button
+                onClick={() => {
+                  router.push(
+                    `/workspace/${workspaceId}/projects/${assemblyGroup.projectId}/design/group/${assemblyGroup.id}/network`,
+                  );
+                }}
                 variant="secondary"
                 className="w-full h-min p-1 pl-5 justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
               >
@@ -91,11 +93,40 @@ export const AssemblyGroupItem = ({
                 <p className="font-light">Network</p>
               </Button>
               <Button
+                onClick={() => {
+                  router.push(
+                    `/workspace/${workspaceId}/projects/${assemblyGroup.projectId}/design/group/${assemblyGroup.id}/components`,
+                  );
+                }}
                 variant="secondary"
                 className="w-full h-min p-1 pl-5 justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
               >
                 <Puzzle strokeWidth={1} className="w-5 h-5" />
                 <p className="font-light">Components</p>
+              </Button>
+              <Button
+                onClick={() => {
+                  router.push(
+                    `/workspace/${workspaceId}/projects/${assemblyGroup.projectId}/design/group/${assemblyGroup.id}/events`,
+                  );
+                }}
+                variant="secondary"
+                className="w-full h-min p-1 pl-5 justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
+              >
+                <Binary strokeWidth={1} className="w-5 h-5" />
+                <p className="font-light">I/O list</p>
+              </Button>
+              <Button
+                onClick={() => {
+                  router.push(
+                    `/workspace/${workspaceId}/projects/${assemblyGroup.projectId}/design/group/${assemblyGroup.id}/enables`,
+                  );
+                }}
+                variant="secondary"
+                className="w-full h-min p-1 pl-5 justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
+              >
+                <Shield strokeWidth={1} className="w-5 h-5" />
+                <p className="font-light">Actions enables</p>
               </Button>
               {assemblyGroup.assemblyProcesses.map((process) => (
                 <ProcessItem
