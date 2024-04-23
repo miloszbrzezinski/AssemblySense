@@ -83,28 +83,16 @@ export default async function DesignEnablesPage({
   }
   return (
     <div className="h-full w-full flex flex-col">
-      <ResizablePanelGroup direction="horizontal" className="h-full">
-        <ResizablePanel className="min-w-[50%] h-full" defaultSize={80}>
-          <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
-            <p>Action enables</p>
-          </div>
-          <div className="p-2">
-            <EnableTable
-              profileId={profile.id}
-              workspaceId={workspace.id}
-              projectComponents={project.projectComponents}
-            />
-          </div>
-        </ResizablePanel>
-        <ResizableHandle className="shadow-lg shadow-black bg-stone-300" />
-        <ResizablePanel className="min-w-72 h-full" defaultSize={20}>
-          <ProjectComponentSidebar
-            profileId={profile.id}
-            projectId={params.projectId}
-            projectComponents={project.projectComponents}
-          />
-        </ResizablePanel>
-      </ResizablePanelGroup>
+      <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
+        <p>Action enables</p>
+      </div>
+      <div className="flex flex-col h-screen pb-52">
+        <EnableTable
+          profileId={profile.id}
+          workspaceId={workspace.id}
+          projectComponents={project.projectComponents}
+        />
+      </div>
     </div>
   );
 }
