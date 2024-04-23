@@ -26,51 +26,48 @@ export const NetworkTableItem = ({
   projectNetwork,
 }: NetworkTableItemProps) => {
   return (
-    <div className="group flex w-full h-10 bg-stone-300 space-x-[1px]">
-      <div className="flex min-w-10 h-10 bg-white items-center group-hover:bg-slate-100">
-        <Button
-          variant="ghost"
-          className="w-full h-full rounded-none p-0 hover:bg-slate-200  transition-none"
-        >
+    <tr className="group h-10">
+      <td className="group-hover:bg-slate-100 border border-l-0 border-stone-300">
+        <button className="hover:bg-slate-200 flex items-center justify-center h-10 w-full">
           <MoreVertical strokeWidth={1} className="hidden group-hover:block" />
-        </Button>
-      </div>
-      <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
+        </button>
+      </td>
+      <td className="group-hover:bg-slate-100 border border-stone-300">
         <AssemblyGroupPopover
           profileId={profileId}
           workspaceId={workspaceId}
           assemblyGroups={assemblyGroups}
           projectNetwork={projectNetwork}
         />
-      </div>
-      <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
+      </td>
+      <td className="group-hover:bg-slate-100 border border-stone-300">
         <ProjectNetworkName
           profileId={profileId}
           workspaceId={workspaceId}
           projectNetwork={projectNetwork}
         />
-      </div>
-      <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
+      </td>
+      <td className="group-hover:bg-slate-100 border border-stone-300">
         <NetworkAddressInput
           profileId={profileId}
           workspaceId={workspaceId}
           projectNetwork={projectNetwork}
         />
-      </div>
-      <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
+      </td>
+      <td className="group-hover:bg-slate-100 border border-stone-300">
         <NetworkAddressInput
           profileId={profileId}
           workspaceId={workspaceId}
           projectNetwork={projectNetwork}
         />
-      </div>
-      <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
+      </td>
+      <td className="group-hover:bg-slate-100 border border-r-0 border-stone-300">
         <ProjectNetworkDescription
           profileId={profileId}
           workspaceId={workspaceId}
           projectNetwork={projectNetwork}
         />
-      </div>
-    </div>
+      </td>
+    </tr>
   );
 };

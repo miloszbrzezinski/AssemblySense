@@ -39,21 +39,19 @@ export const NetworkTableNewItem = ({
   };
 
   return (
-    <Button
-      onClick={onClick}
-      variant="ghost"
-      className="group rounded-none p-0 flex w-full h-10 bg-stone-200 hover:bg-stone-200 space-x-[1px]"
-    >
-      <div className="flex min-w-10 h-10 bg-white items-center group-hover:bg-slate-200">
-        <div className="w-full h-full rounded-none p-0 flex items-center justify-center">
-          <Plus strokeWidth={1} className="hidden group-hover:block" />
+    <tr onClick={onClick} className="group h-10 select-none cursor-pointer">
+      <td className="group-hover:bg-slate-100 border-b border-l-0 border-stone-300">
+        <div className="flex items-center justify-center h-10 w-full">
+          <Plus strokeWidth={1} />
         </div>
-      </div>
-      <div className="group-hover:bg-slate-100 flex w-full h-10 bg-white items-center">
-        <div className="text-base h-10 w-full flex items-center justify-start">
-          <h3 className="text-sm font-light pl-2 select-none">New Network</h3>
-        </div>
-      </div>
-    </Button>
+      </td>
+      <td className="group-hover:bg-slate-100 border-b border-stone-300 font-light">
+        Add network
+      </td>
+      <td className="group-hover:bg-slate-100 border-b border-stone-300"></td>
+      <td className="group-hover:bg-slate-100 border-b border-stone-300"></td>
+      <td className="group-hover:bg-slate-100 border-b border-stone-300"></td>
+      <td className="group-hover:bg-slate-100 border-b border-r-0 border-stone-300"></td>
+    </tr>
   );
 };

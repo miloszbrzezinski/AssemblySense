@@ -82,7 +82,7 @@ export default async function ProjectDesignNetworkPage({
       <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
         <p>Network</p>
       </div>
-      <div className="p-2">
+      <div className="flex flex-col h-screen pb-52">
         <NetworkTable
           profileId={profile.id}
           workspaceId={params.workspaceId}
