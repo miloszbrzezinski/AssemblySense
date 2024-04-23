@@ -98,21 +98,6 @@ export const EnableFormulaPopover = ({
     tmpFormula = stringFormula.replaceAll(",", "+");
 
     setFormula(tmpFormula);
-    // startTransition(() => {
-    //   setComponentEventEnable(
-    //     profileId,
-    //     workspaceId,
-    //     componentEvent.projectComponent.id,
-    //     componentEvent.id,
-    //     formula,
-    //     componentEvent.projectComponent.projectId,
-    //   ).then((data) => {
-    //     // setError(data.error);
-    //     if (data.success) {
-    //       router.refresh();
-    //     }
-    //   });
-    // });
   };
 
   return (
@@ -201,6 +186,11 @@ export const EnableFormulaPopover = ({
               )
             </button>
           </div>
+          {componentStatuses.length === 0 && (
+            <h3 className="bg-white p-2 font-extralight text-2xl">
+              No events available in this process
+            </h3>
+          )}
           {componentStatuses.map((status) => (
             <div
               key={status.id}
