@@ -21,36 +21,36 @@ const ComponentsTable = ({
   projectComponents,
 }: ComponentsTableProps) => {
   return (
-    <div className="relative overflow-x-auto">
-      <table className="table-auto border-collapse shadow-md w-full bg-white overflow-x-scroll">
+    <div className="flex-grow overflow-auto">
+      <table className="border-collapse shadow-md relative w-full bg-white">
         <thead className="h-14">
           <tr>
-            <th className="border border-l-0 border-t-0 border-stone-300 w-10 min-w-10">
+            <th className="sticky top-0 border bg-neutral-200/90 border-l-0 border-t-0 border-stone-300 w-10 min-w-10">
               <div className="flex items-center justify-center">
                 <Puzzle strokeWidth={1} />
               </div>
             </th>
-            <th className="border border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+            <th className="sticky top-0 border bg-neutral-200/95 border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
               Group
             </th>
-            <th className="border border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+            <th className="sticky top-0 border bg-neutral-200/95 border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
               Process
             </th>
-            <th className="border border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+            <th className="sticky top-0 border bg-neutral-200/95 border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
               Component symbol
             </th>
-            <th className="border border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+            <th className="sticky top-0 border bg-neutral-200/95 border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
               Component
             </th>
-            <th className="border border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+            <th className="sticky top-0 border bg-neutral-200/95 border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
               Status
             </th>
-            <th className="border border-r-0 border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+            <th className="sticky top-0 border bg-neutral-200/95 border-r-0 border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
               Comment
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="pb-20">
           {projectComponents.map((component) => (
             <ComponentTableItem
               key={component.id}

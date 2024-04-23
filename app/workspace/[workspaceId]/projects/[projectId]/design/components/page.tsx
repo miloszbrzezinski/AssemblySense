@@ -79,7 +79,7 @@ export default async function ProjectDesignComponentsPage({
           <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
             <p>Project components</p>
           </div>
-          <div className="p-2">
+          <div className="flex flex-col h-screen pb-52">
             <ComponentsTable
               profileId={profile.id}
               workspaceId={workspace.id}
