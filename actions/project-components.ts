@@ -303,11 +303,13 @@ export const setProjectComponentStatus = async (
 
 export const removeProjectComponent = async (
   profileId: string,
-  projectMember: ProjectMemberWithProfile,
+  workspaceId: string,
+  projectId: string,
+  projectComponentId: string,
 ) => {
   const workspace = await db.workspace.update({
     where: {
-      id: projectMember.workspaceMember.workspaceId,
+      id: workspaceId,
       members: {
         some: {
           profileId,
@@ -321,12 +323,12 @@ export const removeProjectComponent = async (
       projects: {
         update: {
           where: {
-            id: projectMember.projectId,
+            id: projectId,
           },
           data: {
-            projectMembers: {
+            projectComponents: {
               delete: {
-                id: projectMember.id,
+                id: projectComponentId,
               },
             },
           },

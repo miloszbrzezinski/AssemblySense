@@ -17,6 +17,7 @@ export type ModalType =
   | "removeProcess"
   | "removeSequence"
   | "addComponent"
+  | "removeProjectComponent"
   | "addDepartment"
   | "addProjectMember";
 
@@ -26,6 +27,7 @@ interface ModalData {
   profileId?: string;
   workspaceId?: string;
   projectId?: string;
+  projectComponentId?: string;
   groupId?: string;
   processId?: string;
   sequenceId?: string;

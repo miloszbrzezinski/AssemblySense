@@ -7,6 +7,7 @@ import { InviteUsersModal } from "../modals/invite-modal";
 import { AddDepartmentModal } from "../modals/add-department-modal";
 import { RemoveSequenceModal } from "../modals/remove-sequence";
 import { RemoveProcessModal } from "../modals/remove-process";
+import { RemoveProjectComponentModal } from "../modals/remove-project-component";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -27,6 +28,7 @@ export const ModalProvider = () => {
       <AddDepartmentModal />
       <RemoveSequenceModal />
       <RemoveProcessModal />
+      <RemoveProjectComponentModal />
     </>
   );
 };
