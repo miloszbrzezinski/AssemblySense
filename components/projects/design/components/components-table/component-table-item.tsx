@@ -1,13 +1,11 @@
 "use client";
-import { AssemblyGroup, AssemblyProcess } from "@prisma/client";
 import AssemblyGroupPopover from "./assembly-groups-popover";
 import { AssemblyGroupWithProcesses, ProjectComponentWithData } from "@/types";
 import { ProjectComponentName } from "./project-component-name";
 import { AssemblyProcessPopover } from "./assembly-process-popover";
 import { ProjectComponentDescription } from "./project-component-description";
 import { ProjectComponentStatus } from "./project-component-status";
-import { MoreVertical, SquareArrowOutUpLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { SquareArrowOutUpLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface ComponentTableItemProps {
@@ -17,7 +15,7 @@ interface ComponentTableItemProps {
   projectComponent: ProjectComponentWithData;
 }
 
-const ComponentTableItem = ({
+export const ComponentTableItem = ({
   profileId,
   workspaceId,
   assemblyGroups,
@@ -90,5 +88,3 @@ const ComponentTableItem = ({
     </tr>
   );
 };
-
-export default ComponentTableItem;

@@ -1,4 +1,4 @@
-import ComponentsTable from "@/components/projects/design/components/components-table/components-table";
+import { ComponentsTable } from "@/components/projects/design/components/components-table/components-table";
 import { DesignLibrarySidebar } from "@/components/projects/design/components/library-sidebar";
 import {
   ResizableHandle,
