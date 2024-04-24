@@ -134,6 +134,53 @@ export const setProjectNetworkName = async (
   return { success: `Network name changed!` };
 };
 
+export const setProjectNetworkAddress = async (
+  profileId: string,
+  workspaceId: string,
+  projectNetwork: ProjectNetwork,
+  projectId: string,
+  subnetMask: string,
+  networkPortion: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectNetworks: {
+              update: {
+                where: {
+                  id: projectNetwork.id,
+                },
+                data: {
+                  subnetMask,
+                  networkPortion,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Network address changed!` };
+};
+
 export const setProjectNetworkDescription = async (
   profileId: string,
   workspaceId: string,
