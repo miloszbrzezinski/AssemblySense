@@ -1,11 +1,4 @@
 import { setProjectNetworkAddress } from "@/actions/project-network";
-import { Button } from "@/components/ui/button";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
 import {
   Popover,
   PopoverContent,
@@ -15,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { ProjectNetworkWithData } from "@/types";
 import { useRouter } from "next/navigation";
-import { FormEvent, startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface MaskStates {
@@ -33,12 +26,14 @@ interface NetworkAddressInputProps {
   profileId: string;
   workspaceId: string;
   projectNetwork: ProjectNetworkWithData;
+  type?: "mask" | "ip";
 }
 
 export const NetworkAddressInput = ({
   profileId,
   workspaceId,
   projectNetwork,
+  type = "ip",
 }: NetworkAddressInputProps) => {
   const router = useRouter();
   const [maskIndex, setMaskIndex] = useState(0);
@@ -54,6 +49,7 @@ export const NetworkAddressInput = ({
   });
 
   useEffect(() => {
+    type === "mask" ? setMaskIndex(0) : setMaskIndex(4);
     const tmpMask = projectNetwork.subnetMask.split(".");
     let tmpFirstMask = [0];
     if (tmpMask[0]) {
@@ -100,7 +96,7 @@ export const NetworkAddressInput = ({
       ["ipThird"]: tmpThirdIp,
       ["ipFourth"]: tmpFourthIp,
     }));
-  }, [projectNetwork.subnetMask, projectNetwork.networkPortion]);
+  }, [projectNetwork.subnetMask, projectNetwork.networkPortion, type]);
 
   useEffect(() => {
     const keyDownHandler = (e: KeyboardEvent) => {
@@ -211,7 +207,9 @@ export const NetworkAddressInput = ({
     <Popover>
       <PopoverTrigger className="text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
         <h3 className="text-base font-light pl-2">
-          {projectNetwork.networkPortion}
+          {type === "ip"
+            ? projectNetwork.networkPortion
+            : projectNetwork.subnetMask}
         </h3>
       </PopoverTrigger>
       <PopoverContent className="rounded-none p-0 bg-white space-y-[1px] w-full">

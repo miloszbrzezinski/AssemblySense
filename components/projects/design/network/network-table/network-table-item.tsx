@@ -52,6 +52,7 @@ export const NetworkTableItem = ({
           profileId={profileId}
           workspaceId={workspaceId}
           projectNetwork={projectNetwork}
+          type="mask"
         />
       </td>
       <td className="group-hover:bg-slate-100 border border-stone-300">
@@ -59,6 +60,7 @@ export const NetworkTableItem = ({
           profileId={profileId}
           workspaceId={workspaceId}
           projectNetwork={projectNetwork}
+          type="ip"
         />
       </td>
       <td className="group-hover:bg-slate-100 border border-r-0 border-stone-300">
