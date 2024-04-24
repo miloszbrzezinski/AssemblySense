@@ -1,9 +1,11 @@
 "use client";
+import { setProjectComponentsName } from "@/actions/project-components";
 import { useModal } from "@/hooks/use-modal-store";
 import { ProjectComponentWithData } from "@/types";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 interface ProjectComponentNavbarProps {
   profileId: string;
@@ -41,28 +43,27 @@ export const ProjectComponentNavbar = ({
   };
 
   const saveName = () => {
-    // startTransition(() => {
-    //   setProcessSequenceName(
-    //     profileId,
-    //     workspaceId,
-    //     projectId,
-    //     groupId,
-    //     processId,
-    //     sequence.id,
-    //     name,
-    //   ).then((data) => {
-    //     // setError(data.error);
-    //     if (data.success) {
-    //       toast(data.success, {
-    //         action: {
-    //           label: "Undo",
-    //           onClick: () => console.log("Undo"),
-    //         },
-    //       });
-    //       router.refresh();
-    //     }
-    //   });
-    // });
+    startTransition(() => {
+      setProjectComponentsName(
+        profileId,
+        workspaceId,
+        projectComponent,
+        name,
+        projectComponent.projectId,
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          toast(data.success, {
+            description: `New name: ${name}`,
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          router.refresh();
+        }
+      });
+    });
   };
   projectComponent.projectId;
   const onDelete = () => {
@@ -77,13 +78,20 @@ export const ProjectComponentNavbar = ({
   return (
     <div className="flex border-b text-xl font-light items-center p-2 py-0 pr-0 bg-white shadow-md justify-between">
       <div className="flex space-x-1 items-center whitespace-nowrap">
-        <button className="hover:bg-stone-100 px-1 rounded-md">
+        <button
+          onClick={() => {
+            router.push(
+              `/workspace/${workspaceId}/projects/${projectComponent.projectId}/design/components`,
+            );
+          }}
+          className="hover:bg-stone-100 px-1 rounded-md"
+        >
           Project components
         </button>
         <span>/</span>
         <h2 className="font-extralight select-none space-x-1">
           <span>{projectComponent.component.manufacturer}</span>
-          <span>{projectComponent.component.name}:</span>
+          <span className="font-light">{projectComponent.component.name}:</span>
         </h2>
         <input
           value={name}
