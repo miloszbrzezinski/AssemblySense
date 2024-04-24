@@ -1,3 +1,4 @@
+import { setProjectNetworkAddress } from "@/actions/project-network";
 import { Button } from "@/components/ui/button";
 import {
   InputOTP,
@@ -13,7 +14,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { ProjectNetworkWithData } from "@/types";
-import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEvent, startTransition, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface MaskStates {
   maskFirst: number[];
@@ -37,6 +40,7 @@ export const NetworkAddressInput = ({
   workspaceId,
   projectNetwork,
 }: NetworkAddressInputProps) => {
+  const router = useRouter();
   const [maskIndex, setMaskIndex] = useState(0);
   const [address, setAddress] = useState<MaskStates>({
     maskFirst: [],
@@ -57,15 +61,15 @@ export const NetworkAddressInput = ({
     }
     let tmpSecondMask = [0];
     if (tmpMask[0]) {
-      tmpSecondMask = tmpMask[0].split("").map((e) => Number(e));
+      tmpSecondMask = tmpMask[1].split("").map((e) => Number(e));
     }
     let tmpThirdMask = [0];
     if (tmpMask[0]) {
-      tmpThirdMask = tmpMask[0].split("").map((e) => Number(e));
+      tmpThirdMask = tmpMask[2].split("").map((e) => Number(e));
     }
     let tmpFourthMask = [0];
     if (tmpMask[0]) {
-      tmpFourthMask = tmpMask[0].split("").map((e) => Number(e));
+      tmpFourthMask = tmpMask[3].split("").map((e) => Number(e));
     }
     const tmpIp = projectNetwork.networkPortion.split(".");
     let tmpFirstIp = [0];
@@ -175,6 +179,34 @@ export const NetworkAddressInput = ({
     };
   }, [maskIndex, address]);
 
+  const onClick = () => {
+    console.log(address.ipFirst.join().replaceAll(",", ""));
+    const networkPortion = `${address.ipFirst.join().replaceAll(",", "")}.${address.ipSecond.join().replaceAll(",", "")}.${address.ipThird.join().replaceAll(",", "")}.${address.ipFourth.join().replaceAll(",", "")}`;
+    const subnetMask = `${address.maskFirst.join().replaceAll(",", "")}.${address.maskSecond.join().replaceAll(",", "")}.${address.maskThird.join().replaceAll(",", "")}.${address.maskFourth.join().replaceAll(",", "")}`;
+    startTransition(() => {
+      setProjectNetworkAddress(
+        profileId,
+        workspaceId,
+        projectNetwork,
+        projectNetwork.projectId,
+        subnetMask,
+        networkPortion,
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          toast(data.success, {
+            description: `Address modified}`,
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          router.refresh();
+        }
+      });
+    });
+  };
+
   return (
     <Popover>
       <PopoverTrigger className="text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
@@ -277,8 +309,12 @@ export const NetworkAddressInput = ({
         </div>
         <Separator />
         <div className="w-full p-2 flex justify-between">
-          <Button variant="outline">Cancel</Button>
-          <Button className="bg-stone-700">Save</Button>
+          <button
+            onClick={onClick}
+            className="bg-stone-700 text-white p-2 w-full"
+          >
+            Save
+          </button>
         </div>
       </PopoverContent>
     </Popover>
