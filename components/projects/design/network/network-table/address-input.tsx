@@ -50,6 +50,55 @@ export const NetworkAddressInput = ({
   });
 
   useEffect(() => {
+    const tmpMask = projectNetwork.subnetMask.split(".");
+    let tmpFirstMask = [0];
+    if (tmpMask[0]) {
+      tmpFirstMask = tmpMask[0].split("").map((e) => Number(e));
+    }
+    let tmpSecondMask = [0];
+    if (tmpMask[0]) {
+      tmpSecondMask = tmpMask[0].split("").map((e) => Number(e));
+    }
+    let tmpThirdMask = [0];
+    if (tmpMask[0]) {
+      tmpThirdMask = tmpMask[0].split("").map((e) => Number(e));
+    }
+    let tmpFourthMask = [0];
+    if (tmpMask[0]) {
+      tmpFourthMask = tmpMask[0].split("").map((e) => Number(e));
+    }
+    const tmpIp = projectNetwork.networkPortion.split(".");
+    let tmpFirstIp = [0];
+    if (tmpIp[0]) {
+      tmpFirstIp = tmpIp[0].split("").map((e) => Number(e));
+    }
+    let tmpSecondIp = [0];
+    if (tmpIp[1]) {
+      tmpSecondIp = tmpIp[1].split("").map((e) => Number(e));
+    }
+    let tmpThirdIp = [0];
+    if (tmpIp[2]) {
+      tmpThirdIp = tmpIp[2].split("").map((e) => Number(e));
+    }
+    let tmpFourthIp = [0];
+    if (tmpIp[3]) {
+      tmpFourthIp = tmpIp[3].split("").map((e) => Number(e));
+    }
+
+    setAddress((prevAddress) => ({
+      ...prevAddress,
+      ["maskFirst"]: tmpFirstMask,
+      ["maskSecond"]: tmpSecondMask,
+      ["maskThird"]: tmpThirdMask,
+      ["maskFourth"]: tmpFourthMask,
+      ["ipFirst"]: tmpFirstIp,
+      ["ipSecond"]: tmpSecondIp,
+      ["ipThird"]: tmpThirdIp,
+      ["ipFourth"]: tmpFourthIp,
+    }));
+  }, [projectNetwork.subnetMask, projectNetwork.networkPortion]);
+
+  useEffect(() => {
     const keyDownHandler = (e: KeyboardEvent) => {
       let element: keyof typeof address = "maskFirst";
       switch (maskIndex) {
@@ -80,7 +129,6 @@ export const NetworkAddressInput = ({
       }
       if (Number(e.key) || Number(e.key) === 0) {
         const tmpMask = [...address[element], Number(e.key)];
-        console.log(tmpMask.length);
         if (tmpMask.length < 4) {
           setAddress((prevAddress) => ({
             ...prevAddress,
@@ -220,6 +268,7 @@ export const NetworkAddressInput = ({
               className={cn(
                 "flex w-10 h-6 hover:bg-slate-100 text-lg items-center justify-center",
                 maskIndex === 7 && "bg-slate-200",
+                Number(address["maskFourth"]) === 0 && "hidden",
               )}
             >
               {address.ipFourth}
