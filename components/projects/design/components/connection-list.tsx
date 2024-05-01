@@ -1,19 +1,23 @@
 "use client";
+import { addProjectComponentConnection } from "@/actions/component-connection";
 import { addProjectComponentEvent } from "@/actions/component-event";
 import {
   ComponentConnectionWithData,
   ComponentEventWithData,
   ProjectComponentWithData,
+  ProjectNetworkWithData,
 } from "@/types";
-import { EventType } from "@prisma/client";
+import { EventType, ProjectNetwork } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { toast } from "sonner";
+import { ProjectComponentConnectionPopover } from "./project-component-connection-popover";
 
 interface ComponentConnectionListProps {
   profileId: string;
   workspaceId: string;
   projectComponent: ProjectComponentWithData;
+  projectNetworks: ProjectNetwork[];
   connections: ComponentConnectionWithData[];
 }
 
@@ -21,13 +25,14 @@ export const ComponentConnectionList = ({
   profileId,
   workspaceId,
   projectComponent,
+  projectNetworks,
   connections,
 }: ComponentConnectionListProps) => {
   const router = useRouter();
 
   const onAdd = () => {
     startTransition(() => {
-      addProjectComponentEvent(profileId, workspaceId, projectComponent).then(
+      addProjectComponentConnection(profileId, workspaceId, projectComponent).then(
         (data) => {
           // setError(data.error);
           if (data.success) {
@@ -79,12 +84,7 @@ export const ComponentConnectionList = ({
             </div>
           </div>
         ))}
-        <button
-          onClick={onAdd}
-          className="w-full p-2 bg-white hover:bg-stone-100"
-        >
-          Add connection
-        </button>
+        <ProjectComponentConnectionPopover profileId={profileId} workspaceId={workspaceId} projectNetworks={projectNetworks} projectComponent={projectComponent}/>
       </div>
       <div className="flex w-full h-full bg-white" />
     </div>

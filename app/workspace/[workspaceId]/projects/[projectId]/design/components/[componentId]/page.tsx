@@ -33,6 +33,9 @@ export default async function ProjectDesignComponentsPage({
           id: params.projectId,
         },
         include: {
+          projectNetworks: {
+
+          },
           projectComponents: {
             where: {
               id: params.componentId,
@@ -105,6 +108,7 @@ export default async function ProjectDesignComponentsPage({
           profileId={profile.id}
           workspaceId={workspace.id}
           projectComponent={component}
+          projectNetworks={project.projectNetworks}
           connections={component.componentConnections}
         />
       </div>
