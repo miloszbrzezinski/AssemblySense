@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/workspace/navbar";
-import Sidebar from "@/components/workspace/sidebar";
+import { Sidebar } from "@/components/workspace/sidebar";
+import { SidebarMobile } from "@/components/workspace/sidebar-mobile";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { ThemeProvider } from "next-themes";
@@ -40,13 +41,16 @@ export default async function WorkspaceLayout({
       disableTransitionOnChange
     >
       <div className="h-full bg-stone-100 dark:bg-zinc-800">
-        <Navbar workspaceName="demo" />
-        <div className="pt-14 h-full flex ">
+        <Navbar workspaceName={workspace.name} />
+        <div className="pt-14 h-full flex">
           <div className="hidden md:flex h-full w-16 z-40 fixed">
             <Sidebar />
           </div>
           <div className="w-full md:pl-14 transition-all bg-stone-100 dark:bg-zinc-800">
             {children}
+          </div>
+          <div className="md:hidden flex h-16 w-full z-40 fixed bottom-0">
+            <SidebarMobile />
           </div>
         </div>
       </div>

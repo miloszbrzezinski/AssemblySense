@@ -1,6 +1,4 @@
 import ProjectNavbar from "@/components/projects/project-navbar";
-import { Navbar } from "@/components/workspace/navbar";
-import Sidebar from "@/components/workspace/sidebar";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
