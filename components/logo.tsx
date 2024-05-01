@@ -23,7 +23,16 @@ export const Logo = ({ className }: { className?: string }) => {
         >
           <p
             className={cn(
-              "text-2xl text-transparent bg-clip-text bg-gradient-to-r from-sky-900 to-amber-900 dark:from-emerald-100 dark:to-sky-200",
+              "hidden md:block text-2xl text-transparent bg-clip-text bg-gradient-to-r from-sky-900 to-amber-900 dark:from-sky-300 dark:to-amber-300",
+              headingFont.className,
+              className,
+            )}
+          >
+            AssemblySense
+          </p>
+          <p
+            className={cn(
+              "md:hidden block text-xl text-transparent bg-clip-text bg-gradient-to-r from-sky-900 to-amber-900 dark:from-sky-300 dark:to-amber-300",
               headingFont.className,
               className,
             )}

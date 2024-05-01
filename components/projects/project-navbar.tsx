@@ -48,20 +48,20 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
 
   return (
     <div className="flex flex-col w-full items-center h-24 bg-stone-50 dark:bg-zinc-900/30 dark:border-b-zinc-400 border-b-stone-500/30 shadow-sm border-b select-none">
-      <div className="flex flex-row flex-grow w-full justify-between px-5">
+      <div className="flex flex-row flex-grow w-full justify-between md:px-5 px-1">
         <div className="flex items-center h-12 text-2xl pt-2">
           <Button
             onClick={onClick}
             variant="ghost"
-            className="text-2xl ext-stone-900 dark:text-zinc-300 dark:hover:bg-zinc-700/50 font-medium px-2"
+            className="hidden md:bolck text-2xl ext-stone-900 dark:text-zinc-300 dark:hover:bg-zinc-700/50 font-medium px-2"
           >
             Projects
           </Button>
-          <p className="ext-stone-900 dark:text-zinc-300 font-extralight">/</p>
+          <p className="hidden md:bolck text-stone-900 dark:text-zinc-300 font-extralight">/</p>
           <Button
             onClick={onClickDashboard}
             variant="ghost"
-            className="text-2xl space-x-2 text-stone-900 dark:text-zinc-300 font-normal px-2"
+            className="md:text-2xl text-xl space-x-2 text-stone-900 dark:text-zinc-300 font-normal px-2"
           >
             <span>{project.projectNo}</span>
             <span className="font-light">{project.name}</span>
@@ -80,35 +80,8 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
               </Button>
             </>
           )}
-          {pathname.split("/")[6] === "assembly-group" && (
-            <>
-              <p className="ext-stone-900 dark:text-zinc-300 font-extralight">
-                /
-              </p>
-              <Button
-                variant="ghost"
-                className="text-2xl ext-stone-900 dark:text-zinc-300 font-light px-2"
-              >
-                ass
-              </Button>
-            </>
-          )}
-          {pathname.split("/")[8] === "process-unit" && (
-            <>
-              <p className="ext-stone-900 dark:text-zinc-300 font-extralight">
-                /
-              </p>
-              <Button
-                variant="ghost"
-                className="text-2xl text-stone-900 dark:text-zinc-300 font-extralight px-2"
-              >
-                ass
-              </Button>
-            </>
-          )}
         </div>
         <div className="flex space-x-5 md:items-end items-center transition-all">
-          <div className="flex space-x-2"></div>
           <div className="gap-2 flex">
             <DropdownMenu>
               <DropdownMenuTrigger className="p-2 block md:hidden transition-all outline-none">
