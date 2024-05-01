@@ -25,10 +25,10 @@ export const IOTableItem = ({
           <GripVertical strokeWidth={1} className="hidden group-hover:block" />
         </button>
       </td>
-      <td className="group-hover:bg-slate-100 border border-stone-300">
+      <td className="group-hover:bg-slate-100 text-sm font-light p-2 border border-stone-300">
         {componentEvent.projectComponent.assemblyGroup?.name}
       </td>
-      <td className="group-hover:bg-slate-100 border border-stone-300">
+      <td className="group-hover:bg-slate-100 text-sm font-light p-2 border border-stone-300">
         {componentEvent.projectComponent.name}
       </td>
       <td className="group-hover:bg-slate-100 border border-stone-300">
