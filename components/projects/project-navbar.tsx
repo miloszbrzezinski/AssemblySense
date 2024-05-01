@@ -16,8 +16,14 @@ import { cn } from "@/lib/utils";
 
 import { HintButton } from "@/components/ui/hint-button";
 import ProjectNavButton from "./project-nav-button";
+import { Project } from "@prisma/client";
 
-const ProjectNavbar = ({ isFavourite }: { isFavourite: boolean }) => {
+interface ProjectNavbarProps {
+  project: Project;
+  isFavourite: boolean;
+}
+
+const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
@@ -57,8 +63,8 @@ const ProjectNavbar = ({ isFavourite }: { isFavourite: boolean }) => {
             variant="ghost"
             className="text-2xl space-x-2 text-stone-900 dark:text-zinc-300 font-normal px-2"
           >
-            <span>P001</span>
-            <span className="font-light">Bublulator assembly line</span>
+            <span>{project.projectNo}</span>
+            <span className="font-light">{project.name}</span>
           </Button>
           {pathname.split("/")[5] === "settings" && (
             <>
