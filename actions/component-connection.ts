@@ -1,12 +1,12 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { MemberRole, ProjectComponent } from "@prisma/client";
-import { z } from "zod";
+import { MemberRole, ProjectComponent, ProjectNetwork } from "@prisma/client";
 
 export const addProjectComponentConnection = async (
   profileId: string,
   workspaceId: string,
+  projectNetworks: ProjectNetwork,
   projectComponent: ProjectComponent,
 ) => {
   const workspace = await db.workspace.update({
@@ -39,7 +39,7 @@ export const addProjectComponentConnection = async (
                       name: "new connection",
                       hostPortion: "1",
                       description: "",
-                      projectNetworkId: "",
+                      projectNetworkId: projectNetworks.id,
                     },
                   },
                 },

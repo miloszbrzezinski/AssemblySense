@@ -1,4 +1,5 @@
 "use client";
+import { addProjectComponentConnection } from "@/actions/component-connection";
 import { setComponentsAssemblyGroup } from "@/actions/project-components";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,7 +47,7 @@ export const ProjectComponentConnectionPopover = ({
   };
 
   // Filter the team array based on the search term
-  const filteredGroups = projectNetworks.filter((network) =>
+  const filteredNetworks = projectNetworks.filter((network) =>
     network.name.toLowerCase().includes(searchInput),
   );
 
@@ -56,29 +57,24 @@ export const ProjectComponentConnectionPopover = ({
     }
   }, [projectComponent.assemblyGroup]);
 
-  const onClick = (group: AssemblyGroup) => {
+  const onAdd = (network: ProjectNetwork) => {
     startTransition(() => {
-      setComponentsAssemblyGroup(
-        profileId,
-        workspaceId,
-        projectComponent,
-        group.id,
-        projectComponent.projectId,
-      ).then((data) => {
-        // setError(data.error);
-        if (data.success) {
-          setSelectedValue(group.name);
-          toast(data.success, {
-            description: `New group: ${group.name}`,
-            action: {
-              label: "Undo",
-              onClick: () => console.log("Undo"),
-            },
-          });
-          closeRef.current?.click();
-          router.refresh();
-        }
-      });
+      addProjectComponentConnection(profileId, workspaceId, network, projectComponent).then(
+        (data) => {
+          // setError(data.error);
+          if (data.success) {
+            toast(data.success, {
+              description: ``,
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
+            closeRef.current?.click();
+            router.refresh();
+          }
+        },
+      );
     });
   };
 
@@ -134,16 +130,16 @@ export const ProjectComponentConnectionPopover = ({
         </div>
 
         <div className="bg-stone-200 space-y-[1px]">
-          {filteredGroups.map((group) => (
+          {filteredNetworks.map((network) => (
             <div
               onClick={() => {
-                onClick(group);
+                onAdd(network);
               }}
-              key={group.id}
+              key={network.id}
               className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
             >
               <Network strokeWidth={1} />
-              <h3>{group.name}</h3>
+              <h3>{network.name}</h3>
             </div>
           ))}
         </div>

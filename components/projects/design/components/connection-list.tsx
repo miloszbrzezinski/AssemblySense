@@ -30,25 +30,6 @@ export const ComponentConnectionList = ({
 }: ComponentConnectionListProps) => {
   const router = useRouter();
 
-  const onAdd = () => {
-    startTransition(() => {
-      addProjectComponentConnection(profileId, workspaceId, projectComponent).then(
-        (data) => {
-          // setError(data.error);
-          if (data.success) {
-            toast(data.success, {
-              description: ``,
-              action: {
-                label: "Undo",
-                onClick: () => console.log("Undo"),
-              },
-            });
-            router.refresh();
-          }
-        },
-      );
-    });
-  };
   return (
     <div className="flex flex-col w-full h-full border bg-stone-300 space-y-[1px]">
       <div className="flex w-full shadow-md items-center p-2 bg-white">
