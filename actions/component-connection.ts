@@ -53,3 +53,52 @@ export const addProjectComponentConnection = async (
 
   return { success: `Connection added!` };
 };
+
+
+export const removeProjectComponentConnection = async (
+  profileId: string,
+  workspaceId: string,
+  componentConnectionId: string,
+  projectComponent: ProjectComponent,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectComponent.projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponent.id,
+                },
+                data: {
+                  componentConnections: {
+                    delete:{
+                      id: componentConnectionId
+                    }
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Connection removed!` };
+};

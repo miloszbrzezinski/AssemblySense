@@ -78,34 +78,6 @@ export const ProjectComponentConnectionPopover = ({
     });
   };
 
-  const removeGroup = () => {
-    startTransition(() => {
-      setComponentsAssemblyGroup(
-        profileId,
-        workspaceId,
-        projectComponent,
-        null,
-        projectComponent.projectId,
-      ).then((data) => {
-        // setError(data.error);
-        if (data.success) {
-          if (data.success) {
-            setSelectedValue("General");
-            toast(data.success, {
-              description: `New group: ${"General"}`,
-              action: {
-                label: "Undo",
-                onClick: () => console.log("Undo"),
-              },
-            });
-            closeRef.current?.click();
-            router.refresh();
-          }
-        }
-      });
-    });
-  };
-
   return (
     <Popover>
       <PopoverTrigger className="text-base h-10 pl-2 w-full flex items-center justify-start bg-white hover:bg-slate-200">
