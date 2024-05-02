@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { toast } from "sonner";
 import { EventListItem } from "./event-item";
+import { Binary } from "lucide-react";
 
 interface ComponentEventListProps {
   profileId: string;
@@ -42,25 +43,33 @@ export const ComponentEventList = ({
     });
   };
   return (
-    <div className="flex flex-col w-full h-full border bg-stone-300 space-y-[1px]">
+    <div className="flex flex-col w-full h-min bg-stone-300 space-y-[0.5px]">
       <div className="flex w-full shadow-md items-center p-2 bg-white">
         <p className="text-lg font-light">IO List</p>
       </div>
-      <div className=" space-y-[1px] w-full flex flex-col">
-        <div className="bg-stone-300 space-x-[1px] flex w-full h-10">
-          <div className="bg-white h-10 w-full items-center justify-start flex">
-            <p className="pl-2">Event</p>
-          </div>
-          <div className="bg-white h-10 min-w-24 items-center justify-start flex">
-            <p className="pl-2">Address</p>
-          </div>
-          <div className="bg-white h-10 min-w-40 items-center justify-start flex">
-            <p className="pl-2">Symbol</p>
-          </div>
-          <div className="bg-white h-10 w-full items-center justify-start flex">
-            <p className="pl-2">Description</p>
-          </div>
-        </div>
+      <table className="border-collapse shadow-sm relative w-full bg-white">
+      <thead className="h-10">
+        <tr>
+          <th className="sticky top-0 border bg-white border-l-0 border-t-0 border-stone-300 w-10 min-w-10">
+            <div className="flex items-center justify-center">
+              <Binary strokeWidth={1} />
+            </div>
+          </th>
+          <th className="sticky top-0 border bg-white border-t-0 border-l-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+            Event
+          </th>
+          <th className="sticky top-0 border bg-white border-t-0 border-stone-300 min-w-28 text-base font-light whitespace-nowrap px-6">
+            Address
+          </th>
+          <th className="sticky top-0 border bg-white border-t-0 border-stone-300 min-w-32 max-w-32 text-base font-light whitespace-nowrap px-6">
+            Symbol
+          </th>
+          <th className="sticky top-0 border bg-white border-t-0 border-r-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+            Description
+          </th>
+        </tr>
+      </thead>
+      <tbody>
         {events.map((event) => (
           <EventListItem
             key={event.id}
@@ -70,8 +79,8 @@ export const ComponentEventList = ({
             projectComponent={projectComponent}
           />
         ))}
-      </div>
-      <div className="flex w-full h-full bg-white" />
+      </tbody>
+      </table>
       <button
         onClick={onAdd}
         className="w-full p-2 bg-white hover:bg-stone-100"

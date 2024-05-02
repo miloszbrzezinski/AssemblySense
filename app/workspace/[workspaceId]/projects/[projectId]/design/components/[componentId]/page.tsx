@@ -66,6 +66,11 @@ export default async function ProjectDesignComponentsPage({
                   },
                   addressIO: true,
                 },
+                orderBy: {
+                  addressIO: {
+                    symbol: "asc"
+                  }
+                }
               },
             },
           },
