@@ -58,7 +58,7 @@ export const ComponentConnectionList = ({
         </thead>
         <tbody>
         {connections.map((connection) => (
-          <ConnectionItem key={connection.id} profileId={profileId} workspaceId={workspaceId} projectComponent={projectComponent} connection={connection} />
+          <ConnectionItem key={connection.id} profileId={profileId} workspaceId={workspaceId} projectComponent={projectComponent} connection={connection} projectNetworks={projectNetworks}/>
         ))}
         </tbody>
       </table>

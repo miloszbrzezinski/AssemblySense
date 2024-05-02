@@ -5,15 +5,18 @@ import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { toast } from "sonner";
 import { ConnectionDescription } from "./connection-description";
+import { ProjectComponentConnectionPopover } from "./network-popover";
+import { ProjectNetwork } from "@prisma/client";
 
 interface ConnectionItemProps {
     profileId: string;
     workspaceId: string;
     projectComponent: ProjectComponentWithData;
     connection: ComponentConnectionWithData
+    projectNetworks: ProjectNetwork[];
 }
 
-export const ConnectionItem = ({profileId,workspaceId, projectComponent, connection}: ConnectionItemProps) => {
+export const ConnectionItem = ({profileId,workspaceId, projectComponent, connection, projectNetworks}: ConnectionItemProps) => {
   const router = useRouter();
 
 
@@ -54,8 +57,8 @@ export const ConnectionItem = ({profileId,workspaceId, projectComponent, connect
         />
       </button>
     </td>
-    <td className="group-hover:bg-slate-100 border bg-white border-t-0 border-l-0 border-stone-300 min-w-36 text-sm font-light whitespace-nowrap px-2">
-      {connection.projectNetwork.name}
+    <td className="group-hover:bg-slate-100 border bg-white border-t-0 border-l-0 border-stone-300 min-w-36 text-sm font-light whitespace-nowrap">
+      <ProjectComponentConnectionPopover profileId={profileId} workspaceId={workspaceId} projectNetworks={projectNetworks} projectComponent={projectComponent} connection={connection}/>
     </td>
     <td className="group-hover:bg-slate-100 border bg-white border-t-0 border-stone-300 max-w-36 w-36 items-baseline whitespace-nowrap px-2">
       <span className="font-light">{connection.projectNetwork.networkPortion}</span>.<span className="font-normal">{connection.hostPortion}</span>
