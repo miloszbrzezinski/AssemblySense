@@ -1,5 +1,5 @@
 import { ProjectComponentNavbar } from "@/components/projects/design/components/component-navbar";
-import { ComponentConnectionList } from "@/components/projects/design/components/connection-list";
+import { ComponentConnectionList } from "@/components/projects/design/components/connections-list/connection-list";
 import { ComponentEventList } from "@/components/projects/design/components/events-list/events-list";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";

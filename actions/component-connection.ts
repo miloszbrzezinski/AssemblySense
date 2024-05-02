@@ -102,3 +102,57 @@ export const removeProjectComponentConnection = async (
 
   return { success: `Connection removed!` };
 };
+
+export const setProjectComponentConnectionDescription = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponent: ProjectComponent,
+  componentConnectionId: string,
+  description: string
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectComponent.projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponent.id,
+                },
+                data: {
+                  componentConnections: {
+                    update:{
+                      where: {
+                        id: componentConnectionId
+                      },
+                      data: {
+                        description
+                      }
+                    }
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Connection description changed!` };
+};
