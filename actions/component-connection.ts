@@ -211,3 +211,57 @@ export const setProjectComponentConnectionNetwork = async (
 
   return { success: `Connection network changed!` };
 };
+
+export const setProjectComponentConnectionAddress = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponent: ProjectComponent,
+  componentConnectionId: string,
+  projectNetworkId: string
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectComponent.projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponent.id,
+                },
+                data: {
+                  componentConnections: {
+                    update:{
+                      where: {
+                        id: componentConnectionId
+                      },
+                      data: {
+                        projectNetworkId
+                      }
+                    }
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Connection network changed!` };
+};

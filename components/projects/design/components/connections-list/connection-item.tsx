@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { ConnectionDescription } from "./connection-description";
 import { ProjectComponentConnectionPopover } from "./network-popover";
 import { ProjectNetwork } from "@prisma/client";
+import { NetworkAddressInput } from "./address-input";
 
 interface ConnectionItemProps {
     profileId: string;
@@ -60,8 +61,9 @@ export const ConnectionItem = ({profileId,workspaceId, projectComponent, connect
     <td className="group-hover:bg-slate-100 border bg-white border-t-0 border-l-0 border-stone-300 min-w-36 text-sm font-light whitespace-nowrap">
       <ProjectComponentConnectionPopover profileId={profileId} workspaceId={workspaceId} projectNetworks={projectNetworks} projectComponent={projectComponent} connection={connection}/>
     </td>
-    <td className="group-hover:bg-slate-100 border bg-white border-t-0 border-stone-300 max-w-36 w-36 items-baseline whitespace-nowrap px-2">
-      <span className="font-light">{connection.projectNetwork.networkPortion}</span>.<span className="font-normal">{connection.hostPortion}</span>
+    <td className="group-hover:bg-slate-100 border bg-white border-t-0 border-stone-300 max-w-36 w-36 items-baseline whitespace-nowrap">
+      <NetworkAddressInput profileId={profileId} workspaceId={workspaceId} projectComponent={projectComponent} connection={connection}/>
+      
     </td>
     <td className=" group-hover:bg-slate-100 border bg-white border-t-0 border-r-0 border-stone-300 min-w-36 text-sm font-light whitespace-nowrap">
       <ConnectionDescription profileId={profileId} workspaceId={workspaceId} projectComponent={projectComponent} connection={connection}/>
