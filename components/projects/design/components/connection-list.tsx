@@ -12,6 +12,8 @@ import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { toast } from "sonner";
 import { ProjectComponentConnectionPopover } from "./project-component-connection-popover";
+import { Network, X } from "lucide-react";
+import { ConnectionItem } from "./connection-item";
 
 interface ComponentConnectionListProps {
   profileId: string;
@@ -31,43 +33,36 @@ export const ComponentConnectionList = ({
   const router = useRouter();
 
   return (
-    <div className="flex flex-col w-full h-full border bg-stone-300 space-y-[1px]">
+    <div className="flex flex-col w-full h-min bg-stone-300 space-y-[0.5px]">
       <div className="flex w-full shadow-md items-center p-2 bg-white">
         <p className="text-lg font-light">Connections</p>
       </div>
-      <div className=" space-y-[1px] w-full flex flex-col">
-        <div className="bg-stone-300 space-x-[1px] flex w-full h-10">
-          <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            <p>Network</p>
-          </div>
-          <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            <p>Address</p>
-          </div>
-          <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-            Description
-          </div>
-        </div>
+      <table className="border-collapse shadow-sm relative w-full bg-white">
+        <thead className="h-10">
+          <tr>
+            <th className="sticky top-0 border bg-white border-l-0 border-t-0 border-stone-300 w-10 min-w-10">
+              <div className="flex items-center justify-center">
+                <Network strokeWidth={1} />
+              </div>
+            </th>
+            <th className="sticky top-0 border bg-white border-t-0 border-l-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+              Network
+            </th>
+            <th className="sticky top-0 border bg-white border-t-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+              Address
+            </th>
+            <th className="sticky top-0 border bg-white border-t-0 border-r-0 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+              Description
+            </th>
+          </tr>
+        </thead>
+        <tbody>
         {connections.map((connection) => (
-          <div
-            key={connection.id}
-            className="bg-stone-300 space-x-[1px] flex w-full h-10"
-          >
-            <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>{connection.name}</p>
-            </div>
-            <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>
-                <span>{connection.hostPortion}</span>
-              </p>
-            </div>
-            <div className="bg-white h-10 w-full items-center justify-start pl-2 flex">
-              <p>{connection.description}</p>
-            </div>
-          </div>
+          <ConnectionItem key={connection.id} profileId={profileId} workspaceId={workspaceId} projectComponent={projectComponent} connection={connection} />
         ))}
-        <ProjectComponentConnectionPopover profileId={profileId} workspaceId={workspaceId} projectNetworks={projectNetworks} projectComponent={projectComponent}/>
-      </div>
-      <div className="flex w-full h-full bg-white" />
+        </tbody>
+      </table>
+      <ProjectComponentConnectionPopover profileId={profileId} workspaceId={workspaceId} projectNetworks={projectNetworks} projectComponent={projectComponent}/>
     </div>
   );
 };
