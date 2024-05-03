@@ -6,11 +6,12 @@ import {
   ProjectComponentWithData,
   ProjectNetworkWithData,
 } from "@/types";
-import { MoreVertical } from "lucide-react";
+import { MoreVertical, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProjectNetworkDescription } from "./project-network-description";
 import { ProjectNetworkName } from "./project-network-name";
 import { NetworkAddressInput } from "./address-input";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface NetworkTableItemProps {
   profileId: string;
@@ -28,9 +29,19 @@ export const NetworkTableItem = ({
   return (
     <tr className="group h-10">
       <td className="group-hover:bg-slate-100 border border-l-0 border-stone-300">
-        <button className="hover:bg-slate-200 flex items-center justify-center h-10 w-full">
-          <MoreVertical strokeWidth={1} className="hidden group-hover:block" />
-        </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="hover:bg-slate-200 flex items-center justify-center h-10 w-full outline-none">
+            <MoreVertical strokeWidth={1} className="hidden group-hover:block" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="left">
+            <DropdownMenuItem
+              className="text-red-900 hover:bg-red-200"
+            >
+              <Trash className="h-4 w-4 mr-2" />
+                Remove
+              </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </td>
       <td className="group-hover:bg-slate-100 border border-stone-300">
         <AssemblyGroupPopover
