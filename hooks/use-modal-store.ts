@@ -19,7 +19,8 @@ export type ModalType =
   | "addComponent"
   | "removeProjectComponent"
   | "addDepartment"
-  | "addProjectMember";
+  | "addProjectMember"
+  | "removeNetwork";
 
 interface ModalData {
   projectMembersWithProfile?: ProjectMemberWithProfile[];
@@ -28,6 +29,7 @@ interface ModalData {
   workspaceId?: string;
   projectId?: string;
   projectComponentId?: string;
+  projectNetworkId?: string;
   groupId?: string;
   processId?: string;
   sequenceId?: string;

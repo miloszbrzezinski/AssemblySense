@@ -12,6 +12,7 @@ import { ProjectNetworkDescription } from "./project-network-description";
 import { ProjectNetworkName } from "./project-network-name";
 import { NetworkAddressInput } from "./address-input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface NetworkTableItemProps {
   profileId: string;
@@ -26,6 +27,8 @@ export const NetworkTableItem = ({
   assemblyGroups,
   projectNetwork,
 }: NetworkTableItemProps) => {
+  const { onOpen } = useModal()
+
   return (
     <tr className="group h-10">
       <td className="group-hover:bg-slate-100 border border-l-0 border-stone-300">
@@ -37,7 +40,9 @@ export const NetworkTableItem = ({
             <DropdownMenuItem
               className="text-red-900 hover:bg-red-200"
             >
-              <Trash className="h-4 w-4 mr-2" />
+              <Trash className="h-4 w-4 mr-2"
+                onClick={() => onOpen("removeNetwork", {profileId, workspaceId, projectId: projectNetwork.projectId, projectNetworkId: projectNetwork.id})}
+              />
                 Remove
               </DropdownMenuItem>
           </DropdownMenuContent>
