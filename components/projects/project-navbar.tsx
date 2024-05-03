@@ -36,13 +36,13 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
 
   const onClickSettings = () => {
     router.push(
-      `/workspace/${params.workspaceId}/projects/${params.projectId}/settings`,
+      `/workspace/${params.workspaceId}/projects/${params.projectId}/settings/general`
     );
   };
 
   const onClickDashboard = () => {
     router.push(
-      `/workspace/${params.workspaceId}/projects/${params.projectId}/dashboard`,
+      `/workspace/${params.workspaceId}/projects/${params.projectId}/dashboard`
     );
   };
 
@@ -57,7 +57,9 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
           >
             Projects
           </Button>
-          <p className="hidden md:bolck text-stone-900 dark:text-zinc-300 font-extralight">/</p>
+          <p className="hidden md:bolck text-stone-900 dark:text-zinc-300 font-extralight">
+            /
+          </p>
           <Button
             onClick={onClickDashboard}
             variant="ghost"
@@ -114,7 +116,7 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
             <HintButton
               className={cn(
                 !true &&
-                  "bg-gradient-to-tl from-blue-500 to-blue-400 border-blue-300 dark:border-blue-400 text-white hover:shadow-sm shadow-lg dark:shadow-md shadow-blue-300 dark:shadow-blue-500 hover:text-white",
+                  "bg-gradient-to-tl from-blue-500 to-blue-400 border-blue-300 dark:border-blue-400 text-white hover:shadow-sm shadow-lg dark:shadow-md shadow-blue-300 dark:shadow-blue-500 hover:text-white"
               )}
               description="Commit change"
               sideOffset={5}
@@ -128,7 +130,7 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
               className={cn(
                 "hover:bg-amber-600/70 hover:text-amber-50 dark:hover:bg-amber-700",
                 isFavourite &&
-                  "bg-amber-600/70 text-amber-50 dark:bg-amber-600/70 dark:text-amber-50",
+                  "bg-amber-600/70 text-amber-50 dark:bg-amber-600/70 dark:text-amber-50"
               )}
             >
               <Eye strokeWidth={1.5} className="h-5 w-5" />

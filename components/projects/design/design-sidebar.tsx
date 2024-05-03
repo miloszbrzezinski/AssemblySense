@@ -1,17 +1,10 @@
 "use client";
 import {
   Binary,
-  Circle,
-  FilePlus,
   FolderPlus,
   Network,
-  Plus,
   Puzzle,
   Shield,
-  Slash,
-  Tally1,
-  Target,
-  Users,
   Waypoints,
 } from "lucide-react";
 import { Button } from "../../ui/button";
@@ -66,7 +59,7 @@ export const DesignSidebar = ({
 
   return (
     <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll">
-      <Accordion type="multiple">
+      <Accordion type="single" collapsible defaultValue="project">
         <AccordionItem value="project">
           <div className="shadow-sm shadow-stone-300 w-full">
             <AccordionTrigger>
@@ -77,34 +70,7 @@ export const DesignSidebar = ({
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/targets`,
-                );
-              }}
-              variant="secondary"
-              className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
-            >
-              <Target strokeWidth={1} />
-              <p className="font-light">Project targets</p>
-            </Button>
-            <Button
-              onClick={() => {
-                router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/members`,
-                );
-              }}
-              variant="secondary"
-              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
-            >
-              <div className="flex items-center justify-start space-x-2">
-                <Users strokeWidth={1} />
-                <p className="font-light">Members</p>
-              </div>
-              <p className="font-light">{projectMembers.length}</p>
-            </Button>
-            <Button
-              onClick={() => {
-                router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/network`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/network`
                 );
               }}
               variant="secondary"
@@ -119,7 +85,7 @@ export const DesignSidebar = ({
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/components`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/components`
                 );
               }}
               variant="secondary"
@@ -135,7 +101,7 @@ export const DesignSidebar = ({
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/io-list`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/io-list`
                 );
               }}
               variant="secondary"
@@ -149,7 +115,7 @@ export const DesignSidebar = ({
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/enables`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/enables`
                 );
               }}
               variant="secondary"
@@ -163,7 +129,7 @@ export const DesignSidebar = ({
             <Button
               onClick={() => {
                 router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/layout`,
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/layout`
                 );
               }}
               variant="secondary"
