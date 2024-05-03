@@ -8,6 +8,7 @@ import { X } from "lucide-react";
 import { startTransition } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { removeProjectComponentEvent } from "@/actions/component-event";
 
 interface EventListItemProps {
   profileId: string;
@@ -26,25 +27,26 @@ export const EventListItem = ({
 
   const removeEvent = () => {
     startTransition(() => {
-      // removeProjectComponentConnection(
-      //   profileId,
-      //   workspaceId,
-      //   connection.id,
-      //   projectComponent,
-      // ).then((data) => {
-      //   // setError(data.error);
-      //   if (data.success) {
-      //     if (data.success) {
-      //       toast(data.success, {
-      //         action: {
-      //           label: "Undo",
-      //           onClick: () => console.log("Undo"),
-      //         },
-      //       });
-      //       router.refresh();
-      //     }
-      //   }
-      // });
+      removeProjectComponentEvent(
+        profileId,
+        workspaceId,
+        projectComponent.id,
+        event.id,
+        projectComponent.projectId
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          if (data.success) {
+            toast(data.success, {
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
+            router.refresh();
+          }
+        }
+      });
     });
   };
 

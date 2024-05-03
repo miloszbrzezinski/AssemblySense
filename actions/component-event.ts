@@ -409,17 +409,13 @@ export const setComponentEventAddress = async (
 
 
 
-export const removeComponentEvent = async (
+export const removeProjectComponentEvent = async (
   profileId: string,
   workspaceId: string,
   projectComponentId: string,
   componentEventId: string,
-  address: string,
   projectId: string,
 ) => {
-  const eventType = address[0] === "I" ? EventType.STATUS : EventType.ACTION;
-  const byteAdress = address.split(".")[0].substring(1);
-  const bitAdress = address.split(".")[1];
 
   const workspace = await db.workspace.update({
     where: {
