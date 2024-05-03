@@ -15,6 +15,7 @@ import { useModal } from "@/hooks/use-modal-store";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { removeProcess } from "@/actions/assembly-group";
+import { removeProjectNetwork } from "@/actions/project-network";
 
 export const RemoveNetowrkModal = () => {
   const { isOpen, onClose, type, data } = useModal();
@@ -24,30 +25,27 @@ export const RemoveNetowrkModal = () => {
   const isModalOpen = isOpen && type === "removeNetwork";
   const { profileId, workspaceId, projectId, projectNetworkId } = data;
 
-  // if (!profileId || !workspaceId || !projectId || !projectNetworkId) {
-  //   return;
-  // }
+  if (!profileId || !workspaceId || !projectId || !projectNetworkId) {
+    return;
+  }
 
   const onClick = async () => {
     startTransition(() => {
-      // removeProcess(profileId, workspaceId, projectId, groupId, processId).then(
-      //   (data) => {
-      //     // setError(data.error);
-      //     if (data.success) {
-      //       toast(data.success, {
-      //         action: {
-      //           label: "Undo",
-      //           onClick: () => console.log("Undo"),
-      //         },
-      //       });
-      //       onClose();
-      //       router.push(
-      //         `/workspace/${workspaceId}/projects/${projectId}/design`,
-      //       );
-      //       router.refresh();
-      //     }
-      //   },
-      // );
+      removeProjectNetwork(profileId, workspaceId, projectId, projectNetworkId).then(
+        (data) => {
+          // setError(data.error);
+          if (data.success) {
+            toast(data.success, {
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
+            onClose();
+            router.refresh();
+          }
+        },
+      );
     });
   };
 

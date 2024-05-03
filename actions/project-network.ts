@@ -30,7 +30,7 @@ export const addProjectNetwork = async (
           data: {
             projectNetworks: {
               create: {
-                name: "network",
+                name: "new network",
                 subnetMask: "255.255.255.0",
                 networkPortion: "192.168.1",
               },
@@ -230,8 +230,8 @@ export const setProjectNetworkDescription = async (
 export const removeProjectNetwork = async (
   profileId: string,
   workspaceId: string,
-  projectNetwork: ProjectNetwork,
   projectId: string,
+  projectNetworkId: string,
 ) => {
   const workspace = await db.workspace.update({
     where: {
@@ -254,7 +254,7 @@ export const removeProjectNetwork = async (
           data: {
             projectNetworks: {
               delete: {
-                id: projectNetwork.id,
+                id: projectNetworkId,
               },
             },
           },

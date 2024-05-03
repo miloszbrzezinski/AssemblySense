@@ -30,7 +30,6 @@ export const NetworkTableItem = ({
   const { onOpen } = useModal()
 
   const onRemove = () => {
-    console.log("tttt")
     onOpen("removeNetwork", {profileId, workspaceId, projectId: projectNetwork.projectId, projectNetworkId: projectNetwork.id})
   }
 
