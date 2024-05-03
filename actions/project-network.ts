@@ -225,3 +225,43 @@ export const setProjectNetworkDescription = async (
 
   return { success: `Network description changed!` };
 };
+
+
+export const removeProjectNetwork = async (
+  profileId: string,
+  workspaceId: string,
+  projectNetwork: ProjectNetwork,
+  projectId: string,
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectNetworks: {
+              delete: {
+                id: projectNetwork.id,
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Network removed!` };
+};
