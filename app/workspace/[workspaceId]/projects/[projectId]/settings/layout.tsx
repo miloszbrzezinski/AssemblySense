@@ -1,4 +1,5 @@
 import { DesignSidebar } from "@/components/projects/design/design-sidebar";
+import { ProjectSettingsSidebar } from "@/components/projects/settings/project-settings-sidebar";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -68,25 +69,18 @@ export default async function ProjectDesignLayout({
 
   return (
     <div className="h-full flex bg-stone-100 dark:bg-zinc-800">
-      <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel className="min-w-72 h-full" defaultSize={15}>
-          <DesignSidebar
-            profileId={profile.id}
-            workspaceId={params.workspaceId}
-            projectId={params.projectId}
-            assemblyGroups={project.assemblyGroups}
-            projectMembers={project.projectMembers}
-            projectComponents={project.projectComponents}
-            projectNetworks={project.projectNetworks}
-          />
-        </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel className="min-w-[50%] h-full" defaultSize={85}>
-          <div className="w-full h-full transition-all bg-stone-100 dark:bg-zinc-800">
-            {children}
-          </div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+      <ProjectSettingsSidebar
+        profileId={profile.id}
+        workspaceId={params.workspaceId}
+        projectId={params.projectId}
+        assemblyGroups={project.assemblyGroups}
+        projectMembers={project.projectMembers}
+        projectComponents={project.projectComponents}
+        projectNetworks={project.projectNetworks}
+      />
+      <div className="w-full h-full transition-all bg-stone-100 dark:bg-zinc-800">
+        {children}
+      </div>
     </div>
   );
 }
