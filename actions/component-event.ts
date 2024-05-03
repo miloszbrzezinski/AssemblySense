@@ -406,3 +406,59 @@ export const setComponentEventAddress = async (
 
   return { success: `Component event address changed!` };
 };
+
+
+
+export const removeComponentEvent = async (
+  profileId: string,
+  workspaceId: string,
+  projectComponentId: string,
+  componentEventId: string,
+  address: string,
+  projectId: string,
+) => {
+  const eventType = address[0] === "I" ? EventType.STATUS : EventType.ACTION;
+  const byteAdress = address.split(".")[0].substring(1);
+  const bitAdress = address.split(".")[1];
+
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectComponents: {
+              update: {
+                where: {
+                  id: projectComponentId,
+                },
+                data: {
+                  componentEvents: {
+                    delete: {
+                        id: componentEventId,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Component event removed!` };
+};
