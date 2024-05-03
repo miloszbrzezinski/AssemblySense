@@ -29,6 +29,11 @@ export const NetworkTableItem = ({
 }: NetworkTableItemProps) => {
   const { onOpen } = useModal()
 
+  const onRemove = () => {
+    console.log("tttt")
+    onOpen("removeNetwork", {profileId, workspaceId, projectId: projectNetwork.projectId, projectNetworkId: projectNetwork.id})
+  }
+
   return (
     <tr className="group h-10">
       <td className="group-hover:bg-slate-100 border border-l-0 border-stone-300">
@@ -39,9 +44,10 @@ export const NetworkTableItem = ({
           <DropdownMenuContent side="left">
             <DropdownMenuItem
               className="text-red-900 hover:bg-red-200"
+              onClick={onRemove}
             >
               <Trash className="h-4 w-4 mr-2"
-                onClick={() => onOpen("removeNetwork", {profileId, workspaceId, projectId: projectNetwork.projectId, projectNetworkId: projectNetwork.id})}
+                
               />
                 Remove
               </DropdownMenuItem>
