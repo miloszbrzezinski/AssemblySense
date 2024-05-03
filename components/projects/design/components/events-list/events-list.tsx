@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { toast } from "sonner";
 import { EventListItem } from "./event-item";
-import { Binary } from "lucide-react";
+import { Binary, Plus } from "lucide-react";
 
 interface ComponentEventListProps {
   profileId: string;
@@ -81,11 +81,9 @@ export const ComponentEventList = ({
         ))}
       </tbody>
       </table>
-      <button
-        onClick={onAdd}
-        className="w-full p-2 bg-white hover:bg-stone-100"
-      >
-        Add I/O
+      <button onClick={onAdd} className="text-base h-10 pl-2 w-full flex items-center justify-start bg-white hover:bg-slate-200">
+        <Plus strokeWidth={1}/>
+        <h3 className="text-base font-light pl-2">Add event</h3>
       </button>
     </div>
   );

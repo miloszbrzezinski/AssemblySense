@@ -46,7 +46,7 @@ export default function Home() {
             </SignedOut>
             <SignedIn>
               <Button size="lg" variant="secondary" className="w-full" asChild>
-                <Link href="/workspace">Continue Learning</Link>
+                <Link href="/workspace">Continue</Link>
               </Button>
             </SignedIn>
           </ClerkLoaded>
