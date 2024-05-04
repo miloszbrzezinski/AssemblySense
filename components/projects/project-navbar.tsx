@@ -19,17 +19,27 @@ import ProjectNavButton from "./project-nav-button";
 import { Project } from "@prisma/client";
 
 interface ProjectNavbarProps {
+  profileId: string;
   project: Project;
   isFavourite: boolean;
 }
 
-const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
+const ProjectNavbar = ({
+  profileId,
+  project,
+  isFavourite,
+}: ProjectNavbarProps) => {
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
+  const { onOpen } = useModal();
 
   const onClick = () => {
     router.push(`/workspace/${params.workspaceId}/projects`);
+  };
+
+  const onClickChanges = async () => {
+    onOpen("commitChanges", { profileId });
   };
 
   const onClickFavourite = async () => {};
@@ -50,16 +60,16 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
     <div className="flex flex-col w-full items-center h-24 bg-stone-50 dark:bg-zinc-900/30 dark:border-b-zinc-400 border-b-stone-500/30 shadow-sm border-b select-none">
       <div className="flex flex-row flex-grow w-full justify-between md:px-5 px-1">
         <div className="flex items-center h-12 text-2xl pt-2">
-          <Button
+          {/* <Button
             onClick={onClick}
             variant="ghost"
-            className="hidden md:bolck text-2xl ext-stone-900 dark:text-zinc-300 dark:hover:bg-zinc-700/50 font-medium px-2"
+            className="hidden md:block text-2xl ext-stone-900 dark:text-zinc-300 dark:hover:bg-zinc-700/50 font-medium px-2"
           >
             Projects
           </Button>
-          <p className="hidden md:bolck text-stone-900 dark:text-zinc-300 font-extralight">
+          <p className="hidden md:block text-stone-900 dark:text-zinc-300 font-extralight">
             /
-          </p>
+          </p> */}
           <Button
             onClick={onClickDashboard}
             variant="ghost"
@@ -90,7 +100,10 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
                 <MoreVertical className="h-5 w-5 select-none" />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem className="space-x-2">
+                <DropdownMenuItem
+                  onClick={onClickChanges}
+                  className="space-x-2"
+                >
                   <Replace strokeWidth={1.5} className="h-5 w-5" />
                   <p>Commit change</p>
                 </DropdownMenuItem>
@@ -114,6 +127,7 @@ const ProjectNavbar = ({ project, isFavourite }: ProjectNavbarProps) => {
           </div>
           <div className="group space-x-2 whitespace-nowrap md:block hidden transition-all">
             <HintButton
+              onClick={onClickChanges}
               className={cn(
                 !true &&
                   "bg-gradient-to-tl from-blue-500 to-blue-400 border-blue-300 dark:border-blue-400 text-white hover:shadow-sm shadow-lg dark:shadow-md shadow-blue-300 dark:shadow-blue-500 hover:text-white"

@@ -9,6 +9,7 @@ import { RemoveSequenceModal } from "../modals/remove-sequence";
 import { RemoveProcessModal } from "../modals/remove-process";
 import { RemoveProjectComponentModal } from "../modals/remove-project-component";
 import { RemoveNetowrkModal } from "../modals/remove-network";
+import { CommitChangesModal } from "../modals/commit-changes";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -31,6 +32,7 @@ export const ModalProvider = () => {
       <RemoveProcessModal />
       <RemoveProjectComponentModal />
       <RemoveNetowrkModal />
+      <CommitChangesModal />
     </>
   );
 };
