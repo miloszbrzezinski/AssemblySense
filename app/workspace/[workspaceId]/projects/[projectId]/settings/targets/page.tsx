@@ -1,7 +1,8 @@
 import { ProjectTargetNavbar } from "@/components/projects/settings/project-targets-navbar";
+import { Button } from "@/components/ui/button";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { MoreVertical, Target, Timer } from "lucide-react";
+import { Edit, MoreVertical, Target, Timer, Trash } from "lucide-react";
 
 export default async function ProjectTargetsPage({
   params,
@@ -55,10 +56,10 @@ export default async function ProjectTargetsPage({
         workspaceId={workspace.id}
         projectId={project.id}
       />
-      <table>
+      <table className="bg-white m-5">
         <tbody>
           {project.projectTargets.map((target) => (
-            <tr key={target.id} className="h-20 hover:bg-stone-200 select-none">
+            <tr key={target.id} className="h-20 hover:bg-slate-200 select-none">
               <td className="w-16 max-w-16">
                 <div className="flex w-16 items-center justify-center border-stone-400">
                   <Timer strokeWidth={1} className="w-12 h-12" />
@@ -73,9 +74,20 @@ export default async function ProjectTargetsPage({
               <td className="text-4xl font-light w-full pl-5">
                 {target.target}
               </td>
-              <td className="max-w-14 w-14">
-                <div className="flex items-center justify-center">
-                  <MoreVertical strokeWidth={1} className="w-7 h-7" />
+              <td className="max-w-36 w-20 px-5">
+                <div className="flex items-center justify-center space-x-4">
+                  <Button
+                    variant="ghost"
+                    className="w-min p-2 hover:bg-slate-300"
+                  >
+                    <Edit strokeWidth={1} className="w-7 h-7" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-min p-2 hover:bg-red-300/50"
+                  >
+                    <Trash strokeWidth={1} className="w-7 h-7" />
+                  </Button>
                 </div>
               </td>
             </tr>

@@ -7,6 +7,7 @@ import {
   ProjectComponent,
   ProjectMember,
   ProjectNetwork,
+  ProjectTarget,
 } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
 
@@ -14,20 +15,16 @@ interface ProjectSettingsSidebarProps {
   profileId: string;
   workspaceId: string;
   projectId: string;
-  assemblyGroups: AssemblyGroupWithProcesses[];
+  projectTargets: ProjectTarget[];
   projectMembers: ProjectMember[];
-  projectComponents: ProjectComponent[];
-  projectNetworks: ProjectNetwork[];
 }
 
 export const ProjectSettingsSidebar = ({
   profileId,
   workspaceId,
   projectId,
-  assemblyGroups,
+  projectTargets,
   projectMembers,
-  projectComponents,
-  projectNetworks,
 }: ProjectSettingsSidebarProps) => {
   const params = useParams();
   const router = useRouter();
@@ -68,10 +65,13 @@ export const ProjectSettingsSidebar = ({
           );
         }}
         variant="secondary"
-        className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
+        className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
       >
-        <Target strokeWidth={1} />
-        <p className="font-light">Project targets</p>
+        <div className="flex  items-center justify-start space-x-2">
+          <Target strokeWidth={1} />
+          <p className="font-light">Project targets</p>
+        </div>
+        <p className="font-light">{projectTargets.length}</p>
       </Button>
       <Button
         onClick={() => {

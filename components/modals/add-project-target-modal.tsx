@@ -70,15 +70,19 @@ export const AddProjectTargetModal = () => {
 
   const onSubmit = (values: z.infer<typeof CreateProjectTargetSchema>) => {
     startTransition(() => {
-      createProjectTarget(profileId, workspaceId, projectId, values).then(
-        (data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
+      createProjectTarget(
+        profileId,
+        workspaceId,
+        projectId,
+        values,
+        selectedType
+      ).then((data) => {
+        // setError(data.error);
+        if (data) {
+          router.refresh();
+          onClose();
         }
-      );
+      });
     });
   };
 
@@ -138,127 +142,144 @@ export const AddProjectTargetModal = () => {
               )}
             />
             <Separator />
-            <FormLabel className="uppercase text-xs dark:text-neutral-200">
-              Target type
-            </FormLabel>
-            <div className="flex items-center justify-between space-x-2">
-              <div
-                className={cn(
-                  "cursor-pointer relative group hover:opacity-75 transition w-1/4"
-                )}
-                onClick={() => {
-                  setSelectedType(ProjectTargetType.GENERAL);
-                }}
-              >
-                <input
-                  type="radio"
-                  id="targetIcon"
-                  className="hidden"
-                  checked={selectedType === ProjectTargetType.GENERAL}
-                  value={ProjectTargetType.GENERAL}
-                  {...form.register("targetType", {
-                    shouldUnregister: true,
-                  })}
-                />
-                <div
-                  className={cn(
-                    "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
-                    selectedType === ProjectTargetType.GENERAL &&
-                      "bg-slate-300 hover:bg-slate-200"
-                  )}
-                >
-                  <Target strokeWidth={1} className="w-14 h-14" />
-                  <p>General</p>
-                </div>
-              </div>
-              <div
-                className={cn(
-                  "cursor-pointer relative group hover:opacity-75 transition w-1/4"
-                )}
-                onClick={() => {
-                  setSelectedType(ProjectTargetType.WORKING_TIME);
-                }}
-              >
-                <input
-                  type="radio"
-                  id="targetIcon"
-                  className="hidden"
-                  checked={selectedType === ProjectTargetType.WORKING_TIME}
-                  value={ProjectTargetType.WORKING_TIME}
-                  {...form.register("targetType", {
-                    shouldUnregister: true,
-                  })}
-                />
-                <div
-                  className={cn(
-                    "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
-                    selectedType === ProjectTargetType.WORKING_TIME &&
-                      "bg-slate-300 hover:bg-slate-200"
-                  )}
-                >
-                  <Timer strokeWidth={1} className="w-14 h-14" />
-                  <p>Working time</p>
-                </div>
-              </div>
-              <div
-                className={cn(
-                  "cursor-pointer relative group hover:opacity-75 transition w-1/4"
-                )}
-                onClick={() => {
-                  setSelectedType(ProjectTargetType.TIME);
-                }}
-              >
-                <input
-                  type="radio"
-                  id="targetIcon"
-                  className="hidden"
-                  checked={selectedType === ProjectTargetType.TIME}
-                  value={ProjectTargetType.TIME}
-                  {...form.register("targetType", {
-                    shouldUnregister: true,
-                  })}
-                />
-                <div
-                  className={cn(
-                    "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
-                    selectedType === ProjectTargetType.TIME &&
-                      "bg-slate-300 hover:bg-slate-200"
-                  )}
-                >
-                  <Hourglass strokeWidth={1} className="w-14 h-14" />
-                  <p>Time</p>
-                </div>
-              </div>
-              <div
-                className={cn(
-                  "cursor-pointer relative group hover:opacity-75 transition w-1/4"
-                )}
-                onClick={() => {
-                  setSelectedType(ProjectTargetType.DATE);
-                }}
-              >
-                <input
-                  type="radio"
-                  id="targetIcon"
-                  className="hidden"
-                  checked={selectedType === ProjectTargetType.DATE}
-                  value={ProjectTargetType.DATE}
-                  {...form.register("targetType", {
-                    shouldUnregister: true,
-                  })}
-                />
-                <div
-                  className={cn(
-                    "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
-                    selectedType === ProjectTargetType.DATE &&
-                      "bg-slate-300 hover:bg-slate-200"
-                  )}
-                >
-                  <CalendarCheck strokeWidth={1} className="w-14 h-14" />
-                  <p>Date</p>
-                </div>
-              </div>
-            </div>
+            <FormField
+              control={form.control}
+              name="targetType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="uppercase text-xs dark:text-neutral-200">
+                    Target type
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex items-center justify-between space-x-2">
+                      <div
+                        className={cn(
+                          "cursor-pointer relative group hover:opacity-75 transition w-1/4"
+                        )}
+                        onClick={() => {
+                          setSelectedType(ProjectTargetType.GENERAL);
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          id="targetType"
+                          className="hidden"
+                          checked={selectedType === ProjectTargetType.GENERAL}
+                          value={ProjectTargetType.GENERAL}
+                          {...form.register("targetType", {
+                            shouldUnregister: true,
+                          })}
+                        />
+                        <div
+                          className={cn(
+                            "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
+                            selectedType === ProjectTargetType.GENERAL &&
+                              "bg-slate-300 hover:bg-slate-200"
+                          )}
+                        >
+                          <Target strokeWidth={1} className="w-14 h-14" />
+                          <p>General</p>
+                        </div>
+                      </div>
+                      <div
+                        className={cn(
+                          "cursor-pointer relative group hover:opacity-75 transition w-1/4"
+                        )}
+                        onClick={() => {
+                          setSelectedType(ProjectTargetType.WORKING_TIME);
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          id="targetType"
+                          className="hidden"
+                          checked={
+                            selectedType === ProjectTargetType.WORKING_TIME
+                          }
+                          value={ProjectTargetType.WORKING_TIME}
+                          {...form.register("targetType", {
+                            shouldUnregister: true,
+                          })}
+                        />
+                        <div
+                          className={cn(
+                            "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
+                            selectedType === ProjectTargetType.WORKING_TIME &&
+                              "bg-slate-300 hover:bg-slate-200"
+                          )}
+                        >
+                          <Timer strokeWidth={1} className="w-14 h-14" />
+                          <p>Working time</p>
+                        </div>
+                      </div>
+                      <div
+                        className={cn(
+                          "cursor-pointer relative group hover:opacity-75 transition w-1/4"
+                        )}
+                        onClick={() => {
+                          setSelectedType(ProjectTargetType.TIME);
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          id="targetType"
+                          className="hidden"
+                          checked={selectedType === ProjectTargetType.TIME}
+                          value={ProjectTargetType.TIME}
+                          {...form.register("targetType", {
+                            shouldUnregister: true,
+                          })}
+                        />
+                        <div
+                          className={cn(
+                            "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
+                            selectedType === ProjectTargetType.TIME &&
+                              "bg-slate-300 hover:bg-slate-200"
+                          )}
+                        >
+                          <Hourglass strokeWidth={1} className="w-14 h-14" />
+                          <p>Time</p>
+                        </div>
+                      </div>
+                      <div
+                        className={cn(
+                          "cursor-pointer relative group hover:opacity-75 transition w-1/4"
+                        )}
+                        onClick={() => {
+                          setSelectedType(ProjectTargetType.DATE);
+                        }}
+                      >
+                        <input
+                          type="radio"
+                          id="targetType"
+                          className="hidden"
+                          checked={selectedType === ProjectTargetType.DATE}
+                          value={ProjectTargetType.DATE}
+                          {...form.register("targetType", {
+                            shouldUnregister: true,
+                          })}
+                        />
+                        <div
+                          className={cn(
+                            "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
+                            selectedType === ProjectTargetType.DATE &&
+                              "bg-slate-300 hover:bg-slate-200"
+                          )}
+                        >
+                          <CalendarCheck
+                            strokeWidth={1}
+                            className="w-14 h-14"
+                          />
+                          <p>Date</p>
+                        </div>
+                      </div>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="targetValue"

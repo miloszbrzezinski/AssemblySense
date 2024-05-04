@@ -1,5 +1,6 @@
 import { DashboardCard } from "@/components/projects/dasboard-card";
 import { ProjectMembersCard } from "@/components/projects/project-members-card";
+import { ProjectTargetsCard } from "@/components/projects/project-targets-card";
 import { Button } from "@/components/ui/button";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -40,6 +41,7 @@ export default async function ProjectDashboardPage({
           id: params.projectId,
         },
         include: {
+          projectTargets: true,
           projectMembers: {
             include: {
               workspaceMember: {
@@ -68,12 +70,7 @@ export default async function ProjectDashboardPage({
   return (
     <div className="h-full w-full flex flex-col p-2 gap-2">
       <div className="flex h-2/3 w-full gap-2">
-        <DashboardCard
-          icon={<Target strokeWidth={1} />}
-          title="Project targets"
-        >
-          Test
-        </DashboardCard>
+        <ProjectTargetsCard projectTarget={project.projectTargets} />
         <ProjectMembersCard projectMembers={project.projectMembers} />
         <DashboardCard
           icon={<SquareCheck strokeWidth={1} />}

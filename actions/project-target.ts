@@ -2,14 +2,15 @@
 
 import { db } from "@/lib/db";
 import { CreateProjectTargetSchema } from "@/schemas";
-import { MemberRole } from "@prisma/client";
+import { MemberRole, ProjectTargetType } from "@prisma/client";
 import { z } from "zod";
 
 export const createProjectTarget = async (
   profileId: string,
   workspaceId: string,
   projectId: string,
-  values: z.infer<typeof CreateProjectTargetSchema>
+  values: z.infer<typeof CreateProjectTargetSchema>,
+  selectedType: ProjectTargetType
 ) => {
   const validatedFields = CreateProjectTargetSchema.safeParse(values);
 
@@ -44,7 +45,7 @@ export const createProjectTarget = async (
                 name: targetName,
                 target: targetValue,
                 description: targetDescription,
-                projectTargetType: targetType,
+                projectTargetType: selectedType,
               },
             },
           },
@@ -61,7 +62,8 @@ export const editProjectTarget = async (
   workspaceId: string,
   projectId: string,
   projectTargetId: string,
-  values: z.infer<typeof CreateProjectTargetSchema>
+  values: z.infer<typeof CreateProjectTargetSchema>,
+  selectedType: ProjectTargetType
 ) => {
   const validatedFields = CreateProjectTargetSchema.safeParse(values);
 

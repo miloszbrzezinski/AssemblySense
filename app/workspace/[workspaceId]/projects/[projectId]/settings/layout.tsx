@@ -38,7 +38,7 @@ export default async function ProjectDesignLayout({
           id: params.projectId,
         },
         include: {
-          projectComponents: true,
+          projectTargets: true,
           projectMembers: true,
           projectNetworks: true,
           assemblyGroups: {
@@ -73,10 +73,8 @@ export default async function ProjectDesignLayout({
         profileId={profile.id}
         workspaceId={params.workspaceId}
         projectId={params.projectId}
-        assemblyGroups={project.assemblyGroups}
+        projectTargets={project.projectTargets}
         projectMembers={project.projectMembers}
-        projectComponents={project.projectComponents}
-        projectNetworks={project.projectNetworks}
       />
       <div className="w-full h-full transition-all bg-stone-100 dark:bg-zinc-800">
         {children}

@@ -51,7 +51,7 @@ export const ProjectMembersCard = ({
                   </div>
                 </div>
               </div>
-            ),
+            )
         )}
       </div>
     </DashboardCard>
