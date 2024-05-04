@@ -55,6 +55,14 @@ export const ProjectTargetsTable = ({
             <td className="max-w-36 w-20 px-5">
               <div className="flex items-center justify-center space-x-4">
                 <Button
+                  onClick={() => {
+                    onOpen("addProjectTarget", {
+                      profileId,
+                      workspaceId,
+                      projectId: target.projectId,
+                      projectTarget: target,
+                    });
+                  }}
                   variant="ghost"
                   className="w-min p-2 hover:bg-slate-300"
                 >

@@ -4,6 +4,7 @@ import {
   ComponentCategory,
   Member,
   Project,
+  ProjectTarget,
   Workspace,
 } from "@prisma/client";
 import { create } from "zustand";
@@ -34,6 +35,7 @@ interface ModalData {
   projectComponentId?: string;
   projectNetworkId?: string;
   projectTargetId?: string;
+  projectTarget?: ProjectTarget;
   groupId?: string;
   processId?: string;
   sequenceId?: string;

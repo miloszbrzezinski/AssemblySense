@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { CreateProjectTargetSchema } from "@/schemas";
-import { startTransition, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { createComponent } from "@/actions/library";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
@@ -60,13 +60,26 @@ export const AddProjectTargetModal = () => {
     },
   });
 
-  const { profileId, projectId, workspaceId } = data;
+  const { profileId, projectId, workspaceId, projectTarget } = data;
+
+  useEffect(() => {
+    if (projectTarget) {
+      form.setValue("targetName", projectTarget.name);
+      form.setValue("targetValue", projectTarget.target);
+      form.setValue("targetDescription", projectTarget.description);
+      setSelectedType(projectTarget.projectTargetType);
+    }
+    if (!projectTarget) {
+      form.setValue("targetName", "");
+      form.setValue("targetValue", "");
+      form.setValue("targetDescription", "");
+      setSelectedType(ProjectTargetType.GENERAL);
+    }
+  }, [form, projectTarget]);
 
   if (!profileId || !projectId || !workspaceId) {
     return;
   }
-
-  const isLoading = form.formState.isSubmitting;
 
   const onSubmit = (values: z.infer<typeof CreateProjectTargetSchema>) => {
     startTransition(() => {
@@ -85,6 +98,8 @@ export const AddProjectTargetModal = () => {
       });
     });
   };
+
+  const isLoading = false;
 
   return (
     <Dialog open={isModalOpen} onOpenChange={onClose}>
