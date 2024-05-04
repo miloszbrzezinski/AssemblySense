@@ -1,3 +1,4 @@
+import { ProjectTargetType } from "@prisma/client";
 import * as z from "zod";
 //import { UserRole } from "@prisma/client";
 
@@ -21,7 +22,7 @@ export const SettingsSchema = z
     {
       message: "New password is required!",
       path: ["newPassword"],
-    },
+    }
   )
   .refine(
     (data) => {
@@ -34,7 +35,7 @@ export const SettingsSchema = z
     {
       message: "Password is required!",
       path: ["password"],
-    },
+    }
   );
 
 export const NewPasswordSchema = z.object({
@@ -131,4 +132,15 @@ export const CreateDepartmentSchema = z.object({
   departmentName: z.string().min(1, {
     message: "Department name is required",
   }),
+});
+
+export const CreateProjectTargetSchema = z.object({
+  targetName: z.string().min(1, {
+    message: "Target name is required",
+  }),
+  targetValue: z.string().min(1, {
+    message: "Target value is required",
+  }),
+  targetDescription: z.string(),
+  targetType: z.nativeEnum(ProjectTargetType),
 });
