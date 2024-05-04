@@ -56,7 +56,7 @@ export const ProjectTargetsTable = ({
               <div className="flex items-center justify-center space-x-4">
                 <Button
                   onClick={() => {
-                    onOpen("addProjectTarget", {
+                    onOpen("editProjectTarget", {
                       profileId,
                       workspaceId,
                       projectId: target.projectId,

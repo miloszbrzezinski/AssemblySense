@@ -24,7 +24,8 @@ export type ModalType =
   | "removeNetwork"
   | "commitChanges"
   | "addProjectTarget"
-  | "removeProjectTarget";
+  | "removeProjectTarget"
+  | "editProjectTarget";
 
 interface ModalData {
   projectMembersWithProfile?: ProjectMemberWithProfile[];
