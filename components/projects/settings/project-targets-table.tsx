@@ -1,5 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { CalendarCard } from "@/components/ui/calendar-card";
+import { TimeDisplay } from "@/components/ui/time-display";
 import { useModal } from "@/hooks/use-modal-store";
 import { ProjectTarget, ProjectTargetType } from "@prisma/client";
 import {
@@ -24,36 +26,38 @@ export const ProjectTargetsTable = ({
 }: ProjectTargetsTableProps) => {
   const { onOpen } = useModal();
   return (
-    <table className="bg-white m-5">
+    <table className="bg-white m-5 border border-collapse">
       <tbody>
         {projectTargets.map((target) => (
-          <tr key={target.id} className="h-20 hover:bg-slate-200 select-none">
-            <td className="w-16 max-w-16">
-              <div className="flex w-16 items-center justify-center border-stone-400">
+          <tr
+            key={target.id}
+            className="group h-24 hover:bg-slate-200 select-none"
+          >
+            <td className="w-32 max-w-32">
+              <div className="flex w-32 items-center justify-center border-stone-400 px-5">
                 {target.projectTargetType === ProjectTargetType.GENERAL && (
-                  <Target strokeWidth={1} className="w-12 h-12" />
+                  <p>{target.target}</p>
                 )}
                 {target.projectTargetType ===
                   ProjectTargetType.WORKING_TIME && (
-                  <Timer strokeWidth={1} className="w-12 h-12" />
+                  <TimeDisplay time={target.target} />
                 )}
                 {target.projectTargetType === ProjectTargetType.TIME && (
-                  <Hourglass strokeWidth={1} className="w-12 h-12" />
+                  <TimeDisplay time={target.target} />
                 )}
                 {target.projectTargetType === ProjectTargetType.DATE && (
-                  <CalendarCheck strokeWidth={1} className="w-12 h-12" />
+                  <CalendarCard date={target.target} />
                 )}
               </div>
             </td>
             <td className="w-min whitespace-nowrap">
-              <div className="border-stone-400/70 border-r border-l px-5">
+              <div className="border-stone-400/70 border-l px-5">
                 <h3 className="text-2xl font-light">{target.name}</h3>
                 <p className="font-extralight">{target.description}</p>
               </div>
             </td>
-            <td className="text-4xl font-light w-full pl-5">{target.target}</td>
             <td className="max-w-36 w-20 px-5">
-              <div className="flex items-center justify-center space-x-4">
+              <div className="group-hover:flex hidden items-center justify-center space-x-1">
                 <Button
                   onClick={() => {
                     onOpen("editProjectTarget", {
