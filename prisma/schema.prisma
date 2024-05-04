@@ -139,6 +139,7 @@ model Project {
   projectMembers    ProjectMember[]
   projectComponents ProjectComponent[]
   projectNetworks   ProjectNetwork[]
+  projectTargets    ProjectTarget[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -158,6 +159,29 @@ model ProjectMember {
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@index([workspaceMemberId])
+}
+
+model ProjectTarget {
+  id                String            @id @default(uuid())
+  name              String            @db.Text
+  description       String            @db.Text
+  target            String            @db.Text
+  projectTargetType ProjectTargetType @default(GENERAL)
+
+  projectId String
+  Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+enum ProjectTargetType {
+  GENERAL
+  TIME
+  WORKING_TIME
+  DATE
 }
 
 model Customer {
