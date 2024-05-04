@@ -11,6 +11,7 @@ import { RemoveProjectComponentModal } from "../modals/remove-project-component"
 import { RemoveNetowrkModal } from "../modals/remove-network";
 import { CommitChangesModal } from "../modals/commit-changes";
 import { AddProjectTargetModal } from "../modals/add-project-target-modal";
+import { RemoveProjectTargetModal } from "../modals/remove-project-target-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -35,6 +36,7 @@ export const ModalProvider = () => {
       <RemoveNetowrkModal />
       <CommitChangesModal />
       <AddProjectTargetModal />
+      <RemoveProjectTargetModal />
     </>
   );
 };

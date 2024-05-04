@@ -1,4 +1,5 @@
 import { ProjectTargetNavbar } from "@/components/projects/settings/project-targets-navbar";
+import { ProjectTargetsTable } from "@/components/projects/settings/project-targets-table";
 import { Button } from "@/components/ui/button";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -56,44 +57,11 @@ export default async function ProjectTargetsPage({
         workspaceId={workspace.id}
         projectId={project.id}
       />
-      <table className="bg-white m-5">
-        <tbody>
-          {project.projectTargets.map((target) => (
-            <tr key={target.id} className="h-20 hover:bg-slate-200 select-none">
-              <td className="w-16 max-w-16">
-                <div className="flex w-16 items-center justify-center border-stone-400">
-                  <Timer strokeWidth={1} className="w-12 h-12" />
-                </div>
-              </td>
-              <td className="w-min whitespace-nowrap">
-                <div className="border-stone-400/70 border-r border-l px-5">
-                  <h3 className="text-2xl font-light">{target.name}</h3>
-                  <p className="font-extralight">{target.description}</p>
-                </div>
-              </td>
-              <td className="text-4xl font-light w-full pl-5">
-                {target.target}
-              </td>
-              <td className="max-w-36 w-20 px-5">
-                <div className="flex items-center justify-center space-x-4">
-                  <Button
-                    variant="ghost"
-                    className="w-min p-2 hover:bg-slate-300"
-                  >
-                    <Edit strokeWidth={1} className="w-7 h-7" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-min p-2 hover:bg-red-300/50"
-                  >
-                    <Trash strokeWidth={1} className="w-7 h-7" />
-                  </Button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ProjectTargetsTable
+        profileId={profile.id}
+        workspaceId={workspace.id}
+        projectTargets={project.projectTargets}
+      />
     </div>
   );
 }

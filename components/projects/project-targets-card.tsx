@@ -35,16 +35,16 @@ export const ProjectTargetsCard = ({
           >
             <div className="flex w-full min-h-14  items-center p-2 space-x-2 hover:bg-stone-100">
               {target.projectTargetType === ProjectTargetType.GENERAL && (
-                <Target strokeWidth={1} className="min-w-11 h-11" />
+                <Target strokeWidth={1} className="min-w-9 h-9" />
               )}
               {target.projectTargetType === ProjectTargetType.WORKING_TIME && (
-                <Timer strokeWidth={1} className="min-w-11 h-11" />
+                <Timer strokeWidth={1} className="min-w-9 h-9" />
               )}
               {target.projectTargetType === ProjectTargetType.TIME && (
-                <Hourglass strokeWidth={1} className="min-w-11 h-11" />
+                <Hourglass strokeWidth={1} className="min-w-9 h-9" />
               )}
               {target.projectTargetType === ProjectTargetType.DATE && (
-                <CalendarCheck strokeWidth={1} className="min-w-11 h-11" />
+                <CalendarCheck strokeWidth={1} className="min-w-9 h-9" />
               )}
               <div>
                 <div className="flex items-center space-x-1">
@@ -60,7 +60,19 @@ export const ProjectTargetsCard = ({
                 orientation="vertical"
                 className="h-10 w-[1px] bg-stone-600"
               />
-              <p className="w-full text-xl">{target.target}</p>
+              {target.projectTargetType === ProjectTargetType.DATE && (
+                <div className="border border-stone-500 rounded-md flex flex-col items-center justify-center">
+                  <p className="p-2 text-2xl">{target.target.split("/")[0]}</p>
+                  <p className="border-t w-full text-sm rounded-b-sm px-1 bg-red-900 text-white">
+                    September
+                  </p>
+                </div>
+              )}
+              {target.projectTargetType === ProjectTargetType.TIME && (
+                <div>
+                  <p className="w-full text-xl">{target.target}</p>
+                </div>
+              )}
             </div>
           </div>
         ))}
