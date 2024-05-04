@@ -1,5 +1,7 @@
 import { AssetMembersSidebar } from "@/components/projects/design/members/asset-members-sidebar";
 import { ProjectMembersList } from "@/components/projects/design/members/project-members-list";
+import { EditProjectIdForm } from "@/components/projects/edit-project-id-form";
+import { EditProjectNameForm } from "@/components/projects/edit-project-name-form";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -89,20 +91,16 @@ export default async function ProjectDesignNetworkPage({
       <div className="w-full space-y-3">
         <h3 className="text-2xl font-normal">General</h3>
         <Separator className="bg-stone-500" />
-        <div className="w-full space-y-1">
-          <h4 className="text-lg font-light">Project ID</h4>
-          <div className="flex space-x-2">
-            <Input className="w-32" />
-            <Button>Save</Button>
-          </div>
-        </div>
-        <div className="w-full space-y-1">
-          <h4 className="text-lg font-light">Project Name</h4>
-          <div className="flex space-x-2">
-            <Input className="w-64" />
-            <Button>Rename</Button>
-          </div>
-        </div>
+        <EditProjectIdForm
+          profileId={profile.id}
+          workspaceId={workspace.id}
+          project={project}
+        />
+        <EditProjectNameForm
+          profileId={profile.id}
+          workspaceId={workspace.id}
+          project={project}
+        />
       </div>
       <div className="w-full space-y-3">
         <h3 className="text-2xl font-normal">Features</h3>

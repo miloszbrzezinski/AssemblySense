@@ -104,6 +104,18 @@ export const CreateProjectSchema = z.object({
   customerDescription: z.string(),
 });
 
+export const EditProjectIdSchema = z.object({
+  projectId: z.string().min(1, {
+    message: "Project ID is required",
+  }),
+});
+
+export const EditProjectNameSchema = z.object({
+  projectName: z.string().min(1, {
+    message: "Project name is required",
+  }),
+});
+
 export const CreateComponentSchema = z.object({
   componentName: z.string().min(1, {
     message: "Component name is required",
