@@ -44,11 +44,16 @@ import {
   editProjectTarget,
 } from "@/actions/project-target";
 import { cn } from "@/lib/utils";
+import { Select, SelectItem, SelectTrigger } from "../ui/select";
+import { SelectContent } from "@radix-ui/react-select";
 
 export const EditProjectTargetModal = () => {
   const [selectedType, setSelectedType] = useState<ProjectTargetType>(
     ProjectTargetType.GENERAL
   );
+  const [selectedTypeInput, setSelectedTypeInput] = useState<
+    "text" | "number" | "time" | "date"
+  >("text");
   const { onOpen, isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "editProjectTarget";
   const router = useRouter();
@@ -71,12 +76,20 @@ export const EditProjectTargetModal = () => {
       form.setValue("targetValue", projectTarget.target);
       form.setValue("targetDescription", projectTarget.description);
       setSelectedType(projectTarget.projectTargetType);
-    }
-    if (!projectTarget) {
-      form.setValue("targetName", "");
-      form.setValue("targetValue", "");
-      form.setValue("targetDescription", "");
-      setSelectedType(ProjectTargetType.GENERAL);
+      switch (projectTarget.projectTargetType) {
+        case ProjectTargetType.GENERAL:
+          setSelectedTypeInput("text");
+          break;
+        case ProjectTargetType.WORKING_TIME:
+          setSelectedTypeInput("number");
+          break;
+        case ProjectTargetType.TIME:
+          setSelectedTypeInput("number");
+          break;
+        case ProjectTargetType.DATE:
+          setSelectedTypeInput("date");
+          break;
+      }
     }
   }, [form, projectTarget]);
 
@@ -101,6 +114,24 @@ export const EditProjectTargetModal = () => {
         }
       });
     });
+  };
+
+  const selectInputType = (targetType: ProjectTargetType) => {
+    setSelectedType(targetType);
+    switch (targetType) {
+      case ProjectTargetType.GENERAL:
+        setSelectedTypeInput("text");
+        break;
+      case ProjectTargetType.WORKING_TIME:
+        setSelectedTypeInput("number");
+        break;
+      case ProjectTargetType.TIME:
+        setSelectedTypeInput("number");
+        break;
+      case ProjectTargetType.DATE:
+        setSelectedTypeInput("date");
+        break;
+    }
   };
 
   const isLoading = false;
@@ -176,7 +207,7 @@ export const EditProjectTargetModal = () => {
                           "cursor-pointer relative group hover:opacity-75 transition w-1/4"
                         )}
                         onClick={() => {
-                          setSelectedType(ProjectTargetType.GENERAL);
+                          selectInputType(ProjectTargetType.GENERAL);
                         }}
                       >
                         <input
@@ -205,7 +236,7 @@ export const EditProjectTargetModal = () => {
                           "cursor-pointer relative group hover:opacity-75 transition w-1/4"
                         )}
                         onClick={() => {
-                          setSelectedType(ProjectTargetType.WORKING_TIME);
+                          selectInputType(ProjectTargetType.WORKING_TIME);
                         }}
                       >
                         <input
@@ -236,7 +267,7 @@ export const EditProjectTargetModal = () => {
                           "cursor-pointer relative group hover:opacity-75 transition w-1/4"
                         )}
                         onClick={() => {
-                          setSelectedType(ProjectTargetType.TIME);
+                          selectInputType(ProjectTargetType.TIME);
                         }}
                       >
                         <input
@@ -265,7 +296,7 @@ export const EditProjectTargetModal = () => {
                           "cursor-pointer relative group hover:opacity-75 transition w-1/4"
                         )}
                         onClick={() => {
-                          setSelectedType(ProjectTargetType.DATE);
+                          selectInputType(ProjectTargetType.DATE);
                         }}
                       >
                         <input
@@ -310,7 +341,7 @@ export const EditProjectTargetModal = () => {
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      type={"text"}
+                      type={selectedTypeInput}
                       className="bg-stone-100/50 dark:bg-neutral-800 dark:border-neutral-400 border-2 border-stone-800 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0"
                       placeholder=""
                       {...field}

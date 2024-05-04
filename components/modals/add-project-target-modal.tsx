@@ -46,6 +46,9 @@ export const AddProjectTargetModal = () => {
   const [selectedType, setSelectedType] = useState<ProjectTargetType>(
     ProjectTargetType.GENERAL
   );
+  const [selectedTypeInput, setSelectedTypeInput] = useState<
+    "text" | "number" | "time" | "date"
+  >("text");
   const { onOpen, isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "addProjectTarget";
   const router = useRouter();
@@ -63,17 +66,12 @@ export const AddProjectTargetModal = () => {
   const { profileId, projectId, workspaceId, projectTarget } = data;
 
   useEffect(() => {
-    if (projectTarget) {
-      form.setValue("targetName", projectTarget.name);
-      form.setValue("targetValue", projectTarget.target);
-      form.setValue("targetDescription", projectTarget.description);
-      setSelectedType(projectTarget.projectTargetType);
-    }
     if (!projectTarget) {
       form.setValue("targetName", "");
       form.setValue("targetValue", "");
       form.setValue("targetDescription", "");
       setSelectedType(ProjectTargetType.GENERAL);
+      setSelectedTypeInput("text");
     }
   }, [form, projectTarget]);
 
@@ -97,6 +95,24 @@ export const AddProjectTargetModal = () => {
         }
       });
     });
+  };
+
+  const selectInputType = (targetType: ProjectTargetType) => {
+    setSelectedType(targetType);
+    switch (targetType) {
+      case ProjectTargetType.GENERAL:
+        setSelectedTypeInput("text");
+        break;
+      case ProjectTargetType.WORKING_TIME:
+        setSelectedTypeInput("number");
+        break;
+      case ProjectTargetType.TIME:
+        setSelectedTypeInput("number");
+        break;
+      case ProjectTargetType.DATE:
+        setSelectedTypeInput("date");
+        break;
+    }
   };
 
   const isLoading = false;
@@ -172,7 +188,7 @@ export const AddProjectTargetModal = () => {
                           "cursor-pointer relative group hover:opacity-75 transition w-1/4"
                         )}
                         onClick={() => {
-                          setSelectedType(ProjectTargetType.GENERAL);
+                          selectInputType(ProjectTargetType.GENERAL);
                         }}
                       >
                         <input
@@ -201,7 +217,7 @@ export const AddProjectTargetModal = () => {
                           "cursor-pointer relative group hover:opacity-75 transition w-1/4"
                         )}
                         onClick={() => {
-                          setSelectedType(ProjectTargetType.WORKING_TIME);
+                          selectInputType(ProjectTargetType.WORKING_TIME);
                         }}
                       >
                         <input
@@ -232,7 +248,7 @@ export const AddProjectTargetModal = () => {
                           "cursor-pointer relative group hover:opacity-75 transition w-1/4"
                         )}
                         onClick={() => {
-                          setSelectedType(ProjectTargetType.TIME);
+                          selectInputType(ProjectTargetType.TIME);
                         }}
                       >
                         <input
@@ -261,7 +277,7 @@ export const AddProjectTargetModal = () => {
                           "cursor-pointer relative group hover:opacity-75 transition w-1/4"
                         )}
                         onClick={() => {
-                          setSelectedType(ProjectTargetType.DATE);
+                          selectInputType(ProjectTargetType.DATE);
                         }}
                       >
                         <input
@@ -306,7 +322,7 @@ export const AddProjectTargetModal = () => {
                   <FormControl>
                     <Input
                       disabled={isLoading}
-                      type={"text"}
+                      type={selectedTypeInput}
                       className="bg-stone-100/50 dark:bg-neutral-800 dark:border-neutral-400 border-2 border-stone-800 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0"
                       placeholder=""
                       {...field}
