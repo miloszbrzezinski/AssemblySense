@@ -33,6 +33,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import {
   reportProjectAssemblyProcessIssue,
+  reportProjectComponentEventAddressIssue,
   reportProjectComponentEventIssue,
   reportProjectComponentIssue,
   reportProjectNetworkIssue,
@@ -125,6 +126,20 @@ export const ReportProjectModal = () => {
     );
   }
 
+  if (addressIO) {
+    problemSource = (
+      <div>
+        <h2 className="text-xl font-light">
+          Component event address:{" "}
+          <span className="font-normal">
+            {addressIO.byteAdress}.{addressIO.bitAdress}
+          </span>
+          <br /> problem report.
+        </h2>
+      </div>
+    );
+  }
+
   if (sequence) {
     problemSource = (
       <div>
@@ -202,6 +217,22 @@ export const ReportProjectModal = () => {
           projectId,
           values,
           componentEvent.id
+        ).then((data) => {
+          // setError(data.error);
+          if (data) {
+            console.log(data);
+            router.refresh();
+            onClose();
+          }
+        });
+      }
+      if (addressIO) {
+        reportProjectComponentEventAddressIssue(
+          profileId,
+          workspaceId,
+          projectId,
+          values,
+          addressIO.id
         ).then((data) => {
           // setError(data.error);
           if (data) {
