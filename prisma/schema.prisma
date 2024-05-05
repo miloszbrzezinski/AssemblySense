@@ -228,6 +228,12 @@ model ProjectIssue {
   sequenceStepId String?
   sequenceStep   SequenceStep? @relation(fields: [sequenceStepId], references: [id], onDelete: Cascade)
 
+  networkId String?
+  network   ProjectNetwork? @relation(fields: [networkId], references: [id], onDelete: Cascade)
+
+  connectionId String?
+  connection   ComponentConnection? @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -427,6 +433,8 @@ model ProjectNetwork {
   assemblyGroupId String?
   assemblyGroup   AssemblyGroup? @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
 
+  projectIssues ProjectIssue[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -445,6 +453,8 @@ model ComponentConnection {
 
   projectNetworkId String
   projectNetwork   ProjectNetwork @relation(fields: [projectNetworkId], references: [id], onDelete: Cascade)
+
+  projectIssues ProjectIssue[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

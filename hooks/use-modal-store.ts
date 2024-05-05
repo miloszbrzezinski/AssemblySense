@@ -1,10 +1,18 @@
 import { ProjectMemberWithProfile, WokrspaceMemberWithData } from "@/types";
 import {
+  AddressIO,
   AssemblyGroup,
+  AssemblyProcess,
   ComponentCategory,
+  ComponentConnection,
+  ComponentEvent,
   Member,
   Project,
+  ProjectComponent,
+  ProjectNetwork,
   ProjectTarget,
+  Sequence,
+  SequenceStep,
   Workspace,
 } from "@prisma/client";
 import { create } from "zustand";
@@ -26,7 +34,8 @@ export type ModalType =
   | "commitChanges"
   | "addProjectTarget"
   | "removeProjectTarget"
-  | "editProjectTarget";
+  | "editProjectTarget"
+  | "reportProjectProblem";
 
 interface ModalData {
   projectMembersWithProfile?: ProjectMemberWithProfile[];
@@ -35,16 +44,24 @@ interface ModalData {
   workspaceId?: string;
   projectId?: string;
   projectComponentId?: string;
+  projectComponent?: ProjectComponent;
   projectNetworkId?: string;
+  projectNetwork?: ProjectNetwork;
+  projectConnection?: ComponentConnection;
   projectTargetId?: string;
   projectTarget?: ProjectTarget;
   groupId?: string;
   processId?: string;
   sequenceId?: string;
+  sequence?: Sequence;
+  sequenceStep?: SequenceStep;
+  componentEvent?: ComponentEvent;
+  addressIO?: AddressIO;
   workspace?: Workspace;
   workspaceMember?: Member;
   componentCategory?: ComponentCategory;
   assemblyGroup?: AssemblyGroup;
+  assemblyProcess?: AssemblyProcess;
   apiUrl?: string;
   query?: Record<string, any>;
 }
