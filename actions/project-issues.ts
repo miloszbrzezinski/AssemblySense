@@ -198,6 +198,70 @@ export const reportProjectComponentIssue = async (
   return { success: `Project problem reported` };
 };
 
+export const reportProjectComponentEventIssue = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  values: z.infer<typeof ReportProjectIssueSchema>,
+  componentEventId: string
+) => {
+  const validatedFields = ReportProjectIssueSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const { problemName, problemDescription } = validatedFields.data;
+
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found" };
+  }
+
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            projectIssues: {
+              create: {
+                name: problemName,
+                description: problemDescription,
+                applicantId: projectMember.id,
+                componentEventId,
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Project problem reported` };
+};
+
 export const reportProjectStepSequenceIssue = async (
   profileId: string,
   workspaceId: string,

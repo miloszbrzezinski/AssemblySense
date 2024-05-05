@@ -26,7 +26,7 @@ export const DashboardCard = ({
         {addButton}
       </div>
       <Separator />
-      {children}
+      <div className="overflow-y-scroll">{children}</div>
     </div>
   );
 };
