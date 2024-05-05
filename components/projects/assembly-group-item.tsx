@@ -3,6 +3,7 @@ import {
   Copy,
   Edit,
   FilePlus,
+  Flag,
   Folder,
   FolderPlus,
   Plus,
@@ -99,10 +100,6 @@ export const AssemblyGroupItem = ({
         </Accordion>
       </ContextMenuTrigger>
       <ContextMenuContent>
-        <ContextMenuItem className="space-x-2">
-          <p>Open</p>
-        </ContextMenuItem>
-        <ContextMenuSeparator />
         <ContextMenuItem
           onClick={() => {
             onOpen("addProcess", {
@@ -118,16 +115,22 @@ export const AssemblyGroupItem = ({
         </ContextMenuItem>
         <ContextMenuItem className="space-x-2">
           <FolderPlus strokeWidth={1} className="w-5 h-5" />
-          <p>New folder</p>
+          <p>New control group</p>
         </ContextMenuItem>
         <ContextMenuSeparator />
-        <ContextMenuItem className="space-x-2">
-          <Scissors strokeWidth={1} className="w-5 h-5" />
-          <p>Cut</p>
-        </ContextMenuItem>
-        <ContextMenuItem className="space-x-2">
-          <Copy strokeWidth={1} className="w-5 h-5" />
-          <p>Copy</p>
+        <ContextMenuItem
+          onClick={() => {
+            onOpen("reportProjectProblem", {
+              profileId,
+              workspaceId,
+              projectId: assemblyGroup.projectId,
+              assemblyGroup,
+            });
+          }}
+          className="space-x-2"
+        >
+          <Flag strokeWidth={1} className="w-5 h-5" />
+          <p>Report problem</p>
         </ContextMenuItem>
         <ContextMenuSeparator />
         <ContextMenuItem className="space-x-2">

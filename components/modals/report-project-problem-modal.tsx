@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import {
+  reportProjectAssemblyGroupIssue,
   reportProjectAssemblyProcessIssue,
   reportProjectComponentEventAddressIssue,
   reportProjectComponentEventIssue,
@@ -78,6 +79,18 @@ export const ReportProjectModal = () => {
   }
 
   const isLoading = form.formState.isSubmitting;
+
+  if (assemblyGroup) {
+    problemSource = (
+      <div>
+        <h2 className="text-xl font-light">
+          Assembly group:{" "}
+          <span className="font-normal">{assemblyGroup.name}</span>
+          <br /> problem report.
+        </h2>
+      </div>
+    );
+  }
 
   if (assemblyProcess) {
     problemSource = (
@@ -178,6 +191,21 @@ export const ReportProjectModal = () => {
 
   const onSubmit = (values: z.infer<typeof ReportProjectIssueSchema>) => {
     startTransition(() => {
+      if (assemblyGroup) {
+        reportProjectAssemblyGroupIssue(
+          profileId,
+          workspaceId,
+          projectId,
+          values,
+          assemblyGroup.id
+        ).then((data) => {
+          // setError(data.error);
+          if (data) {
+            router.refresh();
+            onClose();
+          }
+        });
+      }
       if (assemblyProcess) {
         reportProjectAssemblyProcessIssue(
           profileId,
