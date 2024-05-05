@@ -2,6 +2,7 @@ import { DashboardCard } from "@/components/projects/dasboard-card";
 import { ProjectMembersCard } from "@/components/projects/project-members-card";
 import { ProjectProblemsCard } from "@/components/projects/project-problems-card";
 import { ProjectTargetsCard } from "@/components/projects/project-targets-card";
+import { ProjectTasksCard } from "@/components/projects/project-tasks-card";
 import { Button } from "@/components/ui/button";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -79,12 +80,10 @@ export default async function ProjectDashboardPage({
       <div className="flex h-2/3 w-full gap-2">
         <ProjectTargetsCard projectTarget={project.projectTargets} />
         <ProjectMembersCard projectMembers={project.projectMembers} />
-        <DashboardCard
-          icon={<SquareCheck strokeWidth={1} />}
-          title="Project tasks"
-        >
-          Test
-        </DashboardCard>
+        <ProjectTasksCard
+          assemblyGroups={project.assemblyGroups}
+          projectProblems={project.projectIssues}
+        />
         <ProjectProblemsCard
           assemblyGroups={project.assemblyGroups}
           projectProblems={project.projectIssues}
