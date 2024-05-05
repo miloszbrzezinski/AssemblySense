@@ -207,6 +207,12 @@ model ProjectIssue {
   projectId String
   Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
+  assemblyGroupId String?
+  assemblyGroup   AssemblyGroup? @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
+
+  processId String?
+  process   AssemblyProcess? @relation(fields: [processId], references: [id], onDelete: Cascade)
+
   projectIssueComments ProjectIssueComment[]
 
   // project components
@@ -475,6 +481,8 @@ model AssemblyGroup {
   projectNetworks   ProjectNetwork[]
   projectComponents ProjectComponent[]
 
+  projectIssues ProjectIssue[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -492,6 +500,8 @@ model AssemblyProcess {
 
   assemblyGroupId String
   assemblyGroup   AssemblyGroup @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
+
+  projectIssues ProjectIssue[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

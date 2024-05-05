@@ -4,7 +4,7 @@ import { setProcessName, setProcessNo } from "@/actions/assembly-group";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
 import { AssemblyProcess } from "@prisma/client";
-import { Trash } from "lucide-react";
+import { Flag, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -72,7 +72,7 @@ export const TitleBar = ({
         projectId,
         groupId,
         process.id,
-        processNo,
+        processNo
       ).then((data) => {
         // setError(data.error);
         if (data.success) {
@@ -97,7 +97,7 @@ export const TitleBar = ({
         projectId,
         groupId,
         process.id,
-        processName,
+        processName
       ).then((data) => {
         // setError(data.error);
         if (data.success) {
@@ -155,6 +155,21 @@ export const TitleBar = ({
         )}
       </div>
       <div className="flex items-center h-full">
+        <Button
+          onClick={() => {
+            onOpen("reportProjectProblem", {
+              profileId,
+              workspaceId,
+              projectId,
+              groupId,
+              assemblyProcess: process,
+            });
+          }}
+          variant="ghost"
+          className="hover:bg-stone-300 hover:text-stone-900"
+        >
+          <Flag strokeWidth={1} />
+        </Button>
         <Button
           onClick={() => {
             onOpen("removeProcess", {
