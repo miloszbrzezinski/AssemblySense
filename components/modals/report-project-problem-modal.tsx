@@ -31,7 +31,10 @@ import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
-import { reportProjectNetworkIssue } from "@/actions/project-issues";
+import {
+  reportProjectNetworkIssue,
+  reportProjectStepSequenceIssue,
+} from "@/actions/project-issues";
 
 export const ReportProjectModal = () => {
   //const [problemSource, setProblemSource] = useState<string>();
@@ -82,6 +85,18 @@ export const ReportProjectModal = () => {
     );
   }
 
+  if (sequenceStep) {
+    problemSource = (
+      <div>
+        <h2 className="text-xl font-light">
+          Sequence step:{" "}
+          <span className="font-normal">{sequenceStep.name}</span>
+          <br /> problem report.
+        </h2>
+      </div>
+    );
+  }
+
   const onSubmit = (values: z.infer<typeof ReportProjectIssueSchema>) => {
     startTransition(() => {
       if (projectNetwork) {
@@ -91,6 +106,21 @@ export const ReportProjectModal = () => {
           projectId,
           values,
           projectNetwork.id
+        ).then((data) => {
+          // setError(data.error);
+          if (data) {
+            router.refresh();
+            onClose();
+          }
+        });
+      }
+      if (sequenceStep) {
+        reportProjectStepSequenceIssue(
+          profileId,
+          workspaceId,
+          projectId,
+          values,
+          sequenceStep.id
         ).then((data) => {
           // setError(data.error);
           if (data) {
