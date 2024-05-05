@@ -33,6 +33,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import {
   reportProjectNetworkIssue,
+  reportProjectSequenceIssue,
   reportProjectStepSequenceIssue,
 } from "@/actions/project-issues";
 
@@ -85,6 +86,17 @@ export const ReportProjectModal = () => {
     );
   }
 
+  if (sequence) {
+    problemSource = (
+      <div>
+        <h2 className="text-xl font-light">
+          Sequence: <span className="font-normal">{sequence.name}</span>
+          <br /> problem report.
+        </h2>
+      </div>
+    );
+  }
+
   if (sequenceStep) {
     problemSource = (
       <div>
@@ -106,6 +118,21 @@ export const ReportProjectModal = () => {
           projectId,
           values,
           projectNetwork.id
+        ).then((data) => {
+          // setError(data.error);
+          if (data) {
+            router.refresh();
+            onClose();
+          }
+        });
+      }
+      if (sequence) {
+        reportProjectSequenceIssue(
+          profileId,
+          workspaceId,
+          projectId,
+          values,
+          sequence.id
         ).then((data) => {
           // setError(data.error);
           if (data) {

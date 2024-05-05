@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { startTransition, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { SequenceDescription } from "./seq-description";
-import { Trash } from "lucide-react";
+import { Flag, Trash } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
 
 interface SequenceTitleProps {
@@ -57,7 +57,7 @@ export const SequenceTitle = ({
         groupId,
         processId,
         sequence.id,
-        name,
+        name
       ).then((data) => {
         // setError(data.error);
         if (data.success) {
@@ -70,6 +70,15 @@ export const SequenceTitle = ({
           router.refresh();
         }
       });
+    });
+  };
+
+  const onProblemReport = () => {
+    onOpen("reportProjectProblem", {
+      profileId,
+      workspaceId,
+      projectId,
+      sequence,
     });
   };
 
@@ -98,8 +107,14 @@ export const SequenceTitle = ({
           className="group-hover:bg-slate-100 dark:group-hover:bg-slate-900/50 dark:bg-neutral-900 w-full text-lg font-medium focus:outline-none dark:focus:bg-slate-800 focus:bg-slate-200 focus:rounded-none p-2"
         />
         <button
+          onClick={onProblemReport}
+          className="hover:bg-slate-500/30 dark:hover:bg-slate-500/30 dark:text-neutral-100 text-stone-900 h-10 w-14 items-center justify-center group-hover:flex hidden"
+        >
+          <Flag strokeWidth={1} />
+        </button>
+        <button
           onClick={onDelete}
-          className="hover:bg-red-500/30 dark:hover:bg-red-500/30 dark:text-red-100 text-red-900 h-10 w-10 items-center justify-center group-hover:flex hidden"
+          className="hover:bg-red-500/30 dark:hover:bg-red-500/30 dark:text-red-100 text-red-900 h-10 w-14 items-center justify-center group-hover:flex hidden"
         >
           <Trash strokeWidth={1} />
         </button>
