@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { editProjectName } from "@/actions/project";
 
 interface EditProjectNameFormProps {
   profileId: string;
@@ -49,12 +50,14 @@ export const EditProjectNameForm = ({
     setSuccess("");
 
     startTransition(() => {
-      //   createProject(userId, workspaceId, values).then((data) => {
-      //     // setError(data.error);
-      //     if (data.success) {
-      //       router.push(`/workspace/${workspaceId}/projects`);
-      //     }
-      //   });
+      editProjectName(profileId, workspaceId, project.id, values).then(
+        (data) => {
+          // setError(data.error);
+          if (data.success) {
+            router.refresh();
+          }
+        }
+      );
     });
   };
 

@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { editProjectId } from "@/actions/project";
 
 interface EditProjectNameFormProps {
   profileId: string;
@@ -36,12 +37,12 @@ export const EditProjectIdForm = ({
   const form = useForm<z.infer<typeof EditProjectIdSchema>>({
     resolver: zodResolver(EditProjectIdSchema),
     defaultValues: {
-      projectId: "",
+      projectNo: "",
     },
   });
 
   useEffect(() => {
-    form.setValue("projectId", project.projectNo);
+    form.setValue("projectNo", project.projectNo);
   }, [form]);
 
   const onSubmit = (values: z.infer<typeof EditProjectIdSchema>) => {
@@ -49,12 +50,10 @@ export const EditProjectIdForm = ({
     setSuccess("");
 
     startTransition(() => {
-      //   createProject(userId, workspaceId, values).then((data) => {
-      //     // setError(data.error);
-      //     if (data.success) {
-      //       router.push(`/workspace/${workspaceId}/projects`);
-      //     }
-      //   });
+      editProjectId(profileId, workspaceId, project.id, values).then((data) => {
+        setError(data.error);
+        router.refresh();
+      });
     });
   };
 
@@ -66,7 +65,7 @@ export const EditProjectIdForm = ({
       >
         <FormField
           control={form.control}
-          name="projectId"
+          name="projectNo"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-lg font-light">Project ID</FormLabel>

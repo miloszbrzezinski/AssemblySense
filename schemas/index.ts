@@ -105,7 +105,7 @@ export const CreateProjectSchema = z.object({
 });
 
 export const EditProjectIdSchema = z.object({
-  projectId: z.string().min(1, {
+  projectNo: z.string().min(1, {
     message: "Project ID is required",
   }),
 });
