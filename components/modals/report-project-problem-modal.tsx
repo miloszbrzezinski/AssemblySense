@@ -36,6 +36,7 @@ import {
   reportProjectComponentEventAddressIssue,
   reportProjectComponentEventIssue,
   reportProjectComponentIssue,
+  reportProjectNetworkConnectionIssue,
   reportProjectNetworkIssue,
   reportProjectSequenceIssue,
   reportProjectStepSequenceIssue,
@@ -96,6 +97,18 @@ export const ReportProjectModal = () => {
         <h2 className="text-xl font-light">
           Project network:{" "}
           <span className="font-normal">{projectNetwork.name}</span>
+          <br /> problem report.
+        </h2>
+      </div>
+    );
+  }
+
+  if (projectConnection) {
+    problemSource = (
+      <div>
+        <h2 className="text-xl font-light">
+          Component connection:{" "}
+          <span className="font-normal">{projectConnection.name}</span>
           <br /> problem report.
         </h2>
       </div>
@@ -187,6 +200,21 @@ export const ReportProjectModal = () => {
           projectId,
           values,
           projectNetwork.id
+        ).then((data) => {
+          // setError(data.error);
+          if (data) {
+            router.refresh();
+            onClose();
+          }
+        });
+      }
+      if (projectConnection) {
+        reportProjectNetworkConnectionIssue(
+          profileId,
+          workspaceId,
+          projectId,
+          values,
+          projectConnection.id
         ).then((data) => {
           // setError(data.error);
           if (data) {
