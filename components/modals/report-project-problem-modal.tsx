@@ -33,6 +33,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import {
   reportProjectAssemblyProcessIssue,
+  reportProjectComponentIssue,
   reportProjectNetworkIssue,
   reportProjectSequenceIssue,
   reportProjectStepSequenceIssue,
@@ -79,7 +80,7 @@ export const ReportProjectModal = () => {
     problemSource = (
       <div>
         <h2 className="text-xl font-light">
-          Project network:{" "}
+          Assembly process:{" "}
           <span className="font-normal">{assemblyProcess.name}</span>
           <br /> problem report.
         </h2>
@@ -93,6 +94,18 @@ export const ReportProjectModal = () => {
         <h2 className="text-xl font-light">
           Project network:{" "}
           <span className="font-normal">{projectNetwork.name}</span>
+          <br /> problem report.
+        </h2>
+      </div>
+    );
+  }
+
+  if (projectComponent) {
+    problemSource = (
+      <div>
+        <h2 className="text-xl font-light">
+          Project component:{" "}
+          <span className="font-normal">{projectComponent.name}</span>
           <br /> problem report.
         </h2>
       </div>
@@ -146,6 +159,21 @@ export const ReportProjectModal = () => {
           projectId,
           values,
           projectNetwork.id
+        ).then((data) => {
+          // setError(data.error);
+          if (data) {
+            router.refresh();
+            onClose();
+          }
+        });
+      }
+      if (projectComponent) {
+        reportProjectComponentIssue(
+          profileId,
+          workspaceId,
+          projectId,
+          values,
+          projectComponent.id
         ).then((data) => {
           // setError(data.error);
           if (data) {

@@ -2,7 +2,7 @@
 import { setProjectComponentsName } from "@/actions/project-components";
 import { useModal } from "@/hooks/use-modal-store";
 import { ProjectComponentWithData } from "@/types";
-import { Trash } from "lucide-react";
+import { Flag, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { startTransition, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -49,7 +49,7 @@ export const ProjectComponentNavbar = ({
         workspaceId,
         projectComponent,
         name,
-        projectComponent.projectId,
+        projectComponent.projectId
       ).then((data) => {
         // setError(data.error);
         if (data.success) {
@@ -65,7 +65,16 @@ export const ProjectComponentNavbar = ({
       });
     });
   };
-  projectComponent.projectId;
+
+  const onReport = () => {
+    onOpen("reportProjectProblem", {
+      profileId,
+      workspaceId,
+      projectId: projectComponent.projectId,
+      projectComponent,
+    });
+  };
+
   const onDelete = () => {
     onOpen("removeProjectComponent", {
       profileId,
@@ -81,7 +90,7 @@ export const ProjectComponentNavbar = ({
         <button
           onClick={() => {
             router.push(
-              `/workspace/${workspaceId}/projects/${projectComponent.projectId}/design/components`,
+              `/workspace/${workspaceId}/projects/${projectComponent.projectId}/design/components`
             );
           }}
           className="hover:bg-stone-100 px-1 rounded-md"
@@ -104,12 +113,20 @@ export const ProjectComponentNavbar = ({
           className="group-hover:bg-slate-100 dark:group-hover:bg-slate-900/50 dark:bg-neutral-900 w-full text-lg font-medium focus:outline-none dark:focus:bg-slate-800 focus:bg-slate-200 focus:rounded-none p-2"
         />
       </div>
-      <button
-        onClick={onDelete}
-        className="flex hover:bg-red-500/30 dark:hover:bg-red-500/30 dark:text-red-100 text-red-900 h-10 px-4 items-center justify-center"
-      >
-        <Trash strokeWidth={1} />
-      </button>
+      <div className="flex">
+        <button
+          onClick={onReport}
+          className="flex hover:bg-slate-500/30 dark:hover:bg-neutral-500/30 dark:text-neutral-100 text-stone-900 h-10 px-3 items-center justify-center"
+        >
+          <Flag strokeWidth={1} />
+        </button>
+        <button
+          onClick={onDelete}
+          className="flex hover:bg-red-500/30 dark:hover:bg-red-500/30 dark:text-red-100 text-red-900 h-10 px-3 items-center justify-center"
+        >
+          <Trash strokeWidth={1} />
+        </button>
+      </div>
     </div>
   );
 };
