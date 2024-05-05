@@ -1,5 +1,6 @@
 import { DashboardCard } from "@/components/projects/dasboard-card";
 import { ProjectMembersCard } from "@/components/projects/project-members-card";
+import { ProjectProblemsCard } from "@/components/projects/project-problems-card";
 import { ProjectTargetsCard } from "@/components/projects/project-targets-card";
 import { Button } from "@/components/ui/button";
 import { currentProfile } from "@/lib/current-profile";
@@ -41,6 +42,12 @@ export default async function ProjectDashboardPage({
           id: params.projectId,
         },
         include: {
+          assemblyGroups: {
+            include: {
+              assemblyProcesses: true,
+            },
+          },
+          projectIssues: true,
           projectTargets: true,
           projectMembers: {
             include: {
@@ -78,9 +85,10 @@ export default async function ProjectDashboardPage({
         >
           Test
         </DashboardCard>
-        <DashboardCard icon={<Flag strokeWidth={1} />} title="Project problems">
-          Test
-        </DashboardCard>
+        <ProjectProblemsCard
+          assemblyGroups={project.assemblyGroups}
+          projectProblems={project.projectIssues}
+        />
       </div>
       <div className="flex h-1/3 w-full">
         <DashboardCard
