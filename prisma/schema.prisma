@@ -141,6 +141,7 @@ model Project {
   projectComponents ProjectComponent[]
   projectNetworks   ProjectNetwork[]
   projectTargets    ProjectTarget[]
+  projectIssues     ProjectIssue[]
 
   profileFavourite Profile[]
 
@@ -158,8 +159,14 @@ model ProjectMember {
   workspaceMemberId String
   workspaceMember   Member @relation(fields: [workspaceMemberId], references: [id], onDelete: Cascade)
 
+  projectIssueApplications ProjectIssue[]
+  projectIssueComments     ProjectIssueComment[]
+
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([workspaceMemberId])
 }
@@ -170,6 +177,8 @@ model ProjectTarget {
   description       String            @db.Text
   target            String            @db.Text
   projectTargetType ProjectTargetType @default(GENERAL)
+
+  projectIssues ProjectIssue[]
 
   projectId String
   Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -185,6 +194,59 @@ enum ProjectTargetType {
   TIME
   WORKING_TIME
   DATE
+}
+
+model ProjectIssue {
+  id          String @id @default(uuid())
+  name        String @db.Text
+  description String @db.Text
+
+  applicantId String
+  applicant   ProjectMember @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+
+  projectId String
+  Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  projectIssueComments ProjectIssueComment[]
+
+  // project components
+  targetId String?
+  target   ProjectTarget? @relation(fields: [targetId], references: [id], onDelete: Cascade)
+
+  componentId String?
+  component   ProjectComponent? @relation(fields: [componentId], references: [id], onDelete: Cascade)
+
+  componentEventId String?
+  componentEvent   ComponentEvent? @relation(fields: [componentEventId], references: [id], onDelete: Cascade)
+
+  addressIOId String?
+  AddressIO   AddressIO? @relation(fields: [addressIOId], references: [id], onDelete: Cascade)
+
+  sequenceId String?
+  sequence   Sequence? @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+
+  sequenceStepId String?
+  sequenceStep   SequenceStep? @relation(fields: [sequenceStepId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([applicantId])
+  @@index([projectId])
+}
+
+model ProjectIssueComment {
+  id      String @id @default(uuid())
+  content String @db.Text
+
+  projectIssueId String
+  projectIssue   ProjectIssue @relation(fields: [projectIssueId], references: [id], onDelete: Cascade)
+
+  projectMemberId String
+  projectMember   ProjectMember @relation(fields: [projectMemberId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Customer {
@@ -243,6 +305,8 @@ model ProjectComponent {
   componentEvents      ComponentEvent[]
   componentConnections ComponentConnection[]
 
+  projectIssues ProjectIssue[]
+
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
@@ -278,6 +342,8 @@ model AddressIO {
   componentEventId String          @unique
   componentEvent   ComponentEvent? @relation(fields: [componentEventId], references: [id], onDelete: Cascade)
 
+  projectIssues ProjectIssue[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -296,6 +362,8 @@ model ComponentEvent {
   sequenceSteps SequenceStep[]
 
   addressIO AddressIO?
+
+  projectIssues ProjectIssue[]
 
   projectComponentId String
   projectComponent   ProjectComponent @relation(fields: [projectComponentId], references: [id], onDelete: Cascade)
@@ -316,6 +384,8 @@ model Sequence {
   assemblyProcessId String
   assemblyProcess   AssemblyProcess @relation(fields: [assemblyProcessId], references: [id], onDelete: Cascade)
 
+  projectIssues ProjectIssue[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -333,6 +403,8 @@ model SequenceStep {
 
   sequencepId String
   sequence    Sequence @relation(fields: [sequencepId], references: [id], onDelete: Cascade)
+
+  projectIssues ProjectIssue[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
