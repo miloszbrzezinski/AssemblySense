@@ -162,3 +162,10 @@ export const CreateProjectTargetSchema = z.object({
   targetDescription: z.string(),
   targetType: z.nativeEnum(ProjectTargetType),
 });
+
+export const ReportProjectIssueSchema = z.object({
+  problemName: z.string().min(1, {
+    message: "Problem name is required",
+  }),
+  problemDescription: z.string(),
+});

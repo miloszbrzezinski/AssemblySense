@@ -28,21 +28,13 @@ export const ProjectProblemsCard = ({
   return (
     <DashboardCard icon={<Flag strokeWidth={1} />} title="Project problems">
       <div className="bg-red-700/60 space-y-[0.5px]">
-        <div className="w-full h-20 bg-white p-2 select-none hover:bg-red-50/90">
-          <h2 className="text-lg">General</h2>
-          <p className="text-red-900">
-            Problems: <span className="text-lg font-medium">-</span>
-          </p>
-        </div>
-        {assemblyGroups.map((group) => (
+        {projectProblems.map((problem) => (
           <div
-            key={group.id}
+            key={problem.id}
             className="w-full h-20 bg-white p-2 select-none hover:bg-red-50/90"
           >
-            <h2 className="text-lg">{group.name}</h2>
-            <p className="text-red-900">
-              Problems: <span className="text-lg font-medium"> - </span>
-            </p>
+            <h2 className="text-lg">{problem.name}</h2>
+            <p className="text-red-900">{problem.description}</p>
           </div>
         ))}
       </div>

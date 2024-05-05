@@ -24,13 +24,14 @@ import {
 import { Input } from "../ui/input";
 import { Flag } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { CreateComponentSchema } from "@/schemas";
+import { ReportProjectIssueSchema } from "@/schemas";
 import { startTransition, useState } from "react";
 import { createComponent } from "@/actions/library";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
+import { reportProjectNetworkIssue } from "@/actions/project-issues";
 
 export const ReportProjectModal = () => {
   //const [problemSource, setProblemSource] = useState<string>();
@@ -39,11 +40,11 @@ export const ReportProjectModal = () => {
   const isModalOpen = isOpen && type === "reportProjectProblem";
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof CreateComponentSchema>>({
-    resolver: zodResolver(CreateComponentSchema),
+  const form = useForm<z.infer<typeof ReportProjectIssueSchema>>({
+    resolver: zodResolver(ReportProjectIssueSchema),
     defaultValues: {
-      componentName: "",
-      componentManufacturer: "",
+      problemName: "",
+      problemDescription: "",
     },
   });
 
@@ -81,21 +82,24 @@ export const ReportProjectModal = () => {
     );
   }
 
-  const onSubmit = (values: z.infer<typeof CreateComponentSchema>) => {
-    // startTransition(() => {
-    //   createComponent(
-    //     profileId,
-    //     componentCategory.workspaceId,
-    //     componentCategory.id,
-    //     values
-    //   ).then((data) => {
-    //     // setError(data.error);
-    //     if (data) {
-    //       router.refresh();
-    //       onClose();
-    //     }
-    //   });
-    // });
+  const onSubmit = (values: z.infer<typeof ReportProjectIssueSchema>) => {
+    startTransition(() => {
+      if (projectNetwork) {
+        reportProjectNetworkIssue(
+          profileId,
+          workspaceId,
+          projectId,
+          values,
+          projectNetwork.id
+        ).then((data) => {
+          // setError(data.error);
+          if (data) {
+            router.refresh();
+            onClose();
+          }
+        });
+      }
+    });
   };
 
   return (
@@ -117,7 +121,27 @@ export const ReportProjectModal = () => {
             </div>
             <FormField
               control={form.control}
-              name="componentName"
+              name="problemName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="uppercase text-xs dark:text-neutral-200">
+                    Problem title
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isLoading}
+                      className="text-lg bg-stone-100/50 dark:bg-neutral-800 dark:border-neutral-400 border-2 border-stone-800 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0"
+                      placeholder=""
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="problemDescription"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="uppercase text-xs dark:text-neutral-200">
@@ -136,7 +160,7 @@ export const ReportProjectModal = () => {
               )}
             />
             <DialogFooter className="py-4">
-              <Button disabled={isLoading} className="w-full">
+              <Button type="submit" disabled={isLoading} className="w-full">
                 Report
               </Button>
             </DialogFooter>
