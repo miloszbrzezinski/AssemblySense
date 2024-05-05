@@ -248,3 +248,79 @@ export const removeProject = async (
 
   return { success: `Project removed` };
 };
+
+export const followProject = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string
+) => {
+  let status = "";
+  const workspace = await db.workspace.findUnique({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    include: {
+      projects: {
+        where: {
+          id: projectId,
+        },
+        include: {
+          profileFavourite: {
+            where: {
+              id: profileId,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: `Workspace not found` };
+  }
+
+  if (!workspace.projects[0]) {
+    return { error: `Project not found` };
+  }
+
+  const project = workspace.projects[0];
+  const isFavourite = project.profileFavourite[0] ? true : false;
+
+  if (isFavourite) {
+    await db.project.update({
+      where: {
+        id: projectId,
+      },
+      data: {
+        profileFavourite: {
+          disconnect: [{ id: profileId }],
+        },
+      },
+    });
+    status = "unfollowed";
+  }
+
+  if (!isFavourite) {
+    await db.project.update({
+      where: {
+        id: projectId,
+      },
+      data: {
+        profileFavourite: {
+          connect: [{ id: profileId }],
+        },
+      },
+    });
+    status = "followed";
+  }
+
+  return { success: `Project ${status}` };
+};

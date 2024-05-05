@@ -28,6 +28,13 @@ export default async function WorkspaceLayout({
         where: {
           id: params.projectId,
         },
+        include: {
+          profileFavourite: {
+            where: {
+              id: profile.id,
+            },
+          },
+        },
       },
     },
   });
@@ -40,13 +47,16 @@ export default async function WorkspaceLayout({
     return;
   }
 
+  const project = workspace.projects[0];
+  const isFavourite = project.profileFavourite.length === 1;
+
   return (
     <div className="h-full bg-stone-100 dark:bg-zinc-800">
       <div className="absolute z-20 w-full left-0 md:pl-14 transition-all">
         <ProjectNavbar
           profileId={profile.id}
-          project={workspace.projects[0]}
-          isFavourite={false}
+          project={project}
+          isFavourite={isFavourite}
         />
       </div>
       <div className="h-full flex pt-24">

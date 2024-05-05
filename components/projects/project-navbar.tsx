@@ -17,6 +17,9 @@ import { cn } from "@/lib/utils";
 import { HintButton } from "@/components/ui/hint-button";
 import ProjectNavButton from "./project-nav-button";
 import { Project } from "@prisma/client";
+import { startTransition } from "react";
+import { followProject } from "@/actions/project";
+import { toast } from "sonner";
 
 interface ProjectNavbarProps {
   profileId: string;
@@ -42,7 +45,21 @@ const ProjectNavbar = ({
     onOpen("commitChanges", { profileId });
   };
 
-  const onClickFavourite = async () => {};
+  const onClickFavourite = async () => {
+    startTransition(() => {
+      followProject(profileId, project.workspaceId, project.id).then((data) => {
+        if (data.success) {
+          toast(data.success, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          router.refresh();
+        }
+      });
+    });
+  };
 
   const onClickSettings = () => {
     router.push(
