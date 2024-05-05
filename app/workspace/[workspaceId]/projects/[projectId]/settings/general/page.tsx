@@ -1,5 +1,6 @@
 import { AssetMembersSidebar } from "@/components/projects/design/members/asset-members-sidebar";
 import { ProjectMembersList } from "@/components/projects/design/members/project-members-list";
+import { EditProjectCustomerForm } from "@/components/projects/edit-project-customer";
 import { EditProjectIdForm } from "@/components/projects/edit-project-id-form";
 import { EditProjectNameForm } from "@/components/projects/edit-project-name-form";
 import { Button } from "@/components/ui/button";
@@ -71,6 +72,7 @@ export default async function ProjectDesignNetworkPage({
           },
         },
       },
+      customers: true,
     },
   });
 
@@ -100,6 +102,12 @@ export default async function ProjectDesignNetworkPage({
           profileId={profile.id}
           workspaceId={workspace.id}
           project={project}
+        />
+        <EditProjectCustomerForm
+          profileId={profile.id}
+          workspaceId={workspace.id}
+          project={project}
+          customers={workspace.customers}
         />
       </div>
       <div className="w-full space-y-3">

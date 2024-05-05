@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { editProjectName } from "@/actions/project";
+import { toast } from "sonner";
 
 interface EditProjectNameFormProps {
   profileId: string;
@@ -52,8 +53,14 @@ export const EditProjectNameForm = ({
     startTransition(() => {
       editProjectName(profileId, workspaceId, project.id, values).then(
         (data) => {
-          // setError(data.error);
+          setError(data.error);
           if (data.success) {
+            toast(data.success, {
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
             router.refresh();
           }
         }

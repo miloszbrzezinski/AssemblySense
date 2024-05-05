@@ -4,6 +4,7 @@ import { EditProjectNameForm } from "@/components/projects/edit-project-name-for
 import { db } from "@/lib/db";
 import {
   CreateProjectSchema,
+  EditProjectCustomerSchema,
   EditProjectIdSchema,
   EditProjectNameSchema,
 } from "@/schemas";
@@ -141,11 +142,15 @@ export const editProjectCustomer = async (
   profileId: string,
   workspaceId: string,
   projectId: string,
-  customerId: string
+  values: z.infer<typeof EditProjectCustomerSchema>
 ) => {
-  if (!customerId) {
+  const validatedFields = EditProjectCustomerSchema.safeParse(values);
+
+  if (!validatedFields.success) {
     return { error: "Invalid fields!" };
   }
+
+  const { projectCustomer } = validatedFields.data;
 
   const workspace = await db.workspace.update({
     where: {
@@ -166,7 +171,7 @@ export const editProjectCustomer = async (
             id: projectId,
           },
           data: {
-            customerId,
+            customerId: projectCustomer,
           },
         },
       },
