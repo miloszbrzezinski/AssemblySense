@@ -13,6 +13,7 @@ export type ModalType =
   | "addWorkspace"
   | "inviteUser"
   | "removeWorkspaceMember"
+  | "removeProject"
   | "addAssemblyGroup"
   | "addProcess"
   | "removeProcess"

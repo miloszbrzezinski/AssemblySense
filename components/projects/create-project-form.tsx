@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Customer } from "@prisma/client";
+import { toast } from "sonner";
 
 interface CreateProjectFormProps {
   userId: string;
@@ -66,9 +67,16 @@ export const CreateProjectForm = ({
 
     startTransition(() => {
       createProject(userId, workspaceId, values).then((data) => {
-        // setError(data.error);
+        setError(data.error);
         if (data.success) {
+          toast(data.success, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
           router.push(`/workspace/${workspaceId}/projects`);
+          router.refresh();
         }
       });
     });
