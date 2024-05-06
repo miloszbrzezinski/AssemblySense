@@ -43,6 +43,19 @@ export default async function ProjectIssuePage({
               id: params.issueId,
             },
             include: {
+              assemblyGroup: true,
+              process: true,
+              component: {
+                include: {
+                  component: true,
+                },
+              },
+              componentEvent: true,
+              AddressIO: true,
+              network: true,
+              connection: true,
+              sequence: true,
+              sequenceStep: true,
               projectIssueComments: {
                 include: {
                   projectMember: {
@@ -104,10 +117,33 @@ export default async function ProjectIssuePage({
         <div className="py-5 space-x-5 flex w-full h-full">
           <div className="space-y-5 flex flex-col w-1/3">
             <div className="border p-2 bg-white shadow-md">
-              <h3 className="whitespace-nowrap text-xl">Reported by</h3>
+              <div>
+                <p className="text-lg">
+                  {projectIssue.assemblyGroup?.name}
+                  {": "}
+                  {projectIssue.process?.processId} {projectIssue.process?.name}
+                </p>
+                <p></p>
+                <p>
+                  {projectIssue.component?.component.manufacturer}{" "}
+                  {projectIssue.component?.component.name}{" "}
+                  {projectIssue.component?.name}
+                </p>
+                <p>{projectIssue.componentEvent?.name}</p>
+                <p>{projectIssue.AddressIO?.symbol}</p>
+                <p>{projectIssue.sequence?.name}</p>
+                <p>{projectIssue.sequenceStep?.name}</p>
+                <p>{projectIssue.network?.name}</p>
+                <p>{projectIssue.connection?.name}</p>
+              </div>
               <ProjectMemberItem member={projectIssue.applicant} />
+              <p className="font-light text-sm w-full text-end">
+                {projectIssue.createdAt.getDay()}/
+                {projectIssue.createdAt.getMonth()}/
+                {projectIssue.createdAt.getFullYear()}
+              </p>
             </div>
-            <div className="border p-2 bg-white shadow-md">
+            <div className="border h-full p-2 bg-white shadow-md">
               <h3 className="whitespace-nowrap text-xl">Issue description</h3>
               <p className="text-lg font-light">{projectIssue.description}</p>
             </div>
