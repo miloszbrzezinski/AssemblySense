@@ -178,8 +178,9 @@ const ProjectNavbar = ({
       </div>
       <div className="flex px-5 pt-1 w-full">
         <ProjectNavButton type="dashboard" />
-        <ProjectNavButton type="timeline" />
+        {/* <ProjectNavButton type="timeline" /> */}
         <ProjectNavButton type="design" />
+        <ProjectNavButton type="implementation" />
         <ProjectNavButton type="documentation" />
       </div>
     </div>

@@ -8,6 +8,7 @@ import {
   Banknote,
   BookMarked,
   CalendarRange,
+  CheckCheck,
   DraftingCompass,
   Frame,
   LayoutDashboard,
@@ -41,6 +42,11 @@ const ProjectNavButton = ({ type }: ProjectNavButtonProps) => {
       buttonName = "Timeline";
       break;
     }
+    case "implementation": {
+      Icon = CheckCheck;
+      buttonName = "Implementation";
+      break;
+    }
     case "documentation": {
       Icon = BookMarked;
       buttonName = "Documentation";
@@ -54,7 +60,7 @@ const ProjectNavButton = ({ type }: ProjectNavButtonProps) => {
 
   const onClick = () => {
     router.push(
-      `/workspace/${params.workspaceId}/projects/${params.projectId}/${type}`,
+      `/workspace/${params.workspaceId}/projects/${params.projectId}/${type}`
     );
   };
 
@@ -63,20 +69,20 @@ const ProjectNavButton = ({ type }: ProjectNavButtonProps) => {
       onClick={onClick}
       className={cn(
         "group text-sm w-full md:w-min inline-flex items-center justify-center whitespace-nowrap px-1 p-2 rounded-t-md gap-x-2 border-b-4 border-transparent transition-all",
-        pathname.split("/")[5] === type && " border-sky-800",
+        pathname.split("/")[5] === type && " border-sky-800"
       )}
     >
       <Icon
         strokeWidth={1}
         className={cn(
           "flex-shrink-0 w-5 h-5 text-stone-500 dark:text-zinc-400",
-          pathname.split("/")[5] === type && "text-sky-800 dark:text-sky-400",
+          pathname.split("/")[5] === type && "text-sky-800 dark:text-sky-400"
         )}
       />
       <p
         className={cn(
           "text-stone-500 dark:text-zinc-400 hidden md:block transition-all",
-          pathname.split("/")[5] === type && "text-sky-800 dark:text-sky-400",
+          pathname.split("/")[5] === type && "text-sky-800 dark:text-sky-400"
         )}
       >
         {buttonName}
