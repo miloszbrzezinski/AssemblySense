@@ -12,6 +12,7 @@ import {
   Profile,
   Project,
   ProjectComponent,
+  ProjectIssueComment,
   ProjectMember,
   ProjectNetwork,
   Sequence,
@@ -109,4 +110,8 @@ export type SequenceStepWithEvents = SequenceStep & {
 
 export type SequenceWithSteps = Sequence & {
   sequenceStep: SequenceStepWithEvents[];
+};
+
+export type ProjectIssueCommentWithData = ProjectIssueComment & {
+  projectMember: ProjectMemberWithProfile;
 };

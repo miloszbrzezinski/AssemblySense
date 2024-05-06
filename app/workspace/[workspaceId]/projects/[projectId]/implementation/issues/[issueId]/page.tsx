@@ -1,3 +1,4 @@
+import { IssueDiscutionComponent } from "@/components/projects/implementation/issue-discution-component";
 import { ProjectMemberItem } from "@/components/projects/project-member-item";
 import { Separator } from "@/components/ui/separator";
 import { currentProfile } from "@/lib/current-profile";
@@ -42,7 +43,20 @@ export default async function ProjectIssuePage({
               id: params.issueId,
             },
             include: {
-              projectIssueComments: true,
+              projectIssueComments: {
+                include: {
+                  projectMember: {
+                    include: {
+                      workspaceMember: {
+                        include: {
+                          department: true,
+                          profile: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
               applicant: {
                 include: {
                   workspaceMember: {
@@ -78,16 +92,16 @@ export default async function ProjectIssuePage({
 
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="p-5 text-2xl">
+      <div className="p-5 pb-20 h-full">
         <div className="w-full pb-5">
-          <h2 className="font-light">
+          <h2 className="font-light text-2xl">
             Project issue:{" "}
             <span className="font-normal">{projectIssue.name}</span>
           </h2>
         </div>
 
         <Separator className="bg-stone-300" />
-        <div className="py-5 space-x-5 flex w-full">
+        <div className="py-5 space-x-5 flex w-full h-full">
           <div className="space-y-5 flex flex-col w-1/3">
             <div className="border p-2 bg-white shadow-md">
               <h3 className="whitespace-nowrap text-xl">Reported by</h3>
@@ -99,12 +113,13 @@ export default async function ProjectIssuePage({
             </div>
           </div>
           <div className="space-y-5 flex flex-col w-2/3">
-            <div className="border p-2 bg-white shadow-md">
-              <h3 className="whitespace-nowrap text-xl">Discussion</h3>
-              {projectIssue.projectIssueComments.map((comment) => (
-                <p>{comment.content}</p>
-              ))}
-            </div>
+            <IssueDiscutionComponent
+              profileId={profile.id}
+              workspaceId={workspace.id}
+              projectId={project.id}
+              projectIssueId={projectIssue.id}
+              projectIssueComments={projectIssue.projectIssueComments}
+            />
           </div>
         </div>
       </div>

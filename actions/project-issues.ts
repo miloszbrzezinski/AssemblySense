@@ -289,8 +289,8 @@ export const addComment = async (
     return { error: "Project member not found!" };
   }
 
-  //report problem
-  const projectIssue = await db.projectIssue.update({
+  //add comment
+  await db.projectIssue.update({
     where: {
       id: projectIssueId,
     },
@@ -303,4 +303,5 @@ export const addComment = async (
       },
     },
   });
+  return { success: "Comment added" };
 };
