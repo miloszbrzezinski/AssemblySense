@@ -48,7 +48,44 @@ export default async function ProjectDashboardPage({
               assemblyProcesses: true,
             },
           },
-          projectIssues: true,
+          projectIssues: {
+            include: {
+              applicant: true,
+              assemblyGroup: true,
+              process: true,
+              target: true,
+              component: {
+                include: {
+                  assemblyGroup: true,
+                  assemblyProcess: true,
+                },
+              },
+              componentEvent: {
+                include: {
+                  projectComponent: {
+                    include: {
+                      assemblyGroup: true,
+                      assemblyProcess: true,
+                    },
+                  },
+                },
+              },
+              AddressIO: {
+                include: {
+                  componentEvent: {
+                    include: {
+                      projectComponent: {
+                        include: {
+                          assemblyGroup: true,
+                          assemblyProcess: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
           projectTargets: true,
           projectMembers: {
             include: {

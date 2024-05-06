@@ -2,16 +2,35 @@
 
 import { db } from "@/lib/db";
 import { ReportProjectIssueSchema } from "@/schemas";
-import { MemberRole } from "@prisma/client";
+import {
+  AddressIO,
+  AssemblyGroup,
+  AssemblyProcess,
+  ComponentConnection,
+  ComponentEvent,
+  MemberRole,
+  ProjectComponent,
+  ProjectNetwork,
+  Sequence,
+  SequenceStep,
+} from "@prisma/client";
 import { constants } from "http2";
 import { z } from "zod";
 
-export const reportProjectAssemblyGroupIssue = async (
+export const reportProblem = async (
   profileId: string,
   workspaceId: string,
   projectId: string,
   values: z.infer<typeof ReportProjectIssueSchema>,
-  assemblyGroupId: string
+  assemblyGroup?: AssemblyGroup,
+  assemblyProcess?: AssemblyProcess,
+  network?: ProjectNetwork,
+  networkConnection?: ComponentConnection,
+  projectComponent?: ProjectComponent,
+  projectComponentEvent?: ComponentEvent,
+  projectComponentEventAddressIO?: AddressIO,
+  sequence?: Sequence,
+  sequenceStep?: SequenceStep
 ) => {
   const validatedFields = ReportProjectIssueSchema.safeParse(values);
 
@@ -21,22 +40,9 @@ export const reportProjectAssemblyGroupIssue = async (
 
   const { problemName, problemDescription } = validatedFields.data;
 
-  const projectMember = await db.projectMember.findFirst({
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
     where: {
-      projectId: projectId,
-      workspaceMember: {
-        profileId,
-      },
-    },
-  });
-
-  if (!projectMember) {
-    return { error: "Project member not found" };
-  }
-
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
       members: {
         some: {
           profileId,
@@ -46,47 +52,18 @@ export const reportProjectAssemblyGroupIssue = async (
         },
       },
     },
-    data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                assemblyGroupId,
-              },
-            },
-          },
-        },
-      },
-    },
   });
 
-  return { success: `Project problem reported` };
-};
-
-export const reportProjectAssemblyProcessIssue = async (
-  profileId: string,
-  workspaceId: string,
-  projectId: string,
-  values: z.infer<typeof ReportProjectIssueSchema>,
-  processId: string
-) => {
-  const validatedFields = ReportProjectIssueSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
   }
 
-  const { problemName, problemDescription } = validatedFields.data;
-
+  //project member?
   const projectMember = await db.projectMember.findFirst({
     where: {
+      project: {
+        workspaceId: workspace.id,
+      },
       projectId: projectId,
       workspaceMember: {
         profileId,
@@ -95,489 +72,140 @@ export const reportProjectAssemblyProcessIssue = async (
   });
 
   if (!projectMember) {
-    return { error: "Project member not found" };
+    return { error: "Project member not found!" };
   }
 
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
-      members: {
-        some: {
-          profileId,
-          role: {
-            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
-          },
-        },
-      },
-    },
+  //report problem
+  const projectIssue = await db.projectIssue.create({
     data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                processId,
-              },
-            },
-          },
-        },
-      },
+      name: problemName,
+      description: problemDescription,
+      applicantId: projectMember.id,
+      projectId,
     },
   });
 
-  return { success: `Project problem reported` };
+  if (network) {
+    assignNetwork(projectIssue.id, network.id);
+    return { success: `Project problem reported` };
+  }
+  if (networkConnection) {
+    assignNetworkConnection(projectIssue.id, networkConnection.id);
+    return { success: `Project problem reported` };
+  }
+  if (projectComponent) {
+    assignProjectComponent(projectIssue.id, projectComponent.id);
+    return { success: `Project problem reported` };
+  }
+  if (projectComponentEvent) {
+    assignProjectComponentEvent(projectIssue.id, projectComponentEvent.id);
+    return { success: `Project problem reported` };
+  }
+  if (projectComponentEventAddressIO) {
+    assignProjectComponentEventAddress(
+      projectIssue.id,
+      projectComponentEventAddressIO.id
+    );
+    return { success: `Project problem reported` };
+  }
+  if (sequence) {
+    assignSequence(projectIssue.id, sequence.id);
+    return { success: `Project problem reported` };
+  }
+  if (sequenceStep) {
+    assignSequenceStep(projectIssue.id, sequenceStep.id);
+    return { success: `Project problem reported` };
+  }
 };
 
-export const reportProjectNetworkIssue = async (
-  profileId: string,
-  workspaceId: string,
-  projectId: string,
-  values: z.infer<typeof ReportProjectIssueSchema>,
-  networkId: string
-) => {
-  const validatedFields = ReportProjectIssueSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
-  }
-
-  const { problemName, problemDescription } = validatedFields.data;
-
-  const projectMember = await db.projectMember.findFirst({
+const assignNetwork = async (projectIssueId: string, networkId: string) => {
+  await db.projectIssue.update({
     where: {
-      projectId: projectId,
-      workspaceMember: {
-        profileId,
-      },
-    },
-  });
-
-  if (!projectMember) {
-    return { error: "Project member not found" };
-  }
-
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
-      members: {
-        some: {
-          profileId,
-          role: {
-            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
-          },
-        },
-      },
+      id: projectIssueId,
     },
     data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                networkId,
-              },
-            },
-          },
-        },
-      },
+      networkId,
     },
   });
-
-  return { success: `Project problem reported` };
 };
 
-export const reportProjectNetworkConnectionIssue = async (
-  profileId: string,
-  workspaceId: string,
-  projectId: string,
-  values: z.infer<typeof ReportProjectIssueSchema>,
+const assignNetworkConnection = async (
+  projectIssueId: string,
   connectionId: string
 ) => {
-  const validatedFields = ReportProjectIssueSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
-  }
-
-  const { problemName, problemDescription } = validatedFields.data;
-
-  const projectMember = await db.projectMember.findFirst({
+  await db.projectIssue.update({
     where: {
-      projectId: projectId,
-      workspaceMember: {
-        profileId,
-      },
-    },
-  });
-
-  if (!projectMember) {
-    return { error: "Project member not found" };
-  }
-
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
-      members: {
-        some: {
-          profileId,
-          role: {
-            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
-          },
-        },
-      },
+      id: projectIssueId,
     },
     data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                connectionId,
-              },
-            },
-          },
-        },
-      },
+      connectionId,
     },
   });
-
-  return { success: `Project problem reported` };
 };
 
-export const reportProjectComponentIssue = async (
-  profileId: string,
-  workspaceId: string,
-  projectId: string,
-  values: z.infer<typeof ReportProjectIssueSchema>,
+const assignProjectComponent = async (
+  projectIssueId: string,
   componentId: string
 ) => {
-  const validatedFields = ReportProjectIssueSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
-  }
-
-  const { problemName, problemDescription } = validatedFields.data;
-
-  const projectMember = await db.projectMember.findFirst({
+  await db.projectIssue.update({
     where: {
-      projectId: projectId,
-      workspaceMember: {
-        profileId,
-      },
-    },
-  });
-
-  if (!projectMember) {
-    return { error: "Project member not found" };
-  }
-
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
-      members: {
-        some: {
-          profileId,
-          role: {
-            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
-          },
-        },
-      },
+      id: projectIssueId,
     },
     data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                componentId,
-              },
-            },
-          },
-        },
-      },
+      componentId,
     },
   });
-
-  return { success: `Project problem reported` };
 };
 
-export const reportProjectComponentEventIssue = async (
-  profileId: string,
-  workspaceId: string,
-  projectId: string,
-  values: z.infer<typeof ReportProjectIssueSchema>,
+const assignProjectComponentEvent = async (
+  projectIssueId: string,
   componentEventId: string
 ) => {
-  const validatedFields = ReportProjectIssueSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
-  }
-
-  const { problemName, problemDescription } = validatedFields.data;
-
-  const projectMember = await db.projectMember.findFirst({
+  await db.projectIssue.update({
     where: {
-      projectId: projectId,
-      workspaceMember: {
-        profileId,
-      },
-    },
-  });
-
-  if (!projectMember) {
-    return { error: "Project member not found" };
-  }
-
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
-      members: {
-        some: {
-          profileId,
-          role: {
-            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
-          },
-        },
-      },
+      id: projectIssueId,
     },
     data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                componentEventId,
-              },
-            },
-          },
-        },
-      },
+      componentEventId,
     },
   });
-
-  return { success: `Project problem reported` };
 };
 
-export const reportProjectComponentEventAddressIssue = async (
-  profileId: string,
-  workspaceId: string,
-  projectId: string,
-  values: z.infer<typeof ReportProjectIssueSchema>,
+const assignProjectComponentEventAddress = async (
+  projectIssueId: string,
   addressIOId: string
 ) => {
-  const validatedFields = ReportProjectIssueSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
-  }
-
-  const { problemName, problemDescription } = validatedFields.data;
-
-  const projectMember = await db.projectMember.findFirst({
+  await db.projectIssue.update({
     where: {
-      projectId: projectId,
-      workspaceMember: {
-        profileId,
-      },
-    },
-  });
-
-  if (!projectMember) {
-    return { error: "Project member not found" };
-  }
-
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
-      members: {
-        some: {
-          profileId,
-          role: {
-            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
-          },
-        },
-      },
+      id: projectIssueId,
     },
     data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                addressIOId,
-              },
-            },
-          },
-        },
-      },
+      addressIOId,
     },
   });
-
-  return { success: `Project problem reported` };
 };
 
-export const reportProjectStepSequenceIssue = async (
-  profileId: string,
-  workspaceId: string,
-  projectId: string,
-  values: z.infer<typeof ReportProjectIssueSchema>,
+const assignSequence = async (projectIssueId: string, sequenceId: string) => {
+  await db.projectIssue.update({
+    where: {
+      id: projectIssueId,
+    },
+    data: {
+      sequenceId,
+    },
+  });
+};
+
+const assignSequenceStep = async (
+  projectIssueId: string,
   sequenceStepId: string
 ) => {
-  const validatedFields = ReportProjectIssueSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
-  }
-
-  const { problemName, problemDescription } = validatedFields.data;
-
-  const projectMember = await db.projectMember.findFirst({
+  await db.projectIssue.update({
     where: {
-      projectId: projectId,
-      workspaceMember: {
-        profileId,
-      },
-    },
-  });
-
-  if (!projectMember) {
-    return { error: "Project member not found" };
-  }
-
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
-      members: {
-        some: {
-          profileId,
-          role: {
-            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
-          },
-        },
-      },
+      id: projectIssueId,
     },
     data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                sequenceStepId,
-              },
-            },
-          },
-        },
-      },
+      sequenceStepId,
     },
   });
-
-  return { success: `Project problem reported` };
-};
-
-export const reportProjectSequenceIssue = async (
-  profileId: string,
-  workspaceId: string,
-  projectId: string,
-  values: z.infer<typeof ReportProjectIssueSchema>,
-  sequenceId: string
-) => {
-  const validatedFields = ReportProjectIssueSchema.safeParse(values);
-
-  if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
-  }
-
-  const { problemName, problemDescription } = validatedFields.data;
-
-  const projectMember = await db.projectMember.findFirst({
-    where: {
-      projectId: projectId,
-      workspaceMember: {
-        profileId,
-      },
-    },
-  });
-
-  if (!projectMember) {
-    return { error: "Project member not found" };
-  }
-
-  const workspace = await db.workspace.update({
-    where: {
-      id: workspaceId,
-      members: {
-        some: {
-          profileId,
-          role: {
-            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
-          },
-        },
-      },
-    },
-    data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            projectIssues: {
-              create: {
-                name: problemName,
-                description: problemDescription,
-                applicantId: projectMember.id,
-                sequenceId,
-              },
-            },
-          },
-        },
-      },
-    },
-  });
-
-  return { success: `Project problem reported` };
 };

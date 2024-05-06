@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import {
+  reportProblem,
   reportProjectAssemblyGroupIssue,
   reportProjectAssemblyProcessIssue,
   reportProjectComponentEventAddressIssue,
@@ -42,6 +43,7 @@ import {
   reportProjectSequenceIssue,
   reportProjectStepSequenceIssue,
 } from "@/actions/project-issues";
+import { ProjectComponentName } from "../projects/design/components/components-table/project-component-name";
 
 export const ReportProjectModal = () => {
   //const [problemSource, setProblemSource] = useState<string>();
@@ -191,143 +193,27 @@ export const ReportProjectModal = () => {
 
   const onSubmit = (values: z.infer<typeof ReportProjectIssueSchema>) => {
     startTransition(() => {
-      if (assemblyGroup) {
-        reportProjectAssemblyGroupIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          assemblyGroup.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
-        });
-      }
-      if (assemblyProcess) {
-        reportProjectAssemblyProcessIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          assemblyProcess.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
-        });
-      }
-      if (projectNetwork) {
-        reportProjectNetworkIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          projectNetwork.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
-        });
-      }
-      if (projectConnection) {
-        reportProjectNetworkConnectionIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          projectConnection.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
-        });
-      }
-      if (projectComponent) {
-        reportProjectComponentIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          projectComponent.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
-        });
-      }
-      if (componentEvent) {
-        reportProjectComponentEventIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          componentEvent.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            console.log(data);
-            router.refresh();
-            onClose();
-          }
-        });
-      }
-      if (addressIO) {
-        reportProjectComponentEventAddressIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          addressIO.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            console.log(data);
-            router.refresh();
-            onClose();
-          }
-        });
-      }
-      if (sequence) {
-        reportProjectSequenceIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          sequence.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
-        });
-      }
-      if (sequenceStep) {
-        reportProjectStepSequenceIssue(
-          profileId,
-          workspaceId,
-          projectId,
-          values,
-          sequenceStep.id
-        ).then((data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
-        });
-      }
+      reportProblem(
+        profileId,
+        workspaceId,
+        projectId,
+        values,
+        assemblyGroup,
+        assemblyProcess,
+        projectNetwork,
+        projectConnection,
+        projectComponent,
+        componentEvent,
+        addressIO,
+        sequence,
+        sequenceStep
+      ).then((data) => {
+        // setError(data.error);
+        if (data) {
+          router.refresh();
+          onClose();
+        }
+      });
     });
   };
 
