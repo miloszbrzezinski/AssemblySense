@@ -38,6 +38,7 @@ export default async function ProjectImplementatioLayout({
           id: params.projectId,
         },
         include: {
+          projectIssues: true,
           projectComponents: true,
           projectMembers: true,
           projectNetworks: true,
@@ -79,6 +80,7 @@ export default async function ProjectImplementatioLayout({
             projectMembers={project.projectMembers}
             projectComponents={project.projectComponents}
             projectNetworks={project.projectNetworks}
+            projectProblems={project.projectIssues}
           />
         </ResizablePanel>
         <ResizableHandle />

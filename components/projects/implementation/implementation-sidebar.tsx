@@ -24,10 +24,12 @@ import { useState } from "react";
 import { NewAssemblyGroup } from "../new-assembly-group";
 import {
   ProjectComponent,
+  ProjectIssue,
   ProjectMember,
   ProjectNetwork,
 } from "@prisma/client";
 import { DonutGraph } from "../donut-graph";
+import { StatusItem } from "./status-item";
 
 interface DesignSidebarProps {
   profileId: string;
@@ -37,6 +39,7 @@ interface DesignSidebarProps {
   projectMembers: ProjectMember[];
   projectComponents: ProjectComponent[];
   projectNetworks: ProjectNetwork[];
+  projectProblems: ProjectIssue[];
 }
 
 export const ImplementationSidebar = ({
@@ -47,6 +50,7 @@ export const ImplementationSidebar = ({
   projectMembers,
   projectComponents,
   projectNetworks,
+  projectProblems,
 }: DesignSidebarProps) => {
   const params = useParams();
   const router = useRouter();
@@ -73,18 +77,11 @@ export const ImplementationSidebar = ({
         <DonutGraph tasksDone={20} problems={3} total={30} />
       </div>
       {assemblyGroups.map((group) => (
-        <div className="flex items-center justify-between w-full bg-white p-2 select-none hover:bg-slate-50">
-          <div>
-            <h2 className="text-xl">{group.name}</h2>
-            <p className="text-stone-900">
-              Tasks: <span className="text-lg font-medium">- / -</span>
-            </p>
-            <p className="text-red-900">
-              Problems: <span className="text-lg font-medium">-</span>
-            </p>
-          </div>
-          <DonutGraph tasksDone={20} problems={3} total={30} />
-        </div>
+        <StatusItem
+          key={group.id}
+          group={group}
+          projectProblems={projectProblems}
+        />
       ))}
     </div>
   );

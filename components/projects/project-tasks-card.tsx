@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { ProjectIssue } from "@prisma/client";
 import { DonutGraph } from "./donut-graph";
+import { StatusItem } from "./implementation/status-item";
 
 interface ProjectTasksCardProps {
   assemblyGroups: AssemblyGroupWithProcesses[];
@@ -29,31 +30,13 @@ export const ProjectTasksCard = ({
   return (
     <DashboardCard icon={<CheckSquare strokeWidth={1} />} title="Project tasks">
       <div className="bg-stone-700/60 space-y-[0.5px]">
-        <div className="flex items-center justify-between w-full bg-white p-2 select-none hover:bg-slate-50">
-          <div>
-            <h2 className="text-xl">General</h2>
-            <p className="text-stone-900">
-              Tasks: <span className="text-lg font-medium">- / -</span>
-            </p>
-            <p className="text-red-900">
-              Problems: <span className="text-lg font-medium">-</span>
-            </p>
-          </div>
-          <DonutGraph tasksDone={20} problems={3} total={30} />
-        </div>
+        <StatusItem group={null} projectProblems={projectProblems} />
         {assemblyGroups.map((group) => (
-          <div className="flex items-center justify-between w-full bg-white p-2 select-none hover:bg-slate-50">
-            <div>
-              <h2 className="text-xl">{group.name}</h2>
-              <p className="text-stone-900">
-                Tasks: <span className="text-lg font-medium">- / -</span>
-              </p>
-              <p className="text-red-900">
-                Problems: <span className="text-lg font-medium">-</span>
-              </p>
-            </div>
-            <DonutGraph tasksDone={20} problems={3} total={30} />
-          </div>
+          <StatusItem
+            key={group.id}
+            group={group}
+            projectProblems={projectProblems}
+          />
         ))}
       </div>
     </DashboardCard>
