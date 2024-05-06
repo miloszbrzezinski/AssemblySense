@@ -87,11 +87,9 @@ export const reportProblem = async (
 
   if (assemblyGroupId) {
     assignAssembyGroup(projectIssue.id, assemblyGroupId);
-    return { success: `Project problem reported` };
   }
   if (assemblyProcessId) {
     assignAssembyProcess(projectIssue.id, assemblyProcessId);
-    return { success: `Project problem reported` };
   }
 
   if (network) {
