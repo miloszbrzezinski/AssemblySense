@@ -43,6 +43,7 @@ export const reportProblem = async (
   // workspace access?
   const workspace = await db.workspace.findFirst({
     where: {
+      id: workspaceId,
       members: {
         some: {
           profileId,
@@ -241,6 +242,65 @@ const assignSequenceStep = async (
     },
     data: {
       sequenceStepId,
+    },
+  });
+};
+
+export const addComment = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  projectIssueId: string,
+  content: string
+) => {
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
+  }
+
+  //project member?
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      project: {
+        workspaceId: workspace.id,
+      },
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found!" };
+  }
+
+  //report problem
+  const projectIssue = await db.projectIssue.update({
+    where: {
+      id: projectIssueId,
+    },
+    data: {
+      projectIssueComments: {
+        create: {
+          content,
+          projectMemberId: projectMember.id,
+        },
+      },
     },
   });
 };
