@@ -13,17 +13,23 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { ProjectIssue } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface ProjectProblemsCardProps {
+  workspaceId: string;
+  projectId: string;
   assemblyGroups: AssemblyGroupWithProcesses[];
   projectProblems: ProjectIssue[];
 }
 
 export const ProjectProblemsCard = ({
+  workspaceId,
+  projectId,
   assemblyGroups,
   projectProblems,
 }: ProjectProblemsCardProps) => {
   const { onOpen } = useModal();
+  const router = useRouter();
 
   return (
     <DashboardCard icon={<Flag strokeWidth={1} />} title="Project problems">
@@ -31,6 +37,11 @@ export const ProjectProblemsCard = ({
         {projectProblems.map((problem) => (
           <div
             key={problem.id}
+            onClick={() => {
+              router.push(
+                `/workspace/${workspaceId}/projects/${projectId}/implementation/issues/${problem.id}`
+              );
+            }}
             className="w-full h-20 bg-white p-2 select-none hover:bg-red-50/90"
           >
             <h2 className="text-lg">{problem.name}</h2>

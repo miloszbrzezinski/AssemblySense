@@ -85,6 +85,8 @@ export default async function ProjectDashboardPage({
           projectProblems={project.projectIssues}
         />
         <ProjectProblemsCard
+          workspaceId={params.workspaceId}
+          projectId={project.id}
           assemblyGroups={project.assemblyGroups}
           projectProblems={project.projectIssues}
         />
