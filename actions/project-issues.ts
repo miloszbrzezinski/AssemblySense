@@ -22,8 +22,8 @@ export const reportProblem = async (
   workspaceId: string,
   projectId: string,
   values: z.infer<typeof ReportProjectIssueSchema>,
-  assemblyGroup?: AssemblyGroup,
-  assemblyProcess?: AssemblyProcess,
+  assemblyGroupId?: string,
+  assemblyProcessId?: string,
   network?: ProjectNetwork,
   networkConnection?: ComponentConnection,
   projectComponent?: ProjectComponent,
@@ -85,6 +85,15 @@ export const reportProblem = async (
     },
   });
 
+  if (assemblyGroupId) {
+    assignAssembyGroup(projectIssue.id, assemblyGroupId);
+    return { success: `Project problem reported` };
+  }
+  if (assemblyProcessId) {
+    assignAssembyProcess(projectIssue.id, assemblyProcessId);
+    return { success: `Project problem reported` };
+  }
+
   if (network) {
     assignNetwork(projectIssue.id, network.id);
     return { success: `Project problem reported` };
@@ -116,6 +125,34 @@ export const reportProblem = async (
     assignSequenceStep(projectIssue.id, sequenceStep.id);
     return { success: `Project problem reported` };
   }
+};
+
+const assignAssembyGroup = async (
+  projectIssueId: string,
+  assemblyGroupId: string
+) => {
+  await db.projectIssue.update({
+    where: {
+      id: projectIssueId,
+    },
+    data: {
+      assemblyGroupId,
+    },
+  });
+};
+
+const assignAssembyProcess = async (
+  projectIssueId: string,
+  processId: string
+) => {
+  await db.projectIssue.update({
+    where: {
+      id: projectIssueId,
+    },
+    data: {
+      processId,
+    },
+  });
 };
 
 const assignNetwork = async (projectIssueId: string, networkId: string) => {

@@ -70,11 +70,21 @@ export const IOTableItem = ({
           <DropdownMenuContent side="left">
             <DropdownMenuItem
               onClick={() => {
+                const assemblyGroupId = componentEvent.projectComponent
+                  .assemblyGroupId
+                  ? componentEvent.projectComponent.assemblyGroupId
+                  : undefined;
+                const assemblyProcessId = componentEvent.projectComponent
+                  .assemblyProcessId
+                  ? componentEvent.projectComponent.assemblyProcessId
+                  : undefined;
                 onOpen("reportProjectProblem", {
                   profileId,
                   workspaceId,
                   projectId: componentEvent.projectComponent.projectId,
                   addressIO: componentEvent.addressIO!,
+                  assemblyGroupId,
+                  assemblyProcessId,
                 });
               }}
               className="text-stone-900"

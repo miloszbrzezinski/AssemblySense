@@ -25,25 +25,10 @@ import { Input } from "../ui/input";
 import { Flag } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { ReportProjectIssueSchema } from "@/schemas";
-import { startTransition, useState } from "react";
-import { createComponent } from "@/actions/library";
-import { Router } from "next/router";
+import { startTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
-import {
-  reportProblem,
-  reportProjectAssemblyGroupIssue,
-  reportProjectAssemblyProcessIssue,
-  reportProjectComponentEventAddressIssue,
-  reportProjectComponentEventIssue,
-  reportProjectComponentIssue,
-  reportProjectNetworkConnectionIssue,
-  reportProjectNetworkIssue,
-  reportProjectSequenceIssue,
-  reportProjectStepSequenceIssue,
-} from "@/actions/project-issues";
-import { ProjectComponentName } from "../projects/design/components/components-table/project-component-name";
+import { reportProblem } from "@/actions/project-issues";
 
 export const ReportProjectModal = () => {
   //const [problemSource, setProblemSource] = useState<string>();
@@ -64,8 +49,8 @@ export const ReportProjectModal = () => {
     profileId,
     workspaceId,
     projectId,
-    assemblyGroup,
-    assemblyProcess,
+    assemblyGroupId,
+    assemblyProcessId,
     projectTarget,
     projectComponent,
     projectNetwork,
@@ -81,30 +66,6 @@ export const ReportProjectModal = () => {
   }
 
   const isLoading = form.formState.isSubmitting;
-
-  if (assemblyGroup) {
-    problemSource = (
-      <div>
-        <h2 className="text-xl font-light">
-          Assembly group:{" "}
-          <span className="font-normal">{assemblyGroup.name}</span>
-          <br /> problem report.
-        </h2>
-      </div>
-    );
-  }
-
-  if (assemblyProcess) {
-    problemSource = (
-      <div>
-        <h2 className="text-xl font-light">
-          Assembly process:{" "}
-          <span className="font-normal">{assemblyProcess.name}</span>
-          <br /> problem report.
-        </h2>
-      </div>
-    );
-  }
 
   if (projectNetwork) {
     problemSource = (
@@ -198,8 +159,8 @@ export const ReportProjectModal = () => {
         workspaceId,
         projectId,
         values,
-        assemblyGroup,
-        assemblyProcess,
+        assemblyGroupId,
+        assemblyProcessId,
         projectNetwork,
         projectConnection,
         projectComponent,

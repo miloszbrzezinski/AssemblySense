@@ -67,11 +67,19 @@ export const ProjectComponentNavbar = ({
   };
 
   const onReport = () => {
+    const assemblyGroupId = projectComponent.assemblyGroup
+      ? projectComponent.assemblyGroup.id
+      : undefined;
+    const assemblyProcessId = projectComponent.assemblyProcess
+      ? projectComponent.assemblyProcess.id
+      : undefined;
     onOpen("reportProjectProblem", {
       profileId,
       workspaceId,
       projectId: projectComponent.projectId,
       projectComponent,
+      assemblyGroupId,
+      assemblyProcessId,
     });
   };
 

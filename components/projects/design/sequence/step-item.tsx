@@ -64,6 +64,8 @@ export const StepItem = ({
                 workspaceId,
                 projectId,
                 sequenceStep: step,
+                assemblyGroupId: groupId,
+                assemblyProcessId: processId,
               });
             }}
             description="Report problem"

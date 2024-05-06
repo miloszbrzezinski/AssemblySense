@@ -71,11 +71,19 @@ export const ConnectionItem = ({
           <DropdownMenuContent side="left">
             <DropdownMenuItem
               onClick={() => {
+                const assemblyGroupId = projectComponent.assemblyGroup
+                  ? projectComponent.assemblyGroup.id
+                  : undefined;
+                const assemblyProcessId = projectComponent.assemblyProcess
+                  ? projectComponent.assemblyProcess.id
+                  : undefined;
                 onOpen("reportProjectProblem", {
                   profileId,
                   workspaceId,
                   projectId: projectComponent.projectId,
                   projectConnection: connection,
+                  assemblyGroupId,
+                  assemblyProcessId,
                 });
               }}
               className="text-stone-900"

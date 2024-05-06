@@ -79,6 +79,8 @@ export const SequenceTitle = ({
       workspaceId,
       projectId,
       sequence,
+      assemblyGroupId: groupId,
+      assemblyProcessId: processId,
     });
   };
 

@@ -35,11 +35,15 @@ export const NetworkTableItem = ({
   const { onOpen } = useModal();
 
   const onProblemReport = () => {
+    const assemblyGroupId = projectNetwork.assemblyGroup
+      ? projectNetwork.assemblyGroup.id
+      : undefined;
     onOpen("reportProjectProblem", {
       profileId,
       workspaceId,
       projectId: projectNetwork.projectId,
       projectNetwork: projectNetwork,
+      assemblyGroupId,
     });
   };
 

@@ -60,7 +60,9 @@ interface ModalData {
   workspace?: Workspace;
   workspaceMember?: Member;
   componentCategory?: ComponentCategory;
+  assemblyGroupId?: string;
   assemblyGroup?: AssemblyGroup;
+  assemblyProcessId?: string;
   assemblyProcess?: AssemblyProcess;
   apiUrl?: string;
   query?: Record<string, any>;

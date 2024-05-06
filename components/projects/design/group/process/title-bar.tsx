@@ -163,6 +163,8 @@ export const TitleBar = ({
               projectId,
               groupId,
               assemblyProcess: process,
+              assemblyGroupId: groupId,
+              assemblyProcessId: process.id,
             });
           }}
           variant="ghost"

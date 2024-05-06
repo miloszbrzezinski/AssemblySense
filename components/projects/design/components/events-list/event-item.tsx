@@ -58,6 +58,13 @@ export const EventListItem = ({
     });
   };
 
+  const assemblyGroupId = event.projectComponent.assemblyGroupId
+    ? event.projectComponent.assemblyGroupId
+    : undefined;
+  const assemblyProcessId = event.projectComponent.assemblyProcessId
+    ? event.projectComponent.assemblyProcessId
+    : undefined;
+
   return (
     <tr className="group h-10">
       <td className="group-hover:bg-slate-100 border border-l-0 border-stone-300">
@@ -76,6 +83,8 @@ export const EventListItem = ({
                   workspaceId,
                   projectId: projectComponent.projectId,
                   addressIO: event.addressIO!,
+                  assemblyGroupId,
+                  assemblyProcessId,
                 });
               }}
               className="text-stone-900"
@@ -90,6 +99,8 @@ export const EventListItem = ({
                   workspaceId,
                   projectId: projectComponent.projectId,
                   componentEvent: event,
+                  assemblyGroupId,
+                  assemblyProcessId,
                 });
               }}
               className="text-stone-900"
