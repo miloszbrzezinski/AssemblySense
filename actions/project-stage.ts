@@ -194,13 +194,13 @@ export const removeProjectStage = async (
   }
 
   //deactivate old stage and reorder
-  const oldActivestage = await db.projectStage.findUnique({
+  const oldProjectStage = await db.projectStage.findUnique({
     where: {
       id: projectStageId,
     },
   });
 
-  if (!oldActivestage) {
+  if (!oldProjectStage) {
     return { error: "Project stage not found!" };
   }
 
@@ -213,15 +213,9 @@ export const removeProjectStage = async (
     },
   });
 
-  // const oldActiveStageOrder = oldActivestage.order;
-  // let lastOrder;
-
-  // if(allActivestage.length > 1){
-  //   lastOrder = allActivestage[allActivestage.length - 1]
-  // }
-
-  if (oldActivestage.active && allProjectStages.length > 1) {
-    if (oldActivestage.order === 0) {
+  //Active project stage reassigning
+  if (oldProjectStage.active && allProjectStages.length > 1) {
+    if (oldProjectStage.order === 0) {
       const newActivate = await db.projectStage.findFirst({
         where: {
           projectId,
@@ -239,11 +233,11 @@ export const removeProjectStage = async (
         });
       }
     }
-    if (oldActivestage.order > 0) {
+    if (oldProjectStage.order > 0) {
       const newActivate = await db.projectStage.findFirst({
         where: {
           projectId,
-          order: oldActivestage.order - 1,
+          order: oldProjectStage.order - 1,
         },
       });
       if (newActivate) {
@@ -263,6 +257,21 @@ export const removeProjectStage = async (
   await db.projectStage.delete({
     where: {
       id: projectStageId,
+    },
+  });
+
+  //reordering stages
+  await db.projectStage.updateMany({
+    where: {
+      projectId,
+      order: {
+        gt: oldProjectStage.order,
+      },
+    },
+    data: {
+      order: {
+        decrement: 1,
+      },
     },
   });
 
