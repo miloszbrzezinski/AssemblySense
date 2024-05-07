@@ -15,13 +15,14 @@ import {
   ProjectIssueComment,
   ProjectMember,
   ProjectNetwork,
+  ProjectStage,
   Sequence,
   SequenceStep,
 } from "@prisma/client";
 
 export type ProjectWithCustomer = Project & {
   customer: Customer;
-};
+} & { projectStages: ProjectStage[] };
 
 export type ComponentCategoryWithComponents = ComponentCategory & {
   components: Component[];

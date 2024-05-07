@@ -12,11 +12,11 @@ import {
 } from "lucide-react";
 import { DashboardCard } from "./dasboard-card";
 import { useModal } from "@/hooks/use-modal-store";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../../ui/avatar";
 import { ProjectTarget, ProjectTargetType } from "@prisma/client";
-import { Separator } from "../ui/separator";
-import { CalendarCard } from "../ui/calendar-card";
-import { TimeDisplay } from "../ui/time-display";
+import { Separator } from "../../ui/separator";
+import { CalendarCard } from "../../ui/calendar-card";
+import { TimeDisplay } from "../../ui/time-display";
 
 interface ProjectTargetsCardProps {
   projectTarget: ProjectTarget[];

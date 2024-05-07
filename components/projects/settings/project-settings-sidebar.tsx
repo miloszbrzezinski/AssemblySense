@@ -7,6 +7,7 @@ import {
   ProjectComponent,
   ProjectMember,
   ProjectNetwork,
+  ProjectStage,
   ProjectTarget,
 } from "@prisma/client";
 import { Separator } from "@/components/ui/separator";
@@ -17,6 +18,7 @@ interface ProjectSettingsSidebarProps {
   projectId: string;
   projectTargets: ProjectTarget[];
   projectMembers: ProjectMember[];
+  projectStages: ProjectStage[];
 }
 
 export const ProjectSettingsSidebar = ({
@@ -25,9 +27,12 @@ export const ProjectSettingsSidebar = ({
   projectId,
   projectTargets,
   projectMembers,
+  projectStages,
 }: ProjectSettingsSidebarProps) => {
   const params = useParams();
   const router = useRouter();
+
+  const activeStageOrder = projectStages.filter((s) => s.active)[0]?.order;
 
   return (
     <div className="w-72 h-full border-r pt-2 pb-20 border-stone-300 shadow-md overflow-scroll">
@@ -57,6 +62,9 @@ export const ProjectSettingsSidebar = ({
           <Rocket strokeWidth={1} />
           <p className="font-light">Project stages</p>
         </div>
+        <p className="font-light">
+          {activeStageOrder + 1}/{projectStages.length}
+        </p>
       </Button>
       <Button
         onClick={() => {

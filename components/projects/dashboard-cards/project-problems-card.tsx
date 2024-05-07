@@ -2,14 +2,14 @@
 
 import { Crown, Flag, Plus, ShipWheel, Users } from "lucide-react";
 import { DashboardCard } from "./dasboard-card";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { useModal } from "@/hooks/use-modal-store";
 import {
   AssemblyGroupWithProcesses,
   ProjectMemberWithProfile,
   WokrspaceMemberWithData,
 } from "@/types";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../../ui/avatar";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { ProjectIssue } from "@prisma/client";

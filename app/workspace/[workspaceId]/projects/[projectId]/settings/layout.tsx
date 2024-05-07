@@ -41,6 +41,7 @@ export default async function ProjectDesignLayout({
           projectTargets: true,
           projectMembers: true,
           projectNetworks: true,
+          projectStages: true,
           assemblyGroups: {
             include: {
               assemblyProcesses: true,
@@ -75,6 +76,7 @@ export default async function ProjectDesignLayout({
         projectId={params.projectId}
         projectTargets={project.projectTargets}
         projectMembers={project.projectMembers}
+        projectStages={project.projectStages}
       />
       <div className="w-full h-full transition-all bg-stone-100 dark:bg-zinc-800">
         {children}

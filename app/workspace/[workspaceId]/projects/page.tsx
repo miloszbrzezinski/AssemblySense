@@ -31,6 +31,7 @@ export default async function ProjectsPage({
       projects: {
         include: {
           customer: true,
+          projectStages: true,
         },
       },
     },

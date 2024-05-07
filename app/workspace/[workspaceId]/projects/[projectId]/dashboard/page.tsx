@@ -1,9 +1,9 @@
-import { DashboardCard } from "@/components/projects/dasboard-card";
-import { ProjectMembersCard } from "@/components/projects/project-members-card";
-import { ProjectProblemsCard } from "@/components/projects/project-problems-card";
-import { ProjectStagesCard } from "@/components/projects/project-stages-card";
-import { ProjectTargetsCard } from "@/components/projects/project-targets-card";
-import { ProjectTasksCard } from "@/components/projects/project-tasks-card";
+import { DashboardCard } from "@/components/projects/dashboard-cards/dasboard-card";
+import { ProjectMembersCard } from "@/components/projects/dashboard-cards/project-members-card";
+import { ProjectProblemsCard } from "@/components/projects/dashboard-cards/project-problems-card";
+import { ProjectStagesCard } from "@/components/projects/dashboard-cards/project-stages-card";
+import { ProjectTargetsCard } from "@/components/projects/dashboard-cards/project-targets-card";
+import { ProjectTasksCard } from "@/components/projects/dashboard-cards/project-tasks-card";
 import { Button } from "@/components/ui/button";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";

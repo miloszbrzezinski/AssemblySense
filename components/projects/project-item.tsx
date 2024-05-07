@@ -10,6 +10,7 @@ const ProjectItem = ({ project }: { project: ProjectWithCustomer }) => {
   const onClick = () => {
     router.push(`projects/${project.id}/dashboard`);
   };
+  let activeStage = project.projectStages.filter((s) => s.active)[0];
   return (
     <div
       onClick={onClick}
@@ -24,12 +25,11 @@ const ProjectItem = ({ project }: { project: ProjectWithCustomer }) => {
       </div>
       <div
         className={cn(
-          "py-2 px-3 bg-gradient-to-t  text-neutral-100 font-normal rounded-full text-sm inline-flex items-center justify-center whitespace-nowrap w-8 md:w-auto h-8 transition-all",
-
-          "from-emerald-600 to-emerald-500  dark:from-emerald-700 dark:to-emerald-800 ",
+          "py-2 px-3 text-stone-800 font-normal rounded-full text-sm inline-flex items-center justify-center whitespace-nowrap w-auto h-8 transition-all",
+          "border"
         )}
       >
-        <p className="md:block hidden transition-all">{"Done"}</p>
+        <p className="transition-all">{activeStage && activeStage.name}</p>
       </div>
     </div>
   );
