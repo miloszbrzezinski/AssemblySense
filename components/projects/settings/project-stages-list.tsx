@@ -1,9 +1,10 @@
 "use client";
 import { setActiveProjectStage } from "@/actions/project-stage";
 import { Button } from "@/components/ui/button";
+import { useModal } from "@/hooks/use-modal-store";
 import { cn } from "@/lib/utils";
 import { ProjectStage } from "@prisma/client";
-import { Grip } from "lucide-react";
+import { Grip, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { toast } from "sonner";
@@ -22,6 +23,7 @@ export const ProjectStagesList = ({
   projectStages,
 }: ProjectStagesListProps) => {
   const router = useRouter();
+  const { onOpen } = useModal();
 
   const onActivate = (stageId: string) => {
     startTransition(() => {
@@ -53,15 +55,30 @@ export const ProjectStagesList = ({
                 {stage.order + 1}. {stage.name}
               </p>
             </div>
-            <Button
-              onClick={() => {
-                onActivate(stage.id);
-              }}
-              disabled={stage.active}
-              variant={stage.active ? "secondary" : "outline"}
-            >
-              {stage.active ? "Activated" : "Active"}
-            </Button>
+            <div className="flex space-x-2 items-center">
+              <Button
+                onClick={() => {
+                  onActivate(stage.id);
+                }}
+                disabled={stage.active}
+                variant={stage.active ? "secondary" : "outline"}
+              >
+                {stage.active ? "Activated" : "Active"}
+              </Button>
+              <Button
+                onClick={() => {
+                  onOpen("removeProjectStage", {
+                    profileId,
+                    workspaceId,
+                    projectId: stage.projectId,
+                    projectStageId: stage.id,
+                  });
+                }}
+                variant="outline"
+              >
+                <Trash strokeWidth={1} />
+              </Button>
+            </div>
           </li>
         ))}
       </ol>

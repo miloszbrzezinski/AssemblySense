@@ -17,6 +17,7 @@ import { RemoveProjectModal } from "../modals/remove-project";
 import { ReportProjectModal } from "../modals/report-project-problem-modal";
 import { SolveIssueModal } from "../modals/solve-issue-modal";
 import { AddProjectStageModal } from "../modals/add-project-stage-modal";
+import { RemoveProjectStageModal } from "../modals/remove-project-stage";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -47,6 +48,7 @@ export const ModalProvider = () => {
       <ReportProjectModal />
       <SolveIssueModal />
       <AddProjectStageModal />
+      <RemoveProjectStageModal />
     </>
   );
 };
