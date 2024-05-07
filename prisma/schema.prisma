@@ -207,6 +207,9 @@ model ProjectStage {
   order       Int
   active      Boolean @default(false)
 
+  startDate DateTime?
+  deadline  DateTime?
+
   projectId String
   Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 

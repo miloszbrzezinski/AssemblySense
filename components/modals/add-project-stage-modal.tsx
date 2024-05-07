@@ -131,6 +131,48 @@ export const AddProjectStageModal = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="stageStartDate"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="uppercase text-xs dark:text-neutral-200">
+                    Stage start date
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isLoading}
+                      type="date"
+                      className="bg-stone-100/50 dark:bg-neutral-800 dark:border-neutral-400 border-2 border-stone-800 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0"
+                      placeholder=""
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="stageDeadline"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="uppercase text-xs dark:text-neutral-200">
+                    Stage deadline
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={isLoading}
+                      type="date"
+                      className="bg-stone-100/50 dark:bg-neutral-800 dark:border-neutral-400 border-2 border-stone-800 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0"
+                      placeholder=""
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <DialogFooter className="py-4">
               <Button disabled={isLoading} className="w-full">
                 Add

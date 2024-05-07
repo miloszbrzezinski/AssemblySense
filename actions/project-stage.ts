@@ -17,7 +17,8 @@ export const createProjectStage = async (
     return { error: "Invalid fields!" };
   }
 
-  const { stageName, stageDescription } = validatedFields.data;
+  const { stageName, stageDescription, stageStartDate, stageDeadline } =
+    validatedFields.data;
 
   // workspace access?
   const workspace = await db.workspace.findFirst({
@@ -71,6 +72,8 @@ export const createProjectStage = async (
       description: stageDescription,
       order: nextStageOrder,
       projectId,
+      startDate: new Date(stageStartDate),
+      deadline: new Date(stageDeadline),
     },
   });
 

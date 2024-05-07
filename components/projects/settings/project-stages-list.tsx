@@ -51,9 +51,30 @@ export const ProjectStagesList = ({
           >
             <div className="flex space-x-2 items-center">
               <Grip className="text-stone-300" />
-              <p className={cn(stage.active && "font-medium underline")}>
-                {stage.order + 1}. {stage.name}
-              </p>
+              <div>
+                <p className={cn(stage.active && "font-medium underline")}>
+                  {stage.order + 1}. {stage.name}
+                </p>
+                <p className="space-x-2">
+                  {stage.startDate && (
+                    <span className="font-light">
+                      {new Date(stage.startDate).getDate()}/
+                      {new Date(stage.startDate).getMonth()}/
+                      {new Date(stage.startDate).getFullYear()}
+                    </span>
+                  )}
+                  {stage.deadline && (
+                    <>
+                      <span>-</span>
+                      <span className="font-light">
+                        {new Date(stage.deadline).getDate()}/
+                        {new Date(stage.deadline).getMonth()}/
+                        {new Date(stage.deadline).getFullYear()}
+                      </span>
+                    </>
+                  )}
+                </p>
+              </div>
             </div>
             <div className="flex space-x-2 items-center">
               <Button

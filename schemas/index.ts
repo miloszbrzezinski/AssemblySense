@@ -180,5 +180,11 @@ export const CreateProjectStageSchema = z.object({
   stageName: z.string().min(1, {
     message: "Stage name is required",
   }),
+  stageStartDate: z.string().min(1, {
+    message: "Stage start date is required",
+  }),
+  stageDeadline: z.string().min(1, {
+    message: "Stage deadline is required",
+  }),
   stageDescription: z.string(),
 });
