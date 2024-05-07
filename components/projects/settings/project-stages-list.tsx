@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
 import { cn } from "@/lib/utils";
 import { ProjectStage } from "@prisma/client";
-import { Grip, Trash } from "lucide-react";
+import { Edit, Grip, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { startTransition } from "react";
 import { toast } from "sonner";
@@ -85,6 +85,19 @@ export const ProjectStagesList = ({
                 variant={stage.active ? "secondary" : "outline"}
               >
                 {stage.active ? "Activated" : "Active"}
+              </Button>
+              <Button
+                onClick={() => {
+                  onOpen("editProjectStage", {
+                    profileId,
+                    workspaceId,
+                    projectId: stage.projectId,
+                    projectStage: stage,
+                  });
+                }}
+                variant="outline"
+              >
+                <Edit strokeWidth={1} />
               </Button>
               <Button
                 onClick={() => {

@@ -11,6 +11,7 @@ import {
   ProjectComponent,
   ProjectIssue,
   ProjectNetwork,
+  ProjectStage,
   ProjectTarget,
   Sequence,
   SequenceStep,
@@ -39,7 +40,8 @@ export type ModalType =
   | "reportProjectProblem"
   | "solveIssue"
   | "addProjectStage"
-  | "removeProjectStage";
+  | "removeProjectStage"
+  | "editProjectStage";
 
 interface ModalData {
   projectMembersWithProfile?: ProjectMemberWithProfile[];
@@ -49,6 +51,7 @@ interface ModalData {
   projectId?: string;
   projectIssue?: ProjectIssue;
   projectStageId?: string;
+  projectStage?: ProjectStage;
   projectComponentId?: string;
   projectComponent?: ProjectComponent;
   projectNetworkId?: string;
