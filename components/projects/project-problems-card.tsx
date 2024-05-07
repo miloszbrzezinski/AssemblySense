@@ -31,10 +31,14 @@ export const ProjectProblemsCard = ({
   const { onOpen } = useModal();
   const router = useRouter();
 
+  const displayedProblems = projectProblems.filter(
+    (problem) => !problem.solved
+  );
+
   return (
     <DashboardCard icon={<Flag strokeWidth={1} />} title="Project problems">
       <div className="bg-red-700/60 space-y-[0.5px]">
-        {projectProblems.map((problem) => (
+        {displayedProblems.map((problem) => (
           <div
             key={problem.id}
             onClick={() => {
@@ -44,8 +48,13 @@ export const ProjectProblemsCard = ({
             }}
             className="w-full h-20 bg-white p-2 select-none hover:bg-red-50/90"
           >
-            <h2 className="text-lg">{problem.name}</h2>
-            <p className="text-red-900">{problem.description}</p>
+            <h2 className="text-lg">
+              <span className="font-medium text-red-600 px-2 select-none">
+                {"!".repeat(problem.priority)}
+              </span>
+              <span>{problem.name}</span>
+            </h2>
+            <p className="text-red-900 pl-7">{problem.description}</p>
           </div>
         ))}
       </div>

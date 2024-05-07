@@ -64,18 +64,7 @@ export const ImplementationSidebar = ({
 
   return (
     <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll">
-      <div className="flex items-center justify-between w-full bg-white p-2 select-none hover:bg-slate-50">
-        <div>
-          <h2 className="text-xl">General</h2>
-          <p className="text-stone-900">
-            Tasks: <span className="text-lg font-medium">- / -</span>
-          </p>
-          <p className="text-red-900">
-            Problems: <span className="text-lg font-medium">-</span>
-          </p>
-        </div>
-        <DonutGraph tasksDone={20} problems={3} total={30} />
-      </div>
+      <StatusItem group={null} projectProblems={projectProblems} />
       {assemblyGroups.map((group) => (
         <StatusItem
           key={group.id}

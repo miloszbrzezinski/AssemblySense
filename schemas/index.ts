@@ -169,3 +169,9 @@ export const ReportProjectIssueSchema = z.object({
   }),
   problemDescription: z.string(),
 });
+
+export const SolveProjectIssueSchema = z.object({
+  projectIssueSolution: z.string().min(1, {
+    message: "Problem solution is required",
+  }),
+});

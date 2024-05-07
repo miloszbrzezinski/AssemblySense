@@ -20,15 +20,22 @@ export const ProjectIssueTitleBar = ({
     <>
       <div className="flex w-full pb-5 items-center justify-between">
         <h2 className="font-light text-2xl">
-          <span className="font-medium text-red-600 px-2 select-none">
-            {"!".repeat(projectIssue.priority)}
-          </span>
+          {!projectIssue.solved && (
+            <span className="font-medium text-red-600 px-2 select-none">
+              {"!".repeat(projectIssue.priority)}
+            </span>
+          )}
+          {projectIssue.solved && (
+            <span className="font-medium text-green-600 px-2 select-none">
+              Solved
+            </span>
+          )}
           Project issue:{" "}
           <span className="font-normal">{projectIssue.name}</span>
         </h2>
         <Button
           onClick={() => {
-            onOpen("solveIssue", { profileId });
+            onOpen("solveIssue", { profileId, workspaceId, projectIssue });
           }}
         >
           Solve

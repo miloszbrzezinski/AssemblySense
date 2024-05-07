@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { ReportProjectIssueSchema } from "@/schemas";
+import { ReportProjectIssueSchema, SolveProjectIssueSchema } from "@/schemas";
 import {
   AddressIO,
   AssemblyGroup,
@@ -306,4 +306,69 @@ export const addComment = async (
     },
   });
   return { success: "Comment added" };
+};
+
+export const solveProjectIssue = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  projectIssueId: string,
+  values: z.infer<typeof SolveProjectIssueSchema>
+) => {
+  const validatedFields = SolveProjectIssueSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const { projectIssueSolution } = validatedFields.data;
+
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
+  }
+
+  //project member?
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      project: {
+        workspaceId: workspace.id,
+      },
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found!" };
+  }
+
+  //add comment
+  await db.projectIssue.update({
+    where: {
+      id: projectIssueId,
+    },
+    data: {
+      solved: true,
+      solution: projectIssueSolution,
+      solvedById: projectMember.id,
+    },
+  });
+  return { success: "Project issue solved" };
 };

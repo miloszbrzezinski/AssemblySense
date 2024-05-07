@@ -24,50 +24,58 @@ import {
 import { Input } from "../ui/input";
 import { Flag, Puzzle, Replace } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { CreateComponentSchema } from "@/schemas";
+import { SolveProjectIssueSchema } from "@/schemas";
 import { startTransition } from "react";
 import { createComponent } from "@/actions/library";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 import { Checkbox } from "../ui/checkbox";
 import { Textarea } from "../ui/textarea";
+import { solveProjectIssue } from "@/actions/project-issues";
+import { toast } from "sonner";
 
 export const SolveIssueModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "solveIssue";
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof CreateComponentSchema>>({
-    resolver: zodResolver(CreateComponentSchema),
+  const form = useForm<z.infer<typeof SolveProjectIssueSchema>>({
+    resolver: zodResolver(SolveProjectIssueSchema),
     defaultValues: {
-      componentName: "",
-      componentManufacturer: "",
+      projectIssueSolution: "",
     },
   });
 
-  const { profileId } = data;
+  const { profileId, workspaceId, projectIssue } = data;
 
-  if (!profileId) {
+  if (!profileId || !workspaceId || !projectIssue) {
     return;
   }
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = (values: z.infer<typeof CreateComponentSchema>) => {
-    // startTransition(() => {
-    //   createComponent(
-    //     profileId,
-    //     componentCategory.workspaceId,
-    //     componentCategory.id,
-    //     values
-    //   ).then((data) => {
-    //     // setError(data.error);
-    //     if (data) {
-    //       router.refresh();
-    //       onClose();
-    //     }
-    //   });
-    // });
+  const onSubmit = (values: z.infer<typeof SolveProjectIssueSchema>) => {
+    startTransition(() => {
+      solveProjectIssue(
+        profileId,
+        workspaceId,
+        projectIssue.projectId,
+        projectIssue.id,
+        values
+      ).then((data) => {
+        // setError(data.error);
+        if (data) {
+          toast(data.success, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          router.refresh();
+          onClose();
+        }
+      });
+    });
   };
 
   return (
@@ -86,7 +94,7 @@ export const SolveIssueModal = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <FormField
               control={form.control}
-              name="componentName"
+              name="projectIssueSolution"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="uppercase text-xs dark:text-neutral-200">

@@ -206,6 +206,7 @@ model ProjectIssue {
   priority    Int    @default(1)
 
   solved     Boolean        @default(false)
+  solution   String?        @db.Text
   solvedById String?
   solvedBy   ProjectMember? @relation("solvedBy", fields: [solvedById], references: [id], onDelete: Cascade)
 

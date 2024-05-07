@@ -7,10 +7,14 @@ interface StatusItemProps {
 }
 
 export const StatusItem = ({ group, projectProblems }: StatusItemProps) => {
-  let problems = projectProblems.filter((p) => p.assemblyGroupId === null);
+  let problems = projectProblems.filter(
+    (p) => p.assemblyGroupId === null && !p.solved
+  );
   const groupName = group ? group.name : "General";
   if (group) {
-    problems = projectProblems.filter((p) => p.assemblyGroupId === group.id);
+    problems = projectProblems.filter(
+      (p) => p.assemblyGroupId === group.id && !p.solved
+    );
   }
 
   return (

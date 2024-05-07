@@ -9,6 +9,7 @@ import {
   Member,
   Project,
   ProjectComponent,
+  ProjectIssue,
   ProjectNetwork,
   ProjectTarget,
   Sequence,
@@ -44,6 +45,7 @@ interface ModalData {
   profileId?: string;
   workspaceId?: string;
   projectId?: string;
+  projectIssue?: ProjectIssue;
   projectComponentId?: string;
   projectComponent?: ProjectComponent;
   projectNetworkId?: string;
