@@ -1,4 +1,5 @@
 import { IssueDiscutionComponent } from "@/components/projects/implementation/issue-discution-component";
+import { ProjectIssueTitleBar } from "@/components/projects/implementation/project-issue-title";
 import { ProjectMemberItem } from "@/components/projects/project-member-item";
 import { Separator } from "@/components/ui/separator";
 import { currentProfile } from "@/lib/current-profile";
@@ -106,17 +107,11 @@ export default async function ProjectIssuePage({
   return (
     <div className="h-full w-full flex flex-col">
       <div className="p-5 pb-20 h-full">
-        <div className="w-full pb-5">
-          <h2 className="font-light text-2xl">
-            <span className="font-medium text-red-600 px-2">
-              {"!".repeat(projectIssue.priority)}
-            </span>
-            Project issue:{" "}
-            <span className="font-normal">{projectIssue.name}</span>
-          </h2>
-        </div>
-
-        <Separator className="bg-stone-300" />
+        <ProjectIssueTitleBar
+          profileId={profile.id}
+          workspaceId={params.workspaceId}
+          projectIssue={projectIssue}
+        />
         <div className="py-5 space-x-5 flex w-full h-full">
           <div className="space-y-5 flex flex-col w-1/3">
             <div className="border p-2 bg-white shadow-md">

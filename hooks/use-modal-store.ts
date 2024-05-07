@@ -35,7 +35,8 @@ export type ModalType =
   | "addProjectTarget"
   | "removeProjectTarget"
   | "editProjectTarget"
-  | "reportProjectProblem";
+  | "reportProjectProblem"
+  | "solveIssue";
 
 interface ModalData {
   projectMembersWithProfile?: ProjectMemberWithProfile[];
