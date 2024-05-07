@@ -29,6 +29,7 @@ import { startTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "../ui/textarea";
 import { createProjectStage } from "@/actions/project-stage";
+import { toast } from "sonner";
 
 export const AddProjectStageModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
@@ -60,11 +61,14 @@ export const AddProjectStageModal = () => {
     startTransition(() => {
       createProjectStage(profileId, workspaceId, projectId, values).then(
         (data) => {
-          // setError(data.error);
-          if (data) {
-            router.refresh();
-            onClose();
-          }
+          toast(data.success, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          router.refresh();
+          onClose();
         }
       );
     });

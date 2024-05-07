@@ -76,3 +76,77 @@ export const createProjectStage = async (
 
   return { success: `Project stage created` };
 };
+
+export const setActiveProjectStage = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  projectStageId: string
+) => {
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
+  }
+
+  //project member?
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      project: {
+        workspaceId: workspace.id,
+      },
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found!" };
+  }
+
+  //deactivate old stage
+  const oldActivestage = await db.projectStage.findFirst({
+    where: {
+      projectId,
+      active: true,
+    },
+  });
+
+  if (oldActivestage) {
+    await db.projectStage.update({
+      where: {
+        id: oldActivestage.id,
+      },
+      data: {
+        active: false,
+      },
+    });
+  }
+
+  //activate new
+  await db.projectStage.update({
+    where: {
+      id: projectStageId,
+    },
+    data: {
+      active: true,
+    },
+  });
+
+  return { success: `Project stage activated` };
+};

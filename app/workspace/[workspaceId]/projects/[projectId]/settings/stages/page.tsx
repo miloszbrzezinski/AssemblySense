@@ -32,7 +32,11 @@ export default async function ProjectStagesPage({
           id: params.projectId,
         },
         include: {
-          projectStages: true,
+          projectStages: {
+            orderBy: {
+              order: "asc",
+            },
+          },
         },
       },
     },
@@ -54,7 +58,12 @@ export default async function ProjectStagesPage({
         workspaceId={workspace.id}
         projectId={project.id}
       />
-      <ProjectStagesList projectStages={project.projectStages} />
+      <ProjectStagesList
+        profileId={profile.id}
+        workspaceId={params.workspaceId}
+        projectId={project.id}
+        projectStages={project.projectStages}
+      />
     </div>
   );
 }
