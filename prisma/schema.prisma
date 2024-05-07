@@ -159,14 +159,17 @@ model ProjectMember {
   workspaceMemberId String
   workspaceMember   Member @relation(fields: [workspaceMemberId], references: [id], onDelete: Cascade)
 
-  projectIssueApplications ProjectIssue[]
-  projectIssueComments     ProjectIssueComment[]
+  projectIssueApplications ProjectIssue[] @relation("reported")
+  projectIssueSolved       ProjectIssue[] @relation("solvedBy")
+
+  projectIssueComments ProjectIssueComment[]
 
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  ProjectIssue ProjectIssue[]
 
   @@index([workspaceMemberId])
 }
@@ -200,9 +203,14 @@ model ProjectIssue {
   id          String @id @default(uuid())
   name        String @db.Text
   description String @db.Text
+  priority    Int    @default(1)
+
+  solved     Boolean       @default(false)
+  solvedById String
+  solvedBy   ProjectMember @relation("solvedBy", fields: [solvedById], references: [id], onDelete: Cascade)
 
   applicantId String
-  applicant   ProjectMember @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  applicant   ProjectMember @relation("reported", fields: [applicantId], references: [id], onDelete: Cascade)
 
   projectId String
   Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -240,8 +248,10 @@ model ProjectIssue {
   connectionId String?
   connection   ComponentConnection? @relation(fields: [connectionId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  ProjectMember   ProjectMember? @relation(fields: [projectMemberId], references: [id])
+  projectMemberId String?
 
   @@index([applicantId])
   @@index([projectId])
