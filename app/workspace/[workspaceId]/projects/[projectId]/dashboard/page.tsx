@@ -1,6 +1,7 @@
 import { DashboardCard } from "@/components/projects/dasboard-card";
 import { ProjectMembersCard } from "@/components/projects/project-members-card";
 import { ProjectProblemsCard } from "@/components/projects/project-problems-card";
+import { ProjectStagesCard } from "@/components/projects/project-stages-card";
 import { ProjectTargetsCard } from "@/components/projects/project-targets-card";
 import { ProjectTasksCard } from "@/components/projects/project-tasks-card";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,11 @@ export default async function ProjectDashboardPage({
           },
           projectIssues: true,
           projectTargets: true,
+          projectStages: {
+            orderBy: {
+              order: "asc",
+            },
+          },
           projectMembers: {
             include: {
               workspaceMember: {
@@ -92,19 +98,7 @@ export default async function ProjectDashboardPage({
         />
       </div>
       <div className="flex h-1/3 w-full">
-        <DashboardCard
-          icon={<CalendarRange strokeWidth={1} />}
-          title="Project timeline"
-        >
-          <div className="w-full flex h-full items-center space-x-[1px]">
-            <div className="w-full flex h-10 bg-slate-400 hover:scale-y-110 hover:shadow-md hover:shadow-slate-500 transition-all duration-200" />
-            <div className="w-full flex h-10 bg-slate-400 hover:scale-y-110 hover:shadow-md hover:shadow-slate-500 transition-all duration-200" />
-            <div className="w-full flex h-10 bg-slate-400 hover:scale-y-110 hover:shadow-md hover:shadow-slate-500 transition-all duration-200" />
-            <div className="w-full flex h-40 bg-white-500 border rounded-md hover:scale-y-105 transition-all duration-200 shadow-md" />
-            <div className="w-full flex h-10 bg-stone-600 hover:scale-y-110 hover:shadow-md hover:shadow-stone-500 transition-all duration-200" />
-            <div className="w-full flex h-10 bg-stone-600 hover:scale-y-110 hover:shadow-md hover:shadow-stone-500 transition-all duration-200" />
-          </div>
-        </DashboardCard>
+        <ProjectStagesCard projectStages={project.projectStages} />
       </div>
     </div>
   );
