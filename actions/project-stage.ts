@@ -292,3 +292,71 @@ export const removeProjectStage = async (
 
   return { success: `Project stage removed` };
 };
+
+export const editProjectStage = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  projectStageId: string,
+  values: z.infer<typeof CreateProjectStageSchema>
+) => {
+  const validatedFields = CreateProjectStageSchema.safeParse(values);
+
+  if (!validatedFields.success) {
+    return { error: "Invalid fields!" };
+  }
+
+  const { stageName, stageDescription, stageStartDate, stageDeadline } =
+    validatedFields.data;
+
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
+  }
+
+  //project member?
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      project: {
+        workspaceId: workspace.id,
+      },
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found!" };
+  }
+
+  //update stage
+  const projectStage = await db.projectStage.update({
+    where: {
+      id: projectStageId,
+    },
+    data: {
+      name: stageName,
+      description: stageDescription,
+      startDate: new Date(stageStartDate),
+      deadline: new Date(stageDeadline),
+    },
+  });
+
+  return { success: `Project stage updated` };
+};

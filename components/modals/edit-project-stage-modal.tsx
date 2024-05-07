@@ -28,7 +28,7 @@ import { CreateProjectStageSchema } from "@/schemas";
 import { startTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "../ui/textarea";
-import { createProjectStage } from "@/actions/project-stage";
+import { createProjectStage, editProjectStage } from "@/actions/project-stage";
 import { toast } from "sonner";
 
 export const EditProjectStageModal = () => {
@@ -71,24 +71,28 @@ export const EditProjectStageModal = () => {
     }
   }, [form, projectStage]);
 
-  if (!profileId || !projectId || !workspaceId) {
+  if (!profileId || !projectId || !workspaceId || !projectStage) {
     return;
   }
 
   const onSubmit = (values: z.infer<typeof CreateProjectStageSchema>) => {
     startTransition(() => {
-      // createProjectStage(profileId, workspaceId, projectId, values).then(
-      //   (data) => {
-      //     toast(data.success, {
-      //       action: {
-      //         label: "Undo",
-      //         onClick: () => console.log("Undo"),
-      //       },
-      //     });
-      //     router.refresh();
-      //     onClose();
-      //   }
-      // );
+      editProjectStage(
+        profileId,
+        workspaceId,
+        projectId,
+        projectStage.id,
+        values
+      ).then((data) => {
+        toast(data.success, {
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        });
+        router.refresh();
+        onClose();
+      });
     });
   };
 
