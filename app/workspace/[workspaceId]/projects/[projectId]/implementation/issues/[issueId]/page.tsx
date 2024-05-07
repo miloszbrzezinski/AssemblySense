@@ -108,6 +108,9 @@ export default async function ProjectIssuePage({
       <div className="p-5 pb-20 h-full">
         <div className="w-full pb-5">
           <h2 className="font-light text-2xl">
+            <span className="font-medium text-red-600 px-2">
+              {"!".repeat(projectIssue.priority)}
+            </span>
             Project issue:{" "}
             <span className="font-normal">{projectIssue.name}</span>
           </h2>
@@ -118,12 +121,17 @@ export default async function ProjectIssuePage({
           <div className="space-y-5 flex flex-col w-1/3">
             <div className="border p-2 bg-white shadow-md">
               <div>
-                <p className="text-lg">
-                  {projectIssue.assemblyGroup?.name}
-                  {": "}
-                  {projectIssue.process?.processId} {projectIssue.process?.name}
-                </p>
-                <p></p>
+                {projectIssue.assemblyGroup ? (
+                  <p className="text-xl">
+                    {projectIssue.assemblyGroup?.name}
+                    {": "}
+                    {projectIssue.process?.processId}{" "}
+                    {projectIssue.process?.name}
+                  </p>
+                ) : (
+                  <p className="text-xl">General</p>
+                )}
+
                 <p>
                   {projectIssue.component?.component.manufacturer}{" "}
                   {projectIssue.component?.component.name}{" "}
@@ -143,7 +151,7 @@ export default async function ProjectIssuePage({
                 {projectIssue.createdAt.getFullYear()}
               </p>
             </div>
-            <div className="border h-full p-2 bg-white shadow-md">
+            <div className="border h-full p-2 bg-white shadow-md overflow-y-scroll">
               <h3 className="whitespace-nowrap text-xl">Issue description</h3>
               <p className="text-lg font-light">{projectIssue.description}</p>
             </div>

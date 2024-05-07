@@ -25,10 +25,11 @@ import { Input } from "../ui/input";
 import { Flag } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { ReportProjectIssueSchema } from "@/schemas";
-import { startTransition } from "react";
+import { startTransition, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Textarea } from "../ui/textarea";
 import { reportProblem } from "@/actions/project-issues";
+import { cn } from "@/lib/utils";
 
 export const ReportProjectModal = () => {
   //const [problemSource, setProblemSource] = useState<string>();
@@ -36,6 +37,7 @@ export const ReportProjectModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "reportProjectProblem";
   const router = useRouter();
+  const [priority, setPriority] = useState(1);
 
   const form = useForm<z.infer<typeof ReportProjectIssueSchema>>({
     resolver: zodResolver(ReportProjectIssueSchema),
@@ -159,6 +161,7 @@ export const ReportProjectModal = () => {
         workspaceId,
         projectId,
         values,
+        priority,
         assemblyGroupId,
         assemblyProcessId,
         projectNetwork,
@@ -226,7 +229,7 @@ export const ReportProjectModal = () => {
                   <FormControl>
                     <Textarea
                       disabled={isLoading}
-                      className="h-96 text-lg bg-stone-100/50 dark:bg-neutral-800 dark:border-neutral-400 border-2 border-stone-800 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0"
+                      className="h-80 text-lg bg-stone-100/50 dark:bg-neutral-800 dark:border-neutral-400 border-2 border-stone-800 focus-visible:ring-0 text-black dark:text-white focus-visible:ring-offset-0"
                       placeholder=""
                       {...field}
                     />
@@ -235,6 +238,77 @@ export const ReportProjectModal = () => {
                 </FormItem>
               )}
             />
+            <div className="space-x-2 w-full flex">
+              <div
+                className={cn(
+                  "cursor-pointer relative group hover:opacity-75 transition w-full"
+                )}
+                onClick={() => {
+                  setPriority(1);
+                }}
+              >
+                <input
+                  type="radio"
+                  id="targetType"
+                  className="hidden"
+                  checked={priority === 1}
+                />
+                <div
+                  className={cn(
+                    "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
+                    priority === 1 && "bg-slate-300 hover:bg-slate-200"
+                  )}
+                >
+                  <p className="text-5xl text-red-600">!</p>
+                </div>
+              </div>
+              <div
+                className={cn(
+                  "cursor-pointer relative group hover:opacity-75 transition w-full"
+                )}
+                onClick={() => {
+                  setPriority(2);
+                }}
+              >
+                <input
+                  type="radio"
+                  id="targetType"
+                  className="hidden"
+                  checked={priority === 2}
+                />
+                <div
+                  className={cn(
+                    "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
+                    priority === 2 && "bg-slate-300 hover:bg-slate-200"
+                  )}
+                >
+                  <p className="text-5xl text-red-600">!!</p>
+                </div>
+              </div>
+              <div
+                className={cn(
+                  "cursor-pointer relative group hover:opacity-75 transition w-full"
+                )}
+                onClick={() => {
+                  setPriority(3);
+                }}
+              >
+                <input
+                  type="radio"
+                  id="targetType"
+                  className="hidden"
+                  checked={priority === 3}
+                />
+                <div
+                  className={cn(
+                    "flex flex-col w-full items-center justify-center border-2 border-stone-700 p-2 rounded-md hover:bg-stone-100 whitespace-nowrap",
+                    priority === 3 && "bg-slate-300 hover:bg-slate-200"
+                  )}
+                >
+                  <p className="text-5xl text-red-600">!!!</p>
+                </div>
+              </div>
+            </div>
             <DialogFooter className="py-4">
               <Button type="submit" disabled={isLoading} className="w-full">
                 Report

@@ -205,9 +205,9 @@ model ProjectIssue {
   description String @db.Text
   priority    Int    @default(1)
 
-  solved     Boolean       @default(false)
-  solvedById String
-  solvedBy   ProjectMember @relation("solvedBy", fields: [solvedById], references: [id], onDelete: Cascade)
+  solved     Boolean        @default(false)
+  solvedById String?
+  solvedBy   ProjectMember? @relation("solvedBy", fields: [solvedById], references: [id], onDelete: Cascade)
 
   applicantId String
   applicant   ProjectMember @relation("reported", fields: [applicantId], references: [id], onDelete: Cascade)

@@ -22,6 +22,7 @@ export const reportProblem = async (
   workspaceId: string,
   projectId: string,
   values: z.infer<typeof ReportProjectIssueSchema>,
+  priority: number,
   assemblyGroupId?: string,
   assemblyProcessId?: string,
   network?: ProjectNetwork,
@@ -83,6 +84,7 @@ export const reportProblem = async (
       description: problemDescription,
       applicantId: projectMember.id,
       projectId,
+      priority,
     },
   });
 
