@@ -74,6 +74,18 @@ export const createProjectStage = async (
     },
   });
 
+  //activate if first
+  if (stages.length === 0) {
+    await db.projectStage.update({
+      where: {
+        id: projectStage.id,
+      },
+      data: {
+        active: true,
+      },
+    });
+  }
+
   return { success: `Project stage created` };
 };
 
