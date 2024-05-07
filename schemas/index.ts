@@ -175,3 +175,10 @@ export const SolveProjectIssueSchema = z.object({
     message: "Problem solution is required",
   }),
 });
+
+export const CreateProjectStageSchema = z.object({
+  stageName: z.string().min(1, {
+    message: "Stage name is required",
+  }),
+  stageDescription: z.string(),
+});
