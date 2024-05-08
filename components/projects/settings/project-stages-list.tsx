@@ -1,6 +1,9 @@
 "use client";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
-import { setActiveProjectStage } from "@/actions/project-stage";
+import {
+  reorderProjectStage,
+  setActiveProjectStage,
+} from "@/actions/project-stage";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/hooks/use-modal-store";
 import { cn } from "@/lib/utils";
@@ -53,19 +56,26 @@ export const ProjectStagesList = ({
 
   const onDragEnd = (result: any) => {
     const { destination, source, type } = result;
-    //console.log(`source: ${source.index} destination: ${destination.index}`);
     const newList = [...stagesList];
     console.log(
       `${newList[source.index].name} moved to pos of ${
         newList[destination.index].name
       }`
     );
-    const items = reorder(
-      newList,
-      result.source.index,
-      result.destination.index
-    );
+    const items = reorder(newList, source.index, destination.index);
     setStagesList(items);
+
+    reorderProjectStage(profileId, workspaceId, projectId, items).then(
+      (data) => {
+        toast(data.success, {
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        });
+        router.refresh();
+      }
+    );
   };
 
   return (
@@ -99,7 +109,7 @@ export const ProjectStagesList = ({
                               stage.active && "font-medium underline"
                             )}
                           >
-                            {stage.order + 1}. {stage.name}
+                            {index + 1}. {stage.name}
                           </p>
                           <p className="space-x-2">
                             {stage.startDate && (

@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import { CreateProjectStageSchema } from "@/schemas";
-import { MemberRole, ProjectTargetType } from "@prisma/client";
+import { MemberRole, ProjectStage, ProjectTargetType } from "@prisma/client";
 import { z } from "zod";
 
 export const createProjectStage = async (
@@ -359,4 +359,65 @@ export const editProjectStage = async (
   });
 
   return { success: `Project stage updated` };
+};
+
+export const reorderProjectStage = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  stages: ProjectStage[]
+) => {
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
+  }
+
+  //project member?
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      project: {
+        workspaceId: workspace.id,
+      },
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found!" };
+  }
+
+  //Reorder
+  stages.forEach((stage, index) => {
+    setOrder(stage.id, index);
+  });
+
+  return { success: `Project stage new order saved` };
+};
+
+const setOrder = async (stageId: string, order: number) => {
+  await db.projectStage.update({
+    where: {
+      id: stageId,
+    },
+    data: {
+      order: order,
+    },
+  });
 };
