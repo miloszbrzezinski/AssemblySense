@@ -56,6 +56,7 @@ export default async function ComponentsLibraryPage({
                   assemblyGroup: true,
                   assemblyProcess: true,
                   componentEvents: true,
+                  projectIssues: true,
                 },
               },
             },
@@ -69,8 +70,16 @@ export default async function ComponentsLibraryPage({
     return;
   }
 
+  const projectIssues = await db.projectIssue.findMany({
+    where: {
+      component: {
+        componentId: params.componentId,
+      },
+    },
+  });
+
   const tmpComponent = workspace.componentCategories.filter(
-    (category) => category.components.length > 0,
+    (category) => category.components.length > 0
   );
 
   if (!tmpComponent[0]) {
@@ -100,11 +109,20 @@ export default async function ComponentsLibraryPage({
               (project) =>
                 project.projectComponents.length > 0 && (
                   <UseCaseProject key={project.id} project={project} />
-                ),
+                )
             )}
           </div>
         </TabsContent>
-        <TabsContent value="problems"></TabsContent>
+        <TabsContent value="problems">
+          <div className="flex flex-col space-y-[1px] bg-stone-500">
+            {projectIssues.map((issue) => (
+              <div className="w-full bg-white p-5">
+                <p className="text-xl">{issue.name}</p>
+                <p>{issue.description}</p>
+              </div>
+            ))}
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );
