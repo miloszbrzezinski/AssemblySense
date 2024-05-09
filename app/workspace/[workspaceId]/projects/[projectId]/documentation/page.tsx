@@ -64,7 +64,7 @@ export default async function ProjectDocumentationPage({
   }
 
   return (
-    <div className="h-full w-full flex flex-col">
+    <div className="h-full w-full flex flex-col overflow-y-scroll">
       <div className="p-5">
         <h1 className="text-3xl">
           {project.projectNo} <span className="font-light">{project.name}</span>{" "}
@@ -94,7 +94,7 @@ export default async function ProjectDocumentationPage({
         {project.assemblyGroups.map((group) => (
           <ChapterItem key={group.id} chapterName={group.name}>
             {group.assemblyProcesses.map((process) => (
-              <ProcessSection key={process.id} process={process} />
+              <ProcessSection key={process.id} processId={process.id} />
             ))}
           </ChapterItem>
         ))}
