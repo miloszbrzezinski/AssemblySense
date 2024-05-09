@@ -93,6 +93,45 @@ export const setAssemblyGroupName = async (
   return { success: `Assembly group name changed` };
 };
 
+export const removeAssemblyGroup = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  assemblyGroupId: string
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            assemblyGroups: {
+              delete: {
+                id: assemblyGroupId,
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Assembly group removed` };
+};
+
 export const createProcess = async (
   profileId: string,
   workspaceId: string,

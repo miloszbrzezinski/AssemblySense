@@ -41,7 +41,8 @@ export type ModalType =
   | "solveIssue"
   | "addProjectStage"
   | "removeProjectStage"
-  | "editProjectStage";
+  | "editProjectStage"
+  | "removeAssemblyGroup";
 
 interface ModalData {
   projectMembersWithProfile?: ProjectMemberWithProfile[];

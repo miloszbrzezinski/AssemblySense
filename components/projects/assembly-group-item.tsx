@@ -189,7 +189,17 @@ export const AssemblyGroupItem = ({
           <Edit strokeWidth={1} className="w-5 h-5" />
           <p>Rename</p>
         </ContextMenuItem>
-        <ContextMenuItem className="space-x-2 text-red-800">
+        <ContextMenuItem
+          onClick={() => {
+            onOpen("removeAssemblyGroup", {
+              profileId,
+              workspaceId,
+              projectId: assemblyGroup.projectId,
+              groupId: assemblyGroup.id,
+            });
+          }}
+          className="space-x-2 text-red-800"
+        >
           <Trash strokeWidth={1} className="w-5 h-5" />
           <p>Delete</p>
         </ContextMenuItem>
