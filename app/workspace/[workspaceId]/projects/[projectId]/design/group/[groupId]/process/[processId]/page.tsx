@@ -1,4 +1,5 @@
 import { EnableFormulaPopover } from "@/components/projects/design/action-enables/table/enable-formula-popover";
+import { ProcessDescription } from "@/components/projects/design/group/process/process-description";
 import { TabsListItem } from "@/components/projects/design/group/process/tab-list";
 import { TitleBar } from "@/components/projects/design/group/process/title-bar";
 import { ProcessSequence } from "@/components/projects/design/sequence/sequence";
@@ -100,7 +101,7 @@ export default async function ProcessPage({
   let componentEvents: ComponentEvent[] = [];
 
   process.projectComponents.forEach(
-    (comp) => (componentEvents = [...componentEvents, ...comp.componentEvents]),
+    (comp) => (componentEvents = [...componentEvents, ...comp.componentEvents])
   );
 
   return (
@@ -124,7 +125,17 @@ export default async function ProcessPage({
         <TabsContent
           value="overview"
           className="w-full justify-center items-center flex overflow-y-scroll"
-        ></TabsContent>
+        >
+          <div className="flex flex-col w-full h-96">
+            <p className="text-xl my-5">Process description</p>
+            <ProcessDescription
+              profileId={profile.id}
+              workspaceId={params.workspaceId}
+              projectId={params.projectId}
+              process={process}
+            />
+          </div>
+        </TabsContent>
         {sequences.map((seq) => (
           <TabsContent value={seq.id} key={seq.id}>
             <ProcessSequence

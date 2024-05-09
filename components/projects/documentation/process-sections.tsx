@@ -52,6 +52,12 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
   return (
     <SubChapterItem subChapterName={processName}>
       <div className="pl-5 mt-2">
+        <h4 className="text-lg">Description</h4>
+        <div className="pl-5">
+          <p>{process.description}</p>
+        </div>
+      </div>
+      <div className="pl-5 mt-2">
         <h4 className="text-lg">Components</h4>
         <div className="pl-5">
           <table className="border-collapse relative w-full">

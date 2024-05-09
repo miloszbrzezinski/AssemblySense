@@ -432,3 +432,58 @@ export const setProcessName = async (
 
   return { success: `Process name changed!` };
 };
+
+export const setProcessDescription = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  assemblyGroupId: string,
+  processId: string,
+  description: string
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            assemblyGroups: {
+              update: {
+                where: {
+                  id: assemblyGroupId,
+                },
+                data: {
+                  assemblyProcesses: {
+                    update: {
+                      where: {
+                        id: processId,
+                      },
+                      data: {
+                        description,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Process name changed!` };
+};
