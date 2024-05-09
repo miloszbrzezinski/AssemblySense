@@ -70,8 +70,9 @@ const ProjectNavButton = ({ type }: ProjectNavButtonProps) => {
     <button
       onClick={onClick}
       className={cn(
-        "group text-sm w-full md:w-min inline-flex items-center justify-center whitespace-nowrap px-1 p-2 rounded-t-md gap-x-2 border-b-4 border-transparent transition-all",
-        pathname.split("/")[5] === type && " border-sky-800"
+        "group text-sm w-full md:w-min inline-flex items-center justify-center whitespace-nowrap px-1 p-2 rounded-t-md gap-x-2 border-b-4 border-transparent transition-all hover:border-sky-800/30",
+        pathname.split("/")[5] === type &&
+          " border-sky-800 hover:border-sky-800/80"
       )}
     >
       <Icon

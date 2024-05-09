@@ -1,4 +1,4 @@
-import { AssemblyProcess } from "@prisma/client";
+import { AssemblyProcess, EventType } from "@prisma/client";
 import { SubChapterItem } from "./sub-chapter-item";
 import { db } from "@/lib/db";
 
@@ -28,11 +28,29 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
     return <p>Process not found</p>;
   }
 
+  const componentsEvents = await db.componentEvent.findMany({
+    where: {
+      projectComponent: {
+        assemblyProcess: {
+          id: processId,
+        },
+      },
+    },
+    include: {
+      addressIO: true,
+      projectComponent: {
+        include: {
+          component: true,
+        },
+      },
+    },
+  });
+
   const processName = `${process.processId} ${process.name}`;
 
   return (
     <SubChapterItem subChapterName={processName}>
-      <div className="pl-5">
+      <div className="pl-5 mt-2">
         <h4 className="text-lg">Components</h4>
         <div className="pl-5">
           <table className="border-collapse relative w-full">
@@ -73,8 +91,53 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
           </table>
         </div>
       </div>
-      <div className="pl-5">
+      <div className="pl-5 mt-2">
         <h4 className="text-lg">I/O list</h4>
+        <div className="pl-5">
+          <table className="border-collapse relative w-full">
+            <thead>
+              <tr>
+                <th className="border border-stone-800 font-medium">
+                  Component
+                </th>
+                <th className="border border-stone-800 font-medium">
+                  Component Symbol
+                </th>
+                <th className="border border-stone-800 font-medium">Event</th>
+                <th className="border border-stone-800 font-medium">Adress</th>
+                <th className="border border-stone-800 font-medium">Symbol</th>
+                <th className="border border-stone-800 font-medium">
+                  Description
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {componentsEvents.map((event) => (
+                <tr key={event.id}>
+                  <td className="border border-stone-800 pl-2">
+                    {event.projectComponent.component.manufacturer}{" "}
+                    {event.projectComponent.component.name}
+                  </td>
+                  <td className="border border-stone-800 pl-2">
+                    {event.projectComponent.name}
+                  </td>
+                  <td className="border border-stone-800 pl-2">{event.name}</td>
+                  <td className="border border-stone-800 pl-2">
+                    {event.eventType == EventType.ACTION && "O"}
+                    {event.eventType == EventType.STATUS && "I"}
+                    {event.addressIO?.byteAdress}.{event.addressIO?.bitAdress}
+                  </td>
+                  <td className="border border-stone-800 pl-2">
+                    {event.addressIO?.symbol}
+                  </td>
+                  <td className="border border-stone-800 pl-2">
+                    {event.description}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className="pl-5">
         <h4 className="text-lg">Action enables</h4>
