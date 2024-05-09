@@ -5,6 +5,7 @@ import { createComponentCategory } from "@/actions/library";
 import { Folder } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { startTransition, useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 interface NewAssemblyGroupProps {
   profileId: string;
@@ -36,10 +37,16 @@ export const NewAssemblyGroup = ({
           profileId,
           workspaceId,
           projectId,
-          newAssemblyGroupName,
+          newAssemblyGroupName
         ).then((data) => {
           // setError(data.error);
           if (data) {
+            toast(data.success, {
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
             router.refresh();
             hide();
           }

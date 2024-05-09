@@ -13,7 +13,7 @@ export const createAssemblyGroup = async (
   profileId: string,
   workspaceId: string,
   projectId: string,
-  assemblyGroupName: string,
+  assemblyGroupName: string
 ) => {
   const workspace = await db.workspace.update({
     where: {
@@ -48,12 +48,57 @@ export const createAssemblyGroup = async (
   return { success: `Assembly group ${assemblyGroupName} created` };
 };
 
+export const setAssemblyGroupName = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  assemblyGroupId: string,
+  assemblyGroupName: string
+) => {
+  const workspace = await db.workspace.update({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+    data: {
+      projects: {
+        update: {
+          where: {
+            id: projectId,
+          },
+          data: {
+            assemblyGroups: {
+              update: {
+                where: {
+                  id: assemblyGroupId,
+                },
+                data: {
+                  name: assemblyGroupName,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return { success: `Assembly group name changed` };
+};
+
 export const createProcess = async (
   profileId: string,
   workspaceId: string,
   projectId: string,
   assemblyGroupId: string,
-  values: z.infer<typeof CreateProcessSchema>,
+  values: z.infer<typeof CreateProcessSchema>
 ) => {
   const validatedFields = CreateProcessSchema.safeParse(values);
 
@@ -111,7 +156,7 @@ export const removeProcess = async (
   workspaceId: string,
   projectId: string,
   assemblyGroupId: string,
-  processId: string,
+  processId: string
 ) => {
   const workspace = await db.workspace.update({
     where: {
@@ -161,7 +206,7 @@ export const setProcessNo = async (
   projectId: string,
   assemblyGroupId: string,
   processId: string,
-  processNo: string,
+  processNo: string
 ) => {
   const workspace = await db.workspace.update({
     where: {
@@ -216,7 +261,7 @@ export const setProcessName = async (
   projectId: string,
   assemblyGroupId: string,
   processId: string,
-  name: string,
+  name: string
 ) => {
   const workspace = await db.workspace.update({
     where: {
