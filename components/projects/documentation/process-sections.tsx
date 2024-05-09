@@ -1,6 +1,7 @@
 import { AssemblyProcess, EventType } from "@prisma/client";
 import { SubChapterItem } from "./sub-chapter-item";
 import { db } from "@/lib/db";
+import { EnableFormula } from "../design/action-enables/table/enable-formula";
 
 interface ProcessSectionProps {
   processId: string;
@@ -139,8 +140,45 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
           </table>
         </div>
       </div>
-      <div className="pl-5">
+      <div className="pl-5 mt-2">
         <h4 className="text-lg">Action enables</h4>
+        <div className="pl-5">
+          <table className="border-collapse relative w-full">
+            <thead>
+              <tr>
+                <th className="border border-stone-800 font-medium">Event</th>
+                <th className="border border-stone-800 font-medium">Adress</th>
+                <th className="border border-stone-800 font-medium">Enable</th>
+                <th className="border border-stone-800 font-medium">Comment</th>
+              </tr>
+            </thead>
+            <tbody>
+              {componentsEvents.map(
+                (event) =>
+                  event.eventType === EventType.ACTION && (
+                    <tr key={event.id}>
+                      <td className="border border-stone-800 pl-2">
+                        {event.name}
+                      </td>
+                      <td className="border border-stone-800 pl-2">
+                        O{event.addressIO?.byteAdress}.
+                        {event.addressIO?.bitAdress}
+                      </td>
+                      <td className="border border-stone-800 pl-2">
+                        <EnableFormula
+                          type="transparent"
+                          formula={event.eventEnableFormula}
+                        />
+                      </td>
+                      <td className="border border-stone-800 pl-2">
+                        {event.eventEnableComment}
+                      </td>
+                    </tr>
+                  )
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
       <div className="pl-5">
         <h4 className="text-lg">Sequences</h4>
