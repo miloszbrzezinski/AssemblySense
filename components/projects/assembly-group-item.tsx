@@ -13,14 +13,14 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "../ui/catalog-accordion";
+} from "@/components/ui/catalog-accordion";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from "../ui/context-menu";
+} from "@/components/ui/context-menu";
 import { AssemblyGroupWithProcesses } from "@/types";
 import { useModal } from "@/hooks/use-modal-store";
 import { ProcessItem } from "./process-item";
