@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { startTransition, useState } from "react";
 import { toast } from "sonner";
 import { AssemblyGroupWithProcesses, AssemblyProcessWithGroup } from "@/types";
+import { reorderAssemblyProcess } from "@/actions/assembly-group";
 
 interface ProjectStagesListProps {
   profileId: string;
@@ -52,7 +53,7 @@ export const ProjectLayoutList = ({
     const items = reorder(newList, source.index, destination.index);
     setAssemblyProcessesList(items);
 
-    reorderProjectStage(profileId, workspaceId, projectId, items).then(
+    reorderAssemblyProcess(profileId, workspaceId, projectId, items).then(
       (data) => {
         toast(data.success, {
           action: {

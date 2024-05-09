@@ -6,7 +6,7 @@ import {
   CreateProcessSchema,
   CreateProjectSchema,
 } from "@/schemas";
-import { MemberRole } from "@prisma/client";
+import { AssemblyProcess, MemberRole } from "@prisma/client";
 import { z } from "zod";
 
 export const createAssemblyGroup = async (
@@ -147,7 +147,8 @@ export const createProcess = async (
 
   const { processId, processName } = validatedFields.data;
 
-  const workspace = await db.workspace.update({
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
     where: {
       id: workspaceId,
       members: {
@@ -159,29 +160,51 @@ export const createProcess = async (
         },
       },
     },
+  });
+
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
+  }
+
+  //project member?
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      project: {
+        workspaceId: workspace.id,
+      },
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found!" };
+  }
+
+  //check existing stages
+  const processes = await db.assemblyProcess.findMany({
+    where: {
+      assemblyGroup: {
+        projectId,
+      },
+    },
+  });
+
+  const nextStageOrder = processes.length;
+
+  //create process
+  const projectStage = await db.assemblyGroup.update({
+    where: {
+      id: assemblyGroupId,
+    },
     data: {
-      projects: {
-        update: {
-          where: {
-            id: projectId,
-          },
-          data: {
-            assemblyGroups: {
-              update: {
-                where: {
-                  id: assemblyGroupId,
-                },
-                data: {
-                  assemblyProcesses: {
-                    create: {
-                      processId: processId,
-                      name: processName,
-                    },
-                  },
-                },
-              },
-            },
-          },
+      assemblyProcesses: {
+        create: {
+          processId: processId,
+          name: processName,
+          order: nextStageOrder,
         },
       },
     },
@@ -237,6 +260,67 @@ export const removeProcess = async (
   });
 
   return { success: `Process removed!` };
+};
+
+export const reorderAssemblyProcess = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  processes: AssemblyProcess[]
+) => {
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
+  }
+
+  //project member?
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      project: {
+        workspaceId: workspace.id,
+      },
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found!" };
+  }
+
+  //Reorder
+  processes.forEach((process, index) => {
+    setOrder(process.id, index);
+  });
+
+  return { success: `Project layout new order saved` };
+};
+
+const setOrder = async (processId: string, order: number) => {
+  await db.assemblyProcess.update({
+    where: {
+      id: processId,
+    },
+    data: {
+      order: order,
+    },
+  });
 };
 
 export const setProcessNo = async (

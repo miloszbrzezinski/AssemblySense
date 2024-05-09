@@ -521,6 +521,7 @@ model AssemblyProcess {
   processId   String
   name        String
   description String? @db.Text
+  order       Int     @default(0)
 
   projectComponents ProjectComponent[]
   sequences         Sequence[]

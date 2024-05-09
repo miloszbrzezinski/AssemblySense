@@ -31,20 +31,6 @@ export default async function ProjectDesignLayoutPage({
         where: {
           id: params.projectId,
         },
-        include: {
-          assemblyGroups: {
-            include: {
-              assemblyProcesses: {
-                include: {
-                  assemblyGroup: true,
-                },
-              },
-            },
-            // orderBy: {
-            //   order: "asc",
-            // },
-          },
-        },
       },
     },
   });
@@ -55,13 +41,23 @@ export default async function ProjectDesignLayoutPage({
 
   const project = workspace.projects[0];
 
-  const processes: AssemblyProcessWithGroup[] = [];
-
-  project.assemblyGroups.forEach((g) => processes.push(...g.assemblyProcesses));
-
   if (!project) {
     return;
   }
+
+  const processes = await db.assemblyProcess.findMany({
+    where: {
+      assemblyGroup: {
+        projectId: params.projectId,
+      },
+    },
+    include: {
+      assemblyGroup: true,
+    },
+    orderBy: {
+      order: "asc",
+    },
+  });
   return (
     <div className="h-full w-full flex flex-col">
       <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
