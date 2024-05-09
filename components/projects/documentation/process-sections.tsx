@@ -1,7 +1,8 @@
-import { AssemblyProcess, EventType } from "@prisma/client";
+import { AssemblyProcess, EventType, ProjectNetwork } from "@prisma/client";
 import { SubChapterItem } from "./sub-chapter-item";
 import { db } from "@/lib/db";
 import { EnableFormula } from "../design/action-enables/table/enable-formula";
+import { ConnectionTableCell } from "./connection-table-cell";
 
 interface ProcessSectionProps {
   processId: string;
@@ -15,6 +16,11 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
     include: {
       projectComponents: {
         include: {
+          componentConnections: {
+            include: {
+              projectNetwork: true,
+            },
+          },
           component: {
             include: {
               category: true,
@@ -45,6 +51,31 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
         },
       },
     },
+  });
+
+  const componentsConnections = await db.componentConnection.findMany({
+    where: {
+      projectComponent: {
+        assemblyProcessId: processId,
+      },
+    },
+    include: {
+      projectNetwork: true,
+    },
+  });
+
+  const networks = componentsConnections.map((c) => c.projectNetwork);
+
+  const uniqueNetworks: ProjectNetwork[] = [];
+
+  networks.forEach((n) => {
+    let found = false;
+    uniqueNetworks.forEach((i) => {
+      if (n.id === i.id) found = true;
+    });
+    if (!found) {
+      uniqueNetworks.push(n);
+    }
   });
 
   const processName = `${process.processId} ${process.name}`;
@@ -92,6 +123,49 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
                   <td className="border border-stone-800 pl-2">
                     {component.description}
                   </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div className="pl-5 mt-2">
+        <h4 className="text-lg">Network connections</h4>
+        <div className="pl-5">
+          <table className="border-collapse relative w-full">
+            <thead>
+              <tr>
+                <th className="border border-stone-800 font-medium">
+                  Component
+                </th>
+                <th className="border border-stone-800 font-medium">Symbol</th>
+                {uniqueNetworks.map((network) => (
+                  <th
+                    key={network.id}
+                    className="border border-stone-800 font-medium"
+                  >
+                    {network.name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {process.projectComponents.map((component) => (
+                <tr key={component.id}>
+                  <td className="border border-stone-800 pl-2">
+                    {component.component.manufacturer}{" "}
+                    {component.component.name}
+                  </td>
+                  <td className="border border-stone-800 pl-2">
+                    {component.name}
+                  </td>
+                  {uniqueNetworks.map((network) => (
+                    <ConnectionTableCell
+                      key={network.id}
+                      network={network}
+                      connections={component.componentConnections}
+                    />
+                  ))}
                 </tr>
               ))}
             </tbody>

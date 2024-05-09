@@ -82,6 +82,10 @@ export type ComponentConnectionWithData = ComponentConnection & {
   projectNetwork: ProjectNetwork;
 };
 
+export type ComponentConnectionWithNetwork = ComponentConnection & {
+  projectNetwork: ProjectNetwork;
+};
+
 export type ComponentEventWithData = ComponentEvent & {
   addressIO: AddressIO | null;
 } & {
