@@ -32,6 +32,10 @@ export type AssemblyGroupWithProcesses = AssemblyGroup & {
   assemblyProcesses: AssemblyProcess[];
 };
 
+export type AssemblyProcessWithGroup = AssemblyProcess & {
+  assemblyGroup: AssemblyGroup;
+};
+
 export type MemberWithProfile = Member & {
   profile: Profile;
 };

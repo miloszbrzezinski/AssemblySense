@@ -57,6 +57,9 @@ export const DesignSidebar = ({
     setNewGroup(false);
   };
 
+  let processesCount = 0;
+  assemblyGroups.forEach((g) => (processesCount += g.assemblyProcesses.length));
+
   return (
     <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll">
       <Accordion type="single" collapsible defaultValue="project">
@@ -67,6 +70,21 @@ export const DesignSidebar = ({
             </AccordionTrigger>
           </div>
           <AccordionContent className="pb-0">
+            <Button
+              onClick={() => {
+                router.push(
+                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/layout`
+                );
+              }}
+              variant="secondary"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+            >
+              <div className="flex items-center justify-start space-x-2">
+                <Waypoints strokeWidth={1} />
+                <p className="font-light">Layout</p>
+              </div>
+              <p className="font-light">{processesCount}</p>
+            </Button>
             <Button
               onClick={() => {
                 router.push(
@@ -126,23 +144,11 @@ export const DesignSidebar = ({
                 <p className="font-light">Action enables</p>
               </div>
             </Button>
-            <Button
-              onClick={() => {
-                router.push(
-                  `/workspace/${params.workspaceId}/projects/${params.projectId}/design/layout`
-                );
-              }}
-              variant="secondary"
-              className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
-            >
-              <Waypoints strokeWidth={1} />
-              <p className="font-light">Layout</p>
-            </Button>
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      <Accordion type="multiple">
-        <AccordionItem value="project">
+      <Accordion type="single" collapsible defaultValue="groups">
+        <AccordionItem value="groups">
           <div className="flex w-full justify-between items-center shadow-sm shadow-stone-300">
             <AccordionTrigger>
               <div className="flex justify-between w-full">

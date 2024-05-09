@@ -60,7 +60,9 @@ const ProjectNavButton = ({ type }: ProjectNavButtonProps) => {
 
   const onClick = () => {
     router.push(
-      `/workspace/${params.workspaceId}/projects/${params.projectId}/${type}`
+      `/workspace/${params.workspaceId}/projects/${params.projectId}/${type}${
+        type === "design" ? "/layout" : ""
+      }`
     );
   };
 
