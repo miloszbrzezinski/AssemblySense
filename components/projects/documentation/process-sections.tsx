@@ -3,6 +3,7 @@ import { SubChapterItem } from "./sub-chapter-item";
 import { db } from "@/lib/db";
 import { EnableFormula } from "../design/action-enables/table/enable-formula";
 import { ConnectionTableCell } from "./connection-table-cell";
+import { ProcessSequenceDocs } from "./sequence/sequence";
 
 interface ProcessSectionProps {
   processId: string;
@@ -14,6 +15,21 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
       id: processId,
     },
     include: {
+      sequences: {
+        include: {
+          sequenceStep: {
+            include: {
+              componentsEvents: true,
+            },
+            orderBy: {
+              createdAt: "asc",
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      },
       projectComponents: {
         include: {
           componentConnections: {
@@ -262,6 +278,17 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
       </div>
       <div className="pl-5">
         <h4 className="text-lg">Sequences</h4>
+        {process.sequences.map((seq) => (
+          <div key={seq.id} className="pl-5">
+            <h4 className="text-lg font-light">{seq.name}</h4>
+            <div className="pl-5">
+              <p>{seq.description}</p>
+              <div>
+                <ProcessSequenceDocs sequence={seq} />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </SubChapterItem>
   );
