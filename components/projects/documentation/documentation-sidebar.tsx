@@ -27,7 +27,7 @@ import {
   ProjectMember,
   ProjectNetwork,
 } from "@prisma/client";
-import { ChapterItem } from "./chapter-item";
+import { ChapterSidebarItem } from "./chapter-sidebar-item";
 import { ChangeLogItem } from "./changelog-item";
 
 interface DesignSidebarProps {
@@ -64,13 +64,13 @@ export const DocumentationSidebar = ({
 
   return (
     <div className="w-full h-full border-r pt-3 pb-20 border-stone-300 shadow-md overflow-scroll">
-      <ChapterItem chapterName="Project" />
-      <ChapterItem chapterName="Team" />
-      <ChapterItem chapterName="Layout" />
+      <ChapterSidebarItem chapterName="Project" />
+      <ChapterSidebarItem chapterName="Layout" />
+      <ChapterSidebarItem chapterName="Team" />
       <Separator />
-      <ChapterItem chapterName="General" />
+      <ChapterSidebarItem chapterName="General" />
       {assemblyGroups.map((group) => (
-        <ChapterItem key={group.id} chapterName={group.name} />
+        <ChapterSidebarItem key={group.id} chapterName={group.name} />
       ))}
       <Separator />
       <ChangeLogItem />
