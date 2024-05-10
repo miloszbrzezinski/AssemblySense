@@ -1,13 +1,5 @@
-import {
-  addSequenceStepAction,
-  removeSequenceStepAction,
-} from "@/actions/process-sequence";
 import { SequenceStepWithEvents } from "@/types";
 import { ComponentEvent } from "@prisma/client";
-import { X } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { startTransition } from "react";
-import { toast } from "sonner";
 
 interface StepActionItemProps {
   step: SequenceStepWithEvents;

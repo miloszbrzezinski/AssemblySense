@@ -1,12 +1,4 @@
-import {
-  rmoveSequenceStep,
-  setSequenceStepName,
-} from "@/actions/process-sequence";
 import { SequenceStepWithEvents } from "@/types";
-import { Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { startTransition, useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface StepActionProps {
   index: number;

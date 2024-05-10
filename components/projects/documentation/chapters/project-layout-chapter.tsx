@@ -1,30 +1,17 @@
-import {
-  AssemblyProcess,
-  Department,
-  EventType,
-  ProjectNetwork,
-} from "@prisma/client";
 import { SubChapterItem } from "../docs-sections/sub-chapter-item";
 import { db } from "@/lib/db";
-import { EnableFormula } from "../../design/action-enables/table/enable-formula";
-import { ConnectionTableCell } from "../connection-table-cell";
-import { ProcessSequenceDocs } from "../sequence/sequence";
-import { SectionItem } from "../docs-sections/section-item";
-import { SubSectionItem } from "../docs-sections/sub-section-item";
 import { ChapterItem } from "../docs-sections/chapter-item";
-import { DepartmentWithMembersWithProjects } from "@/types";
-import { profile } from "console";
 import { cn } from "@/lib/utils";
 
-interface ProjectLayoutSectionProps {
+interface ProjectLayoutChapterProps {
   chapterNo: number;
   projectId: string;
 }
 
-export const ProjectLayoutSection = async ({
+export const ProjectLayoutChapter = async ({
   chapterNo,
   projectId,
-}: ProjectLayoutSectionProps) => {
+}: ProjectLayoutChapterProps) => {
   const processes = await db.assemblyProcess.findMany({
     where: {
       assemblyGroup: {

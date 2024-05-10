@@ -1,11 +1,11 @@
 import { ChapterItem } from "@/components/projects/documentation/docs-sections/chapter-item";
 import { ProcessSection } from "@/components/projects/documentation/chapters/process-sections";
-import { ProjectLayoutSection } from "@/components/projects/documentation/chapters/project-layout-sections";
-import { ProjectTeamSection } from "@/components/projects/documentation/chapters/project-team-sections";
+import { ProjectLayoutChapter } from "@/components/projects/documentation/chapters/project-layout-chapter";
+import { ProjectTeamChapter } from "@/components/projects/documentation/chapters/project-team-sections";
 import { SubChapterItem } from "@/components/projects/documentation/docs-sections/sub-chapter-item";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { ProjectSummaryChapter } from "@/components/projects/documentation/chapters/project-summary-section";
+import { ProjectSummaryChapter } from "@/components/projects/documentation/chapters/project-summary-chapter";
 import { GeneralProcessSection } from "@/components/projects/documentation/chapters/gen-process-sections";
 import { NetworkChapter } from "@/components/projects/documentation/chapters/network-chapter";
 import { ProjectIssuesChapter } from "@/components/projects/documentation/chapters/project-issues-chapter";
@@ -76,9 +76,9 @@ export default async function ProjectDocumentationPage({
           {project.projectNo} <span className="font-light">{project.name}</span>{" "}
           <span className="font-extralight"> - documentation</span>
         </h1>
-        <ProjectSummaryChapter chapterNo={2} projectId={project.id} />
-        <ProjectLayoutSection chapterNo={2} projectId={project.id} />
-        <ProjectTeamSection chapterNo={3} projectId={project.id} />
+        <ProjectSummaryChapter chapterNo={1} projectId={project.id} />
+        <ProjectLayoutChapter chapterNo={2} projectId={project.id} />
+        <ProjectTeamChapter chapterNo={3} projectId={project.id} />
         <NetworkChapter chapterNo={4} projectId={project.id} />
         {project.assemblyGroups.map((group, ig) => (
           <ChapterItem

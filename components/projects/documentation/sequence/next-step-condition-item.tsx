@@ -1,7 +1,4 @@
-import { cn } from "@/lib/utils";
-import { ComponentEventWithData, SequenceStepWithEvents } from "@/types";
-import { ComponentEvent, EventType } from "@prisma/client";
-import { AlertTriangle } from "lucide-react";
+import { SequenceStepWithEvents } from "@/types";
 import { EnableFormula } from "../../design/action-enables/table/enable-formula";
 
 interface NextStepConditionItemProps {

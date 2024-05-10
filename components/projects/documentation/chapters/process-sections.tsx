@@ -1,4 +1,4 @@
-import { AssemblyProcess, EventType, ProjectNetwork } from "@prisma/client";
+import { EventType, ProjectNetwork } from "@prisma/client";
 import { SubChapterItem } from "../docs-sections/sub-chapter-item";
 import { db } from "@/lib/db";
 import { EnableFormula } from "../../design/action-enables/table/enable-formula";

@@ -2,7 +2,6 @@ import { SequenceStepWithEvents } from "@/types";
 import { StepNoteDocs } from "./step-note-item";
 import { StepSeparatorDocs } from "./step-separator";
 import { NextStepConditionItemDocs } from "./next-step-condition-item";
-import { StepActionItemDocs } from "./step-action-item";
 import { StepActionsDocs } from "./step-actions-item";
 
 interface StepItemProps {

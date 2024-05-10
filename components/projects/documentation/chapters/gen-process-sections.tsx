@@ -1,11 +1,9 @@
-import { AssemblyProcess, EventType, ProjectNetwork } from "@prisma/client";
+import { EventType, ProjectNetwork } from "@prisma/client";
 import { SubChapterItem } from "../docs-sections/sub-chapter-item";
 import { db } from "@/lib/db";
 import { EnableFormula } from "../../design/action-enables/table/enable-formula";
 import { ConnectionTableCell } from "../connection-table-cell";
-import { ProcessSequenceDocs } from "../sequence/sequence";
 import { SectionItem } from "../docs-sections/section-item";
-import { SubSectionItem } from "../docs-sections/sub-section-item";
 
 interface GeneralProcessSectionProps {
   chapterNo: number;

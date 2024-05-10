@@ -1,10 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { CalendarCard } from "@/components/ui/calendar-card";
 import { TimeDisplay } from "@/components/ui/time-display";
 import { useModal } from "@/hooks/use-modal-store";
 import { ProjectTarget, ProjectTargetType } from "@prisma/client";
-import { Edit, Trash } from "lucide-react";
 
 interface ProjectTargetsTableProps {
   projectTargets: ProjectTarget[];
@@ -13,7 +11,6 @@ interface ProjectTargetsTableProps {
 export const ProjectTargetsTableDocs = ({
   projectTargets,
 }: ProjectTargetsTableProps) => {
-  const { onOpen } = useModal();
   return (
     <table>
       <tbody>

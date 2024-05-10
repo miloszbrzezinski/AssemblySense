@@ -1,9 +1,5 @@
-import { setSequenceStepNote } from "@/actions/process-sequence";
 import { SequenceStepWithEvents } from "@/types";
 import { StickyNote } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { startTransition, useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface StepNoteProps {
   index: number;

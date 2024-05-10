@@ -1,7 +1,4 @@
-import {
-  ComponentConnectionWithData,
-  ComponentConnectionWithNetwork,
-} from "@/types";
+import { ComponentConnectionWithNetwork } from "@/types";
 import { ProjectNetwork } from "@prisma/client";
 
 interface ConnectionTableCellProps {

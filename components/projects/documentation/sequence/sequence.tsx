@@ -1,14 +1,5 @@
 "use client";
-import {
-  ComponentEventWithData,
-  SequenceStepWithEvents,
-  SequenceWithSteps,
-} from "@/types";
-import { startTransition } from "react";
-import { addSequenceStep } from "@/actions/process-sequence";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { ComponentEvent } from "@prisma/client";
+import { SequenceWithSteps } from "@/types";
 import { StepItemDocs } from "./step-item";
 
 interface ProcessSequenceProps {

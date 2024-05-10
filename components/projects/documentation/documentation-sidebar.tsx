@@ -1,27 +1,9 @@
 "use client";
-import {
-  Binary,
-  FileClock,
-  FolderPlus,
-  Network,
-  Puzzle,
-  Shield,
-  Waypoints,
-} from "lucide-react";
-import { Button } from "../../ui/button";
 import { Separator } from "../../ui/separator";
 import { useParams, useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../../ui/accordion";
 import { AssemblyGroupWithProcesses } from "@/types";
-import { NewCategory } from "../../library/new-category";
 import { useState } from "react";
-import { NewAssemblyGroup } from "../new-assembly-group";
 import {
   ProjectComponent,
   ProjectMember,
