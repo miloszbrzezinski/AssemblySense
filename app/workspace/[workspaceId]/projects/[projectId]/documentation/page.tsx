@@ -7,6 +7,7 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { ProjectSummaryChapter } from "@/components/projects/documentation/chapters/project-summary-section";
 import { GeneralProcessSection } from "@/components/projects/documentation/chapters/gen-process-sections";
+import { NetworkChapter } from "@/components/projects/documentation/chapters/network-chapter";
 
 export default async function ProjectDocumentationPage({
   children,
@@ -77,20 +78,21 @@ export default async function ProjectDocumentationPage({
         <ProjectSummaryChapter chapterNo={2} projectId={project.id} />
         <ProjectLayoutSection chapterNo={2} projectId={project.id} />
         <ProjectTeamSection chapterNo={3} projectId={project.id} />
+        <NetworkChapter chapterNo={4} projectId={project.id} />
         {project.assemblyGroups.map((group, ig) => (
           <ChapterItem
-            chapterNo={4 + ig}
+            chapterNo={5 + ig}
             key={group.id}
             chapterName={group.name}
           >
             <GeneralProcessSection
-              chapterNo={4 + ig}
+              chapterNo={5 + ig}
               subCharterNo={1}
               groupId={group.id}
             />
             {group.assemblyProcesses.map((process, ip) => (
               <ProcessSection
-                chapterNo={4 + ig}
+                chapterNo={5 + ig}
                 subCharterNo={ip + 2}
                 key={process.id}
                 processId={process.id}
