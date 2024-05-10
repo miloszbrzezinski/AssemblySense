@@ -2,6 +2,7 @@ import { SubChapterItem } from "../docs-sections/sub-chapter-item";
 import { db } from "@/lib/db";
 import { ChapterItem } from "../docs-sections/chapter-item";
 import { cn } from "@/lib/utils";
+import { ProjectTargetsTableDocs } from "../project-targets-table-docs";
 
 interface ProjectSummaryChapterProps {
   chapterNo: number;
@@ -18,6 +19,12 @@ export const ProjectSummaryChapter = async ({
     },
     orderBy: {
       order: "asc",
+    },
+  });
+
+  const targets = await db.projectTarget.findMany({
+    where: {
+      projectId,
     },
   });
 
@@ -57,7 +64,7 @@ export const ProjectSummaryChapter = async ({
               </div>
               <div className="flex flex-col min-w-40 h-40 border rounded-full items-center justify-center whitespace-nowrap border-stone-800 bg-white shadow-md">
                 <p className="text-3xl font-light">{stage.order}</p>
-                <p className="">{stage.name}</p>
+                <p className="text-lg">{stage.name}</p>
               </div>
               <div className="w-full"></div>
             </div>
@@ -81,7 +88,7 @@ export const ProjectSummaryChapter = async ({
         subChapterNo={2}
         subChapterName="Targets"
       >
-        ...
+        <ProjectTargetsTableDocs projectTargets={targets} />
       </SubChapterItem>
     </ChapterItem>
   );
