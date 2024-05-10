@@ -6,6 +6,7 @@ import { SubChapterItem } from "@/components/projects/documentation/docs-section
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { ProjectSummaryChapter } from "@/components/projects/documentation/chapters/project-summary-section";
+import { GeneralProcessSection } from "@/components/projects/documentation/chapters/gen-process-sections";
 
 export default async function ProjectDocumentationPage({
   children,
@@ -82,10 +83,15 @@ export default async function ProjectDocumentationPage({
             key={group.id}
             chapterName={group.name}
           >
+            <GeneralProcessSection
+              chapterNo={4 + ig}
+              subCharterNo={1}
+              groupId={group.id}
+            />
             {group.assemblyProcesses.map((process, ip) => (
               <ProcessSection
                 chapterNo={4 + ig}
-                subCharterNo={ip + 1}
+                subCharterNo={ip + 2}
                 key={process.id}
                 processId={process.id}
               />
