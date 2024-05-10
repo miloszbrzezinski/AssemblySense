@@ -1,28 +1,18 @@
-import { Separator } from "../../../ui/separator";
-import { useParams, useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
-import { AssemblyGroupWithProcesses } from "@/types";
-import { useState } from "react";
-import {
-  ProjectComponent,
-  ProjectMember,
-  ProjectNetwork,
-} from "@prisma/client";
-import { ChapterSidebarItem } from "./chapter-sidebar-item";
-import { ChangeLogItem } from "../changelog-item";
-import { SubChapterItem } from "../docs-sections/sub-chapter-item";
-import { SubChapterSidebarItem } from "./sub-chapter-sidebar-item";
-import { SectionSidebarItem } from "./section-sidebar-item";
 import { db } from "@/lib/db";
+import { ChapterSidebarItem } from "./chapter-sidebar-item";
+import { SectionSidebarItem } from "./section-sidebar-item";
+import { SubChapterSidebarItem } from "./sub-chapter-sidebar-item";
 import { SubSectionSidebarItem } from "./sub-section-sidebar-item";
 
-interface DesignSidebarProps {
+interface SidebarAssemblyGroupsChapterProps {
+  chapterNo: number;
   projectId: string;
 }
 
-export const DocumentationSidebar = async ({
+export const SidebarAssemblyGroupsChapter = async ({
+  chapterNo,
   projectId,
-}: DesignSidebarProps) => {
+}: SidebarAssemblyGroupsChapterProps) => {
   const assemblyGroups = await db.assemblyGroup.findMany({
     where: {
       projectId,
@@ -41,51 +31,38 @@ export const DocumentationSidebar = async ({
   }
 
   return (
-    <div className="w-full h-full border-r pt-3 pb-20 border-stone-300 shadow-md overflow-scroll">
-      <ChapterSidebarItem chapterNo={1} chapterName="Project">
-        ..
-      </ChapterSidebarItem>
-      <ChapterSidebarItem chapterNo={2} chapterName="Layout and Routes">
-        ..
-      </ChapterSidebarItem>
-      <ChapterSidebarItem chapterNo={3} chapterName="Team">
-        ..
-      </ChapterSidebarItem>
-      <Separator />
-      <ChapterSidebarItem chapterNo={4} chapterName="Networks">
-        ..
-      </ChapterSidebarItem>
+    <>
       {assemblyGroups.map((group, i) => (
         <ChapterSidebarItem
-          chapterNo={5 + i}
+          chapterNo={chapterNo + i}
           key={group.id}
           chapterName={group.name}
         >
           <SubChapterSidebarItem
-            chapterNo={5 + i}
+            chapterNo={chapterNo + i}
             subChapterNo={1}
             subChapterName="General"
           >
             <SectionSidebarItem
-              chapterNo={5 + i}
+              chapterNo={chapterNo + i}
               subChapterNo={1}
               sectionNo={1}
               sectionName={"Components"}
             />
             <SectionSidebarItem
-              chapterNo={5 + i}
+              chapterNo={chapterNo + i}
               subChapterNo={1}
               sectionNo={2}
               sectionName={"Connections"}
             />
             <SectionSidebarItem
-              chapterNo={5 + i}
+              chapterNo={chapterNo + i}
               subChapterNo={1}
               sectionNo={3}
               sectionName={"I/O list"}
             />
             <SectionSidebarItem
-              chapterNo={5 + i}
+              chapterNo={chapterNo + i}
               subChapterNo={1}
               sectionNo={4}
               sectionName={"Action enables"}
@@ -93,43 +70,43 @@ export const DocumentationSidebar = async ({
           </SubChapterSidebarItem>
           {group.assemblyProcesses.map((process, j) => (
             <SubChapterSidebarItem
-              chapterNo={5 + i}
+              chapterNo={chapterNo + i}
               subChapterNo={j + 2}
               key={group.id}
               subChapterName={process.name}
             >
               <SectionSidebarItem
-                chapterNo={5 + i}
+                chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={1}
                 sectionName={"Description"}
               />
               <SectionSidebarItem
-                chapterNo={5 + i}
+                chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={2}
                 sectionName={"Components"}
               />
               <SectionSidebarItem
-                chapterNo={5 + i}
+                chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={3}
                 sectionName={"Connections"}
               />
               <SectionSidebarItem
-                chapterNo={5 + i}
+                chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={4}
                 sectionName={"I/O list"}
               />
               <SectionSidebarItem
-                chapterNo={5 + i}
+                chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={5}
                 sectionName={"Action enables"}
               />
               <SectionSidebarItem
-                chapterNo={5 + i}
+                chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={6}
                 sectionName={"Sequences"}
@@ -137,7 +114,7 @@ export const DocumentationSidebar = async ({
                 {process.sequences.map((sequence, si) => (
                   <SubSectionSidebarItem
                     key={sequence.id}
-                    chapterNo={5 + i}
+                    chapterNo={chapterNo + i}
                     subChapterNo={j + 1}
                     sectionNo={j + 1}
                     subSectionNo={si + 1}
@@ -149,14 +126,6 @@ export const DocumentationSidebar = async ({
           ))}
         </ChapterSidebarItem>
       ))}
-      <Separator />
-      <ChapterSidebarItem
-        chapterNo={assemblyGroups.length + 5}
-        chapterName="Project issues"
-      >
-        ..
-      </ChapterSidebarItem>
-      <ChangeLogItem />
-    </div>
+    </>
   );
 };

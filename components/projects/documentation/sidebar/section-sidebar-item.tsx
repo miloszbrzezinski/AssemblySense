@@ -34,7 +34,9 @@ export const SectionSidebarItem = ({
                 </p>
               </AccordionTrigger>
             </div>
-            <AccordionContent className="w-full">{children}</AccordionContent>
+            <AccordionContent className="w-full pl-5">
+              {children}
+            </AccordionContent>
           </AccordionItem>
         </Accordion>
       )}
