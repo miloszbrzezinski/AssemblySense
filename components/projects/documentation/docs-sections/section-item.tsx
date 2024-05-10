@@ -14,11 +14,11 @@ export const SectionItem = ({
   children,
 }: SectionItemProps) => {
   return (
-    <div className="pl-5 mt-2">
+    <div className="py-3">
       <h4 className="text-lg">
         {chapterNo}.{subCharterNo}.{sectionNo}. {sectionName}
       </h4>
-      <div className="pl-5 my-5 mt-4">{children}</div>
+      <div className="pl-5 mt-2">{children}</div>
     </div>
   );
 };

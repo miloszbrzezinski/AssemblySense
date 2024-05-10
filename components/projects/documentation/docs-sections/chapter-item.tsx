@@ -10,11 +10,11 @@ export const ChapterItem = ({
   children,
 }: ChapterItemProps) => {
   return (
-    <div className="pl-5 mt-5">
+    <div className="py-5">
       <h2 className="text-2xl">
         {chapterNo}. {chapterName}
       </h2>
-      {children}
+      <div className="pl-5 mt-2">{children}</div>
     </div>
   );
 };

@@ -16,11 +16,11 @@ export const SubSectionItem = ({
   children,
 }: SubSectionItemProps) => {
   return (
-    <div className="pl-5 mt-2">
+    <div className="py-2">
       <h4 className="text-lg font-light">
         {chapterNo}.{subCharterNo}.{sectionNo}.{subSectionNo}. {subSectionName}
       </h4>
-      <div className="pl-5 mt-4">{children}</div>
+      <div className="pl-5 mt-2">{children}</div>
     </div>
   );
 };

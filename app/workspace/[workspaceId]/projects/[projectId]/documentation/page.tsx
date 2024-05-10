@@ -76,35 +76,37 @@ export default async function ProjectDocumentationPage({
           {project.projectNo} <span className="font-light">{project.name}</span>{" "}
           <span className="font-extralight"> - documentation</span>
         </h1>
-        <ProjectSummaryChapter chapterNo={1} projectId={project.id} />
-        <ProjectLayoutChapter chapterNo={2} projectId={project.id} />
-        <ProjectTeamChapter chapterNo={3} projectId={project.id} />
-        <NetworkChapter chapterNo={4} projectId={project.id} />
-        {project.assemblyGroups.map((group, ig) => (
-          <ChapterItem
-            chapterNo={5 + ig}
-            key={group.id}
-            chapterName={group.name}
-          >
-            <GeneralProcessSection
+        <div className="pl-5">
+          <ProjectSummaryChapter chapterNo={1} projectId={project.id} />
+          <ProjectLayoutChapter chapterNo={2} projectId={project.id} />
+          <ProjectTeamChapter chapterNo={3} projectId={project.id} />
+          <NetworkChapter chapterNo={4} projectId={project.id} />
+          {project.assemblyGroups.map((group, ig) => (
+            <ChapterItem
               chapterNo={5 + ig}
-              subCharterNo={1}
-              groupId={group.id}
-            />
-            {group.assemblyProcesses.map((process, ip) => (
-              <ProcessSection
+              key={group.id}
+              chapterName={group.name}
+            >
+              <GeneralProcessSection
                 chapterNo={5 + ig}
-                subCharterNo={ip + 2}
-                key={process.id}
-                processId={process.id}
+                subCharterNo={1}
+                groupId={group.id}
               />
-            ))}
-          </ChapterItem>
-        ))}
-        <ProjectIssuesChapter
-          chapterNo={project.assemblyGroups.length + 5}
-          projectId={project.id}
-        />
+              {group.assemblyProcesses.map((process, ip) => (
+                <ProcessSection
+                  chapterNo={5 + ig}
+                  subCharterNo={ip + 2}
+                  key={process.id}
+                  processId={process.id}
+                />
+              ))}
+            </ChapterItem>
+          ))}
+          <ProjectIssuesChapter
+            chapterNo={project.assemblyGroups.length + 5}
+            projectId={project.id}
+          />
+        </div>
       </div>
     </div>
   );
