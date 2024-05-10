@@ -46,7 +46,7 @@ export const ProjectProblemsCard = ({
                 `/workspace/${workspaceId}/projects/${projectId}/implementation/issues/${problem.id}`
               );
             }}
-            className="w-full h-20 bg-white p-2 select-none hover:bg-red-50/90"
+            className="w-full bg-white p-2 select-none hover:bg-red-50/90"
           >
             <h2 className="text-lg">
               <span className="font-medium text-red-600 px-2 select-none">

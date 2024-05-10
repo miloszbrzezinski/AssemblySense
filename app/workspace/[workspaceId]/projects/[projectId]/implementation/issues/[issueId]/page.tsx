@@ -141,8 +141,8 @@ export default async function ProjectIssuePage({
               </div>
               <ProjectMemberItem member={projectIssue.applicant} />
               <p className="font-light text-sm w-full text-end">
-                {projectIssue.createdAt.getDay()}/
-                {projectIssue.createdAt.getMonth()}/
+                {projectIssue.createdAt.getDate()}/
+                {projectIssue.createdAt.getMonth() + 1}/
                 {projectIssue.createdAt.getFullYear()}
               </p>
             </div>

@@ -60,7 +60,8 @@ export const IssueDiscutionComponent = ({
                   {comment.projectMember.workspaceMember.profile.lastName}
                 </span>
                 <span className="font-thin">
-                  {comment.createdAt.getDay()}/{comment.createdAt.getMonth()}/
+                  {comment.createdAt.getDate()}/
+                  {comment.createdAt.getMonth() + 1}/
                   {comment.createdAt.getFullYear()}{" "}
                   {comment.createdAt.getHours()}:
                   {comment.createdAt.getMinutes()}
