@@ -1,5 +1,6 @@
 import { ChapterItem } from "@/components/projects/documentation/chapter-item";
 import { ProcessSection } from "@/components/projects/documentation/process-sections";
+import { ProjectTeamSection } from "@/components/projects/documentation/project-team-sections";
 import { SubChapterItem } from "@/components/projects/documentation/sub-chapter-item";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -89,16 +90,7 @@ export default async function ProjectDocumentationPage({
         <ChapterItem chapterNo={2} chapterName="Layout">
           ...
         </ChapterItem>
-        <ChapterItem chapterNo={3} chapterName="Team">
-          <SubChapterItem
-            chapterNo={3}
-            subChapterNo={1}
-            subChapterName="Department.."
-          >
-            ...
-          </SubChapterItem>
-          ...
-        </ChapterItem>
+        <ProjectTeamSection chapterNo={3} projectId={project.id} />
         {project.assemblyGroups.map((group, ig) => (
           <ChapterItem
             chapterNo={4 + ig}
