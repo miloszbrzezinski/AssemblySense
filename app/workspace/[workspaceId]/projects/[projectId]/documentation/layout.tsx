@@ -1,5 +1,5 @@
 import { DesignSidebar } from "@/components/projects/design/design-sidebar";
-import { DocumentationSidebar } from "@/components/projects/documentation/documentation-sidebar";
+import { DocumentationSidebar } from "@/components/projects/documentation/sidebar/documentation-sidebar";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -71,15 +71,7 @@ export default async function ProjectDocumentationLayout({
     <div className="h-full flex bg-stone-100 dark:bg-zinc-800">
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel className="min-w-72 h-full" defaultSize={15}>
-          <DocumentationSidebar
-            profileId={profile.id}
-            workspaceId={params.workspaceId}
-            projectId={params.projectId}
-            assemblyGroups={project.assemblyGroups}
-            projectMembers={project.projectMembers}
-            projectComponents={project.projectComponents}
-            projectNetworks={project.projectNetworks}
-          />
+          <DocumentationSidebar projectId={params.projectId} />
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel className="min-w-[50%] h-full" defaultSize={85}>
