@@ -1,10 +1,11 @@
-import { ChapterItem } from "@/components/projects/documentation/chapter-item";
-import { ProcessSection } from "@/components/projects/documentation/process-sections";
-import { ProjectLayoutSection } from "@/components/projects/documentation/project-layout-sections";
-import { ProjectTeamSection } from "@/components/projects/documentation/project-team-sections";
-import { SubChapterItem } from "@/components/projects/documentation/sub-chapter-item";
+import { ChapterItem } from "@/components/projects/documentation/docs-sections/chapter-item";
+import { ProcessSection } from "@/components/projects/documentation/chapters/process-sections";
+import { ProjectLayoutSection } from "@/components/projects/documentation/chapters/project-layout-sections";
+import { ProjectTeamSection } from "@/components/projects/documentation/chapters/project-team-sections";
+import { SubChapterItem } from "@/components/projects/documentation/docs-sections/sub-chapter-item";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
+import { ProjectSummaryChapter } from "@/components/projects/documentation/chapters/project-summary-section";
 
 export default async function ProjectDocumentationPage({
   children,
@@ -72,22 +73,7 @@ export default async function ProjectDocumentationPage({
           {project.projectNo} <span className="font-light">{project.name}</span>{" "}
           <span className="font-extralight"> - documentation</span>
         </h1>
-        <ChapterItem chapterNo={1} chapterName="Project summary">
-          <SubChapterItem
-            chapterNo={1}
-            subChapterNo={1}
-            subChapterName="Stages"
-          >
-            ...
-          </SubChapterItem>
-          <SubChapterItem
-            chapterNo={1}
-            subChapterNo={2}
-            subChapterName="Targets"
-          >
-            ...
-          </SubChapterItem>
-        </ChapterItem>
+        <ProjectSummaryChapter chapterNo={2} projectId={project.id} />
         <ProjectLayoutSection chapterNo={2} projectId={project.id} />
         <ProjectTeamSection chapterNo={3} projectId={project.id} />
         {project.assemblyGroups.map((group, ig) => (

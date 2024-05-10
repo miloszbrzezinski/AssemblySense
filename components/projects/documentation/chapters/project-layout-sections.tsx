@@ -4,14 +4,14 @@ import {
   EventType,
   ProjectNetwork,
 } from "@prisma/client";
-import { SubChapterItem } from "./sub-chapter-item";
+import { SubChapterItem } from "../docs-sections/sub-chapter-item";
 import { db } from "@/lib/db";
-import { EnableFormula } from "../design/action-enables/table/enable-formula";
-import { ConnectionTableCell } from "./connection-table-cell";
-import { ProcessSequenceDocs } from "./sequence/sequence";
-import { SectionItem } from "./section-item";
-import { SubSectionItem } from "./sub-section-item";
-import { ChapterItem } from "./chapter-item";
+import { EnableFormula } from "../../design/action-enables/table/enable-formula";
+import { ConnectionTableCell } from "../connection-table-cell";
+import { ProcessSequenceDocs } from "../sequence/sequence";
+import { SectionItem } from "../docs-sections/section-item";
+import { SubSectionItem } from "../docs-sections/sub-section-item";
+import { ChapterItem } from "../docs-sections/chapter-item";
 import { DepartmentWithMembersWithProjects } from "@/types";
 import { profile } from "console";
 import { cn } from "@/lib/utils";
