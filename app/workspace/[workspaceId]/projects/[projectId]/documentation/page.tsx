@@ -1,14 +1,11 @@
-import { ChapterItem } from "@/components/projects/documentation/docs-sections/chapter-item";
-import { ProcessSection } from "@/components/projects/documentation/chapters/process-sections";
+import { db } from "@/lib/db";
+import { currentProfile } from "@/lib/current-profile";
 import { ProjectLayoutChapter } from "@/components/projects/documentation/chapters/project-layout-chapter";
 import { ProjectTeamChapter } from "@/components/projects/documentation/chapters/project-team-sections";
-import { SubChapterItem } from "@/components/projects/documentation/docs-sections/sub-chapter-item";
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
 import { ProjectSummaryChapter } from "@/components/projects/documentation/chapters/project-summary-chapter";
-import { GeneralProcessSection } from "@/components/projects/documentation/chapters/gen-process-sections";
 import { NetworkChapter } from "@/components/projects/documentation/chapters/network-chapter";
 import { ProjectIssuesChapter } from "@/components/projects/documentation/chapters/project-issues-chapter";
+import { AssemblyGroupChapter } from "@/components/projects/documentation/chapters/assembly-groups-chapter";
 
 export default async function ProjectDocumentationPage({
   children,
@@ -25,6 +22,7 @@ export default async function ProjectDocumentationPage({
   if (!profile) {
     return;
   }
+
   const workspace = await db.workspace.findUnique({
     where: {
       id: params.workspaceId,
@@ -40,20 +38,11 @@ export default async function ProjectDocumentationPage({
           id: params.projectId,
         },
         include: {
-          projectComponents: true,
-          projectMembers: true,
-          projectNetworks: true,
           assemblyGroups: {
             include: {
               assemblyProcesses: true,
             },
-            orderBy: {
-              name: "asc",
-            },
           },
-        },
-        orderBy: {
-          name: "asc",
         },
       },
     },
@@ -81,27 +70,7 @@ export default async function ProjectDocumentationPage({
           <ProjectLayoutChapter chapterNo={2} projectId={project.id} />
           <ProjectTeamChapter chapterNo={3} projectId={project.id} />
           <NetworkChapter chapterNo={4} projectId={project.id} />
-          {project.assemblyGroups.map((group, ig) => (
-            <ChapterItem
-              chapterNo={5 + ig}
-              key={group.id}
-              chapterName={group.name}
-            >
-              <GeneralProcessSection
-                chapterNo={5 + ig}
-                subCharterNo={1}
-                groupId={group.id}
-              />
-              {group.assemblyProcesses.map((process, ip) => (
-                <ProcessSection
-                  chapterNo={5 + ig}
-                  subCharterNo={ip + 2}
-                  key={process.id}
-                  processId={process.id}
-                />
-              ))}
-            </ChapterItem>
-          ))}
+          <AssemblyGroupChapter chapterNo={5} projectId={project.id} />
           <ProjectIssuesChapter
             chapterNo={project.assemblyGroups.length + 5}
             projectId={project.id}
