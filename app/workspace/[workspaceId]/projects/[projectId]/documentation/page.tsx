@@ -8,6 +8,7 @@ import { db } from "@/lib/db";
 import { ProjectSummaryChapter } from "@/components/projects/documentation/chapters/project-summary-section";
 import { GeneralProcessSection } from "@/components/projects/documentation/chapters/gen-process-sections";
 import { NetworkChapter } from "@/components/projects/documentation/chapters/network-chapter";
+import { ProjectIssuesChapter } from "@/components/projects/documentation/chapters/project-issues-chapter";
 
 export default async function ProjectDocumentationPage({
   children,
@@ -100,6 +101,10 @@ export default async function ProjectDocumentationPage({
             ))}
           </ChapterItem>
         ))}
+        <ProjectIssuesChapter
+          chapterNo={project.assemblyGroups.length + 5}
+          projectId={project.id}
+        />
       </div>
     </div>
   );
