@@ -4,12 +4,20 @@ import { db } from "@/lib/db";
 import { EnableFormula } from "../design/action-enables/table/enable-formula";
 import { ConnectionTableCell } from "./connection-table-cell";
 import { ProcessSequenceDocs } from "./sequence/sequence";
+import { SectionItem } from "./section-item";
+import { SubSectionItem } from "./sub-section-item";
 
 interface ProcessSectionProps {
+  chapterNo: number;
+  subCharterNo: number;
   processId: string;
 }
 
-export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
+export const ProcessSection = async ({
+  chapterNo,
+  subCharterNo,
+  processId,
+}: ProcessSectionProps) => {
   const process = await db.assemblyProcess.findUnique({
     where: {
       id: processId,
@@ -97,199 +105,218 @@ export const ProcessSection = async ({ processId }: ProcessSectionProps) => {
   const processName = `${process.processId} ${process.name}`;
 
   return (
-    <SubChapterItem subChapterName={processName}>
-      <div className="pl-5 mt-2">
-        <h4 className="text-lg">Description</h4>
-        <div className="pl-5">
-          <p>{process.description}</p>
-        </div>
-      </div>
-      <div className="pl-5 mt-2">
-        <h4 className="text-lg">Components</h4>
-        <div className="pl-5">
-          <table className="border-collapse relative w-full">
-            <thead>
-              <tr>
-                <th className="border border-stone-800 font-medium">Type</th>
-                <th className="border border-stone-800 font-medium">
-                  Manufacturer
-                </th>
-                <th className="border border-stone-800 font-medium">Model</th>
-                <th className="border border-stone-800 font-medium">Symbol</th>
-                <th className="border border-stone-800 font-medium">
-                  Description
-                </th>
+    <SubChapterItem
+      chapterNo={chapterNo}
+      subChapterNo={subCharterNo}
+      subChapterName={processName}
+    >
+      <SectionItem
+        chapterNo={chapterNo}
+        subCharterNo={subCharterNo}
+        sectionNo={1}
+        sectionName="Description"
+      >
+        <p>{process.description}</p>
+      </SectionItem>
+      <SectionItem
+        chapterNo={chapterNo}
+        subCharterNo={subCharterNo}
+        sectionNo={2}
+        sectionName="Components"
+      >
+        <table className="border-collapse relative w-full">
+          <thead>
+            <tr>
+              <th className="border border-stone-800 font-medium">Type</th>
+              <th className="border border-stone-800 font-medium">
+                Manufacturer
+              </th>
+              <th className="border border-stone-800 font-medium">Model</th>
+              <th className="border border-stone-800 font-medium">Symbol</th>
+              <th className="border border-stone-800 font-medium">
+                Description
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {process.projectComponents.map((component) => (
+              <tr key={component.id}>
+                <td className="border border-stone-800 pl-2">
+                  {component.component.category.name}
+                </td>
+                <td className="border border-stone-800 pl-2">
+                  {component.component.manufacturer}
+                </td>
+                <td className="border border-stone-800 pl-2">
+                  {component.component.name}
+                </td>
+                <td className="border border-stone-800 pl-2">
+                  {component.name}
+                </td>
+                <td className="border border-stone-800 pl-2">
+                  {component.description}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {process.projectComponents.map((component) => (
-                <tr key={component.id}>
-                  <td className="border border-stone-800 pl-2">
-                    {component.component.category.name}
-                  </td>
-                  <td className="border border-stone-800 pl-2">
-                    {component.component.manufacturer}
-                  </td>
-                  <td className="border border-stone-800 pl-2">
-                    {component.component.name}
-                  </td>
-                  <td className="border border-stone-800 pl-2">
-                    {component.name}
-                  </td>
-                  <td className="border border-stone-800 pl-2">
-                    {component.description}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="pl-5 mt-2">
-        <h4 className="text-lg">Network connections</h4>
-        <div className="pl-5">
-          <table className="border-collapse relative w-full">
-            <thead>
-              <tr>
-                <th className="border border-stone-800 font-medium">
-                  Component
+            ))}
+          </tbody>
+        </table>
+      </SectionItem>
+      <SectionItem
+        chapterNo={chapterNo}
+        subCharterNo={subCharterNo}
+        sectionNo={3}
+        sectionName="Connections"
+      >
+        <table className="border-collapse relative w-full">
+          <thead>
+            <tr>
+              <th className="border border-stone-800 font-medium">Component</th>
+              <th className="border border-stone-800 font-medium">Symbol</th>
+              {uniqueNetworks.map((network) => (
+                <th
+                  key={network.id}
+                  className="border border-stone-800 font-medium"
+                >
+                  {network.name}
                 </th>
-                <th className="border border-stone-800 font-medium">Symbol</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {process.projectComponents.map((component) => (
+              <tr key={component.id}>
+                <td className="border border-stone-800 pl-2">
+                  {component.component.manufacturer} {component.component.name}
+                </td>
+                <td className="border border-stone-800 pl-2">
+                  {component.name}
+                </td>
                 {uniqueNetworks.map((network) => (
-                  <th
+                  <ConnectionTableCell
                     key={network.id}
-                    className="border border-stone-800 font-medium"
-                  >
-                    {network.name}
-                  </th>
+                    network={network}
+                    connections={component.componentConnections}
+                  />
                 ))}
               </tr>
-            </thead>
-            <tbody>
-              {process.projectComponents.map((component) => (
-                <tr key={component.id}>
-                  <td className="border border-stone-800 pl-2">
-                    {component.component.manufacturer}{" "}
-                    {component.component.name}
-                  </td>
-                  <td className="border border-stone-800 pl-2">
-                    {component.name}
-                  </td>
-                  {uniqueNetworks.map((network) => (
-                    <ConnectionTableCell
-                      key={network.id}
-                      network={network}
-                      connections={component.componentConnections}
-                    />
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="pl-5 mt-2">
-        <h4 className="text-lg">I/O list</h4>
-        <div className="pl-5">
-          <table className="border-collapse relative w-full">
-            <thead>
-              <tr>
-                <th className="border border-stone-800 font-medium">
-                  Component
-                </th>
-                <th className="border border-stone-800 font-medium">
-                  Component Symbol
-                </th>
-                <th className="border border-stone-800 font-medium">Event</th>
-                <th className="border border-stone-800 font-medium">Adress</th>
-                <th className="border border-stone-800 font-medium">Symbol</th>
-                <th className="border border-stone-800 font-medium">
-                  Description
-                </th>
+            ))}
+          </tbody>
+        </table>
+      </SectionItem>
+      <SectionItem
+        chapterNo={chapterNo}
+        subCharterNo={subCharterNo}
+        sectionNo={4}
+        sectionName="I/O list"
+      >
+        <table className="border-collapse relative w-full">
+          <thead>
+            <tr>
+              <th className="border border-stone-800 font-medium">Component</th>
+              <th className="border border-stone-800 font-medium">
+                Component Symbol
+              </th>
+              <th className="border border-stone-800 font-medium">Event</th>
+              <th className="border border-stone-800 font-medium">Adress</th>
+              <th className="border border-stone-800 font-medium">Symbol</th>
+              <th className="border border-stone-800 font-medium">
+                Description
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {componentsEvents.map((event) => (
+              <tr key={event.id}>
+                <td className="border border-stone-800 pl-2">
+                  {event.projectComponent.component.manufacturer}{" "}
+                  {event.projectComponent.component.name}
+                </td>
+                <td className="border border-stone-800 pl-2">
+                  {event.projectComponent.name}
+                </td>
+                <td className="border border-stone-800 pl-2">{event.name}</td>
+                <td className="border border-stone-800 pl-2">
+                  {event.eventType == EventType.ACTION && "O"}
+                  {event.eventType == EventType.STATUS && "I"}
+                  {event.addressIO?.byteAdress}.{event.addressIO?.bitAdress}
+                </td>
+                <td className="border border-stone-800 pl-2">
+                  {event.addressIO?.symbol}
+                </td>
+                <td className="border border-stone-800 pl-2">
+                  {event.description}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {componentsEvents.map((event) => (
-                <tr key={event.id}>
-                  <td className="border border-stone-800 pl-2">
-                    {event.projectComponent.component.manufacturer}{" "}
-                    {event.projectComponent.component.name}
-                  </td>
-                  <td className="border border-stone-800 pl-2">
-                    {event.projectComponent.name}
-                  </td>
-                  <td className="border border-stone-800 pl-2">{event.name}</td>
-                  <td className="border border-stone-800 pl-2">
-                    {event.eventType == EventType.ACTION && "O"}
-                    {event.eventType == EventType.STATUS && "I"}
-                    {event.addressIO?.byteAdress}.{event.addressIO?.bitAdress}
-                  </td>
-                  <td className="border border-stone-800 pl-2">
-                    {event.addressIO?.symbol}
-                  </td>
-                  <td className="border border-stone-800 pl-2">
-                    {event.description}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="pl-5 mt-2">
-        <h4 className="text-lg">Action enables</h4>
-        <div className="pl-5">
-          <table className="border-collapse relative w-full">
-            <thead>
-              <tr>
-                <th className="border border-stone-800 font-medium">Event</th>
-                <th className="border border-stone-800 font-medium">Adress</th>
-                <th className="border border-stone-800 font-medium">Enable</th>
-                <th className="border border-stone-800 font-medium">Comment</th>
-              </tr>
-            </thead>
-            <tbody>
-              {componentsEvents.map(
-                (event) =>
-                  event.eventType === EventType.ACTION && (
-                    <tr key={event.id}>
-                      <td className="border border-stone-800 pl-2">
-                        {event.name}
-                      </td>
-                      <td className="border border-stone-800 pl-2">
-                        O{event.addressIO?.byteAdress}.
-                        {event.addressIO?.bitAdress}
-                      </td>
-                      <td className="border border-stone-800 pl-2">
-                        <EnableFormula
-                          type="transparent"
-                          formula={event.eventEnableFormula}
-                        />
-                      </td>
-                      <td className="border border-stone-800 pl-2">
-                        {event.eventEnableComment}
-                      </td>
-                    </tr>
-                  )
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className="pl-5">
-        <h4 className="text-lg">Sequences</h4>
-        {process.sequences.map((seq) => (
-          <div key={seq.id} className="pl-5">
-            <h4 className="text-lg font-light">{seq.name}</h4>
-            <div className="pl-5">
+            ))}
+          </tbody>
+        </table>
+      </SectionItem>
+      <SectionItem
+        chapterNo={chapterNo}
+        subCharterNo={subCharterNo}
+        sectionNo={5}
+        sectionName="Action enables"
+      >
+        <table className="border-collapse relative w-full">
+          <thead>
+            <tr>
+              <th className="border border-stone-800 font-medium">Event</th>
+              <th className="border border-stone-800 font-medium">Adress</th>
+              <th className="border border-stone-800 font-medium">Enable</th>
+              <th className="border border-stone-800 font-medium">Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            {componentsEvents.map(
+              (event) =>
+                event.eventType === EventType.ACTION && (
+                  <tr key={event.id}>
+                    <td className="border border-stone-800 pl-2">
+                      {event.name}
+                    </td>
+                    <td className="border border-stone-800 pl-2">
+                      O{event.addressIO?.byteAdress}.
+                      {event.addressIO?.bitAdress}
+                    </td>
+                    <td className="border border-stone-800 pl-2">
+                      <EnableFormula
+                        type="transparent"
+                        formula={event.eventEnableFormula}
+                      />
+                    </td>
+                    <td className="border border-stone-800 pl-2">
+                      {event.eventEnableComment}
+                    </td>
+                  </tr>
+                )
+            )}
+          </tbody>
+        </table>
+      </SectionItem>
+      <SectionItem
+        chapterNo={chapterNo}
+        subCharterNo={subCharterNo}
+        sectionNo={6}
+        sectionName="Sequences"
+      >
+        {process.sequences.map((seq, i) => (
+          <SubSectionItem
+            chapterNo={chapterNo}
+            subCharterNo={subCharterNo}
+            sectionNo={6}
+            subSectionNo={i + 1}
+            key={seq.id}
+            subSectionName={seq.name}
+          >
+            <>
               <p>{seq.description}</p>
               <div>
                 <ProcessSequenceDocs sequence={seq} />
               </div>
-            </div>
-          </div>
+            </>
+          </SubSectionItem>
         ))}
-      </div>
+      </SectionItem>
     </SubChapterItem>
   );
 };

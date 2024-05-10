@@ -70,31 +70,48 @@ export default async function ProjectDocumentationPage({
           {project.projectNo} <span className="font-light">{project.name}</span>{" "}
           <span className="font-extralight"> - documentation</span>
         </h1>
-        <div className="pl-5">
-          <h2 className="text-2xl">Project summary</h2>
-          <div>
-            <h3 className="text-xl">Stages</h3>
-          </div>
-          <div>
-            <h3 className="text-xl">Targets</h3>
-          </div>
-        </div>
-        <div className="pl-5">
-          <h2 className="text-2xl">Layout</h2>
-          <div className="pl-5">
-            <h3 className="text-xl">Ref1...</h3>
-          </div>
-        </div>
-        <div className="pl-5">
-          <h2 className="text-2xl">Team</h2>
-          <div className="pl-5">
-            <h3 className="text-xl">Department..</h3>
-          </div>
-        </div>
-        {project.assemblyGroups.map((group) => (
-          <ChapterItem key={group.id} chapterName={group.name}>
-            {group.assemblyProcesses.map((process) => (
-              <ProcessSection key={process.id} processId={process.id} />
+        <ChapterItem chapterNo={1} chapterName="Project summary">
+          <SubChapterItem
+            chapterNo={1}
+            subChapterNo={1}
+            subChapterName="Stages"
+          >
+            ...
+          </SubChapterItem>
+          <SubChapterItem
+            chapterNo={1}
+            subChapterNo={2}
+            subChapterName="Targets"
+          >
+            ...
+          </SubChapterItem>
+        </ChapterItem>
+        <ChapterItem chapterNo={2} chapterName="Layout">
+          ...
+        </ChapterItem>
+        <ChapterItem chapterNo={3} chapterName="Team">
+          <SubChapterItem
+            chapterNo={3}
+            subChapterNo={1}
+            subChapterName="Department.."
+          >
+            ...
+          </SubChapterItem>
+          ...
+        </ChapterItem>
+        {project.assemblyGroups.map((group, ig) => (
+          <ChapterItem
+            chapterNo={4 + ig}
+            key={group.id}
+            chapterName={group.name}
+          >
+            {group.assemblyProcesses.map((process, ip) => (
+              <ProcessSection
+                chapterNo={4 + ig}
+                subCharterNo={ip + 1}
+                key={process.id}
+                processId={process.id}
+              />
             ))}
           </ChapterItem>
         ))}
