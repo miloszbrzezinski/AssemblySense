@@ -1,5 +1,5 @@
 "use client";
-import { Bookmark } from "lucide-react";
+import { Bookmark, File } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -40,8 +40,8 @@ export const SubChapterSidebarItem = ({
         </Accordion>
       )}
       {!children && (
-        <div className="justify-start items-center space-x-1">
-          <Bookmark strokeWidth={1} className="min-w-6 h-6" />{" "}
+        <div className="flex font-light justify-start items-center space-x-1 pl-6 hover:underline cursor-pointer">
+          <File strokeWidth={1} className="min-w-6 h-6" />{" "}
           <p>
             {chapterNo}.{subChapterNo}. {subChapterName}
           </p>

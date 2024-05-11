@@ -17,6 +17,7 @@ import { db } from "@/lib/db";
 import { SubSectionSidebarItem } from "./sub-section-sidebar-item";
 import { SidebarAssemblyGroupsChapter } from "./sidebar-assembly-groups-chapter";
 import { SidebarNetworksChapter } from "./sidebar-networks-chapter";
+import { SidebarTeamsChapter } from "./sidebar-team-chapter";
 
 interface DesignSidebarProps {
   projectId: string;
@@ -43,9 +44,7 @@ export const DocumentationSidebar = async ({
       <ChapterSidebarItem chapterNo={2} chapterName="Layout and Routes">
         ..
       </ChapterSidebarItem>
-      <ChapterSidebarItem chapterNo={3} chapterName="Team">
-        ..
-      </ChapterSidebarItem>
+      <SidebarTeamsChapter chapterNo={3} projectId={projectId} />
       <Separator />
       <SidebarNetworksChapter chapterNo={4} projectId={projectId} />
       <SidebarAssemblyGroupsChapter chapterNo={5} projectId={projectId} />
