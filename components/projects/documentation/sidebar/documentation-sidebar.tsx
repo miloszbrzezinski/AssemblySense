@@ -15,6 +15,8 @@ import { SubChapterSidebarItem } from "./sub-chapter-sidebar-item";
 import { SectionSidebarItem } from "./section-sidebar-item";
 import { db } from "@/lib/db";
 import { SubSectionSidebarItem } from "./sub-section-sidebar-item";
+import { SidebarAssemblyGroupsChapter } from "./sidebar-assembly-groups-chapter";
+import { SidebarNetworksChapter } from "./sidebar-networks-chapter";
 
 interface DesignSidebarProps {
   projectId: string;
@@ -26,13 +28,6 @@ export const DocumentationSidebar = async ({
   const assemblyGroups = await db.assemblyGroup.findMany({
     where: {
       projectId,
-    },
-    include: {
-      assemblyProcesses: {
-        include: {
-          sequences: true,
-        },
-      },
     },
   });
 
@@ -52,103 +47,8 @@ export const DocumentationSidebar = async ({
         ..
       </ChapterSidebarItem>
       <Separator />
-      <ChapterSidebarItem chapterNo={4} chapterName="Networks">
-        ..
-      </ChapterSidebarItem>
-      {assemblyGroups.map((group, i) => (
-        <ChapterSidebarItem
-          chapterNo={5 + i}
-          key={group.id}
-          chapterName={group.name}
-        >
-          <SubChapterSidebarItem
-            chapterNo={5 + i}
-            subChapterNo={1}
-            subChapterName="General"
-          >
-            <SectionSidebarItem
-              chapterNo={5 + i}
-              subChapterNo={1}
-              sectionNo={1}
-              sectionName={"Components"}
-            />
-            <SectionSidebarItem
-              chapterNo={5 + i}
-              subChapterNo={1}
-              sectionNo={2}
-              sectionName={"Connections"}
-            />
-            <SectionSidebarItem
-              chapterNo={5 + i}
-              subChapterNo={1}
-              sectionNo={3}
-              sectionName={"I/O list"}
-            />
-            <SectionSidebarItem
-              chapterNo={5 + i}
-              subChapterNo={1}
-              sectionNo={4}
-              sectionName={"Action enables"}
-            />
-          </SubChapterSidebarItem>
-          {group.assemblyProcesses.map((process, j) => (
-            <SubChapterSidebarItem
-              chapterNo={5 + i}
-              subChapterNo={j + 2}
-              key={group.id}
-              subChapterName={process.name}
-            >
-              <SectionSidebarItem
-                chapterNo={5 + i}
-                subChapterNo={j + 2}
-                sectionNo={1}
-                sectionName={"Description"}
-              />
-              <SectionSidebarItem
-                chapterNo={5 + i}
-                subChapterNo={j + 2}
-                sectionNo={2}
-                sectionName={"Components"}
-              />
-              <SectionSidebarItem
-                chapterNo={5 + i}
-                subChapterNo={j + 2}
-                sectionNo={3}
-                sectionName={"Connections"}
-              />
-              <SectionSidebarItem
-                chapterNo={5 + i}
-                subChapterNo={j + 2}
-                sectionNo={4}
-                sectionName={"I/O list"}
-              />
-              <SectionSidebarItem
-                chapterNo={5 + i}
-                subChapterNo={j + 2}
-                sectionNo={5}
-                sectionName={"Action enables"}
-              />
-              <SectionSidebarItem
-                chapterNo={5 + i}
-                subChapterNo={j + 2}
-                sectionNo={6}
-                sectionName={"Sequences"}
-              >
-                {process.sequences.map((sequence, si) => (
-                  <SubSectionSidebarItem
-                    key={sequence.id}
-                    chapterNo={5 + i}
-                    subChapterNo={j + 1}
-                    sectionNo={j + 1}
-                    subSectionNo={si + 1}
-                    subSectionName={sequence.name}
-                  />
-                ))}
-              </SectionSidebarItem>
-            </SubChapterSidebarItem>
-          ))}
-        </ChapterSidebarItem>
-      ))}
+      <SidebarNetworksChapter chapterNo={4} projectId={projectId} />
+      <SidebarAssemblyGroupsChapter chapterNo={5} projectId={projectId} />
       <Separator />
       <ChapterSidebarItem
         chapterNo={assemblyGroups.length + 5}
