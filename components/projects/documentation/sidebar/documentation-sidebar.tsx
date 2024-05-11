@@ -1,23 +1,11 @@
 import { Separator } from "../../../ui/separator";
-import { useParams, useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
-import { AssemblyGroupWithProcesses } from "@/types";
-import { useState } from "react";
-import {
-  ProjectComponent,
-  ProjectMember,
-  ProjectNetwork,
-} from "@prisma/client";
 import { ChapterSidebarItem } from "./chapter-sidebar-item";
 import { ChangeLogItem } from "../changelog-item";
-import { SubChapterItem } from "../docs-sections/sub-chapter-item";
-import { SubChapterSidebarItem } from "./sub-chapter-sidebar-item";
-import { SectionSidebarItem } from "./section-sidebar-item";
 import { db } from "@/lib/db";
-import { SubSectionSidebarItem } from "./sub-section-sidebar-item";
 import { SidebarAssemblyGroupsChapter } from "./sidebar-assembly-groups-chapter";
 import { SidebarNetworksChapter } from "./sidebar-networks-chapter";
 import { SidebarTeamsChapter } from "./sidebar-team-chapter";
+import { SidebarSummaryChapter } from "./sidebar-summary-chapter";
 
 interface DesignSidebarProps {
   projectId: string;
@@ -38,9 +26,7 @@ export const DocumentationSidebar = async ({
 
   return (
     <div className="w-full h-full border-r pt-3 pb-20 border-stone-300 shadow-md overflow-scroll">
-      <ChapterSidebarItem chapterNo={1} chapterName="Project">
-        ..
-      </ChapterSidebarItem>
+      <SidebarSummaryChapter chapterNo={1} projectId={projectId} />
       <ChapterSidebarItem chapterNo={2} chapterName="Layout and Routes">
         ..
       </ChapterSidebarItem>

@@ -40,7 +40,7 @@ export const SubChapterSidebarItem = ({
         </Accordion>
       )}
       {!children && (
-        <div className="flex font-light justify-start items-center space-x-1 pl-6 hover:underline cursor-pointer">
+        <div className="flex font-light justify-start items-center space-x-1 pl-6 hover:underline cursor-pointer py-1">
           <File strokeWidth={1} className="min-w-6 h-6" />{" "}
           <p>
             {chapterNo}.{subChapterNo}. {subChapterName}
