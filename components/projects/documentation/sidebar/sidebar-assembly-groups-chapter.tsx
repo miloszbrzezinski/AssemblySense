@@ -41,30 +41,39 @@ export const SidebarAssemblyGroupsChapter = async ({
           <SubChapterSidebarItem
             chapterNo={chapterNo + i}
             subChapterNo={1}
+            chapterName={group.name}
             subChapterName="General"
           >
             <SectionSidebarItem
               chapterNo={chapterNo + i}
               subChapterNo={1}
               sectionNo={1}
+              chapterName={group.name}
+              subChapterName="General"
               sectionName={"Components"}
             />
             <SectionSidebarItem
               chapterNo={chapterNo + i}
               subChapterNo={1}
               sectionNo={2}
+              chapterName={group.name}
+              subChapterName="General"
               sectionName={"Connections"}
             />
             <SectionSidebarItem
               chapterNo={chapterNo + i}
               subChapterNo={1}
               sectionNo={3}
+              chapterName={group.name}
+              subChapterName="General"
               sectionName={"I/O list"}
             />
             <SectionSidebarItem
               chapterNo={chapterNo + i}
               subChapterNo={1}
               sectionNo={4}
+              chapterName={group.name}
+              subChapterName="General"
               sectionName={"Action enables"}
             />
           </SubChapterSidebarItem>
@@ -73,42 +82,55 @@ export const SidebarAssemblyGroupsChapter = async ({
               chapterNo={chapterNo + i}
               subChapterNo={j + 2}
               key={group.id}
+              chapterName={group.name}
               subChapterName={process.name}
             >
               <SectionSidebarItem
                 chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={1}
+                chapterName={group.name}
+                subChapterName={process.name}
                 sectionName={"Description"}
               />
               <SectionSidebarItem
                 chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={2}
+                chapterName={group.name}
+                subChapterName={process.name}
                 sectionName={"Components"}
               />
               <SectionSidebarItem
                 chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={3}
+                chapterName={group.name}
+                subChapterName={process.name}
                 sectionName={"Connections"}
               />
               <SectionSidebarItem
                 chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={4}
+                chapterName={group.name}
+                subChapterName={process.name}
                 sectionName={"I/O list"}
               />
               <SectionSidebarItem
                 chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={5}
+                chapterName={group.name}
+                subChapterName={process.name}
                 sectionName={"Action enables"}
               />
               <SectionSidebarItem
                 chapterNo={chapterNo + i}
                 subChapterNo={j + 2}
                 sectionNo={6}
+                chapterName={group.name}
+                subChapterName={process.name}
                 sectionName={"Sequences"}
               >
                 {process.sequences.map((sequence, si) => (
@@ -118,6 +140,9 @@ export const SidebarAssemblyGroupsChapter = async ({
                     subChapterNo={j + 1}
                     sectionNo={j + 1}
                     subSectionNo={si + 1}
+                    chapterName={group.name}
+                    subChapterName={process.name}
+                    sectionName={"Sequences"}
                     subSectionName={sequence.name}
                   />
                 ))}

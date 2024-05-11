@@ -6,12 +6,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/catalog-accordion";
+import { useRouter } from "next/navigation";
 
 interface SubSectionSidebarItemProps {
   chapterNo: number;
   subChapterNo: number;
   sectionNo: number;
   subSectionNo: number;
+  chapterName: string;
+  subChapterName: string;
+  sectionName: string;
   subSectionName: string;
   children?: React.ReactNode;
 }
@@ -21,9 +25,20 @@ export const SubSectionSidebarItem = ({
   subChapterNo,
   sectionNo,
   subSectionNo,
+  chapterName,
+  subChapterName,
+  sectionName,
   subSectionName,
   children,
 }: SubSectionSidebarItemProps) => {
+  const router = useRouter();
+
+  const onClick = () => {
+    router.push(
+      `?chapter=${chapterName}&subchapter=${subChapterName}&section=${sectionName}&subsection=${subSectionName}`
+    );
+  };
+
   return (
     <div>
       {children && (

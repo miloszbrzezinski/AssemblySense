@@ -31,11 +31,13 @@ export const SidebarLayoutChapter = async ({
       <SubChapterSidebarItem
         chapterNo={chapterNo}
         subChapterNo={1}
+        chapterName={"Layout and Routes"}
         subChapterName="Physical layout"
       />
       <SubChapterSidebarItem
         chapterNo={chapterNo}
         subChapterNo={2}
+        chapterName={"Layout and Routes"}
         subChapterName="Routes"
       />
     </ChapterSidebarItem>

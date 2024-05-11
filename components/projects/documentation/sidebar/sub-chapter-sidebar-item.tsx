@@ -6,10 +6,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/catalog-accordion";
+import { useRouter } from "next/navigation";
 
 interface SubChapterSidebarItemProps {
   chapterNo: number;
   subChapterNo: number;
+  chapterName: string;
   subChapterName: string;
   children?: React.ReactNode;
 }
@@ -17,16 +19,26 @@ interface SubChapterSidebarItemProps {
 export const SubChapterSidebarItem = ({
   chapterNo,
   subChapterNo,
+  chapterName,
   subChapterName,
   children,
 }: SubChapterSidebarItemProps) => {
+  const router = useRouter();
+
+  const onClick = () => {
+    router.push(`?chapter=${chapterName}&subchapter=${subChapterName}`);
+  };
+
   return (
     <div>
       {children && (
         <Accordion type="multiple" className="group">
           <AccordionItem value="group">
             <div className="flex w-full justify-between items-center pr-2">
-              <AccordionTrigger className="justify-start items-center space-x-1">
+              <AccordionTrigger
+                onClick={onClick}
+                className="justify-start items-center space-x-1"
+              >
                 <Bookmark strokeWidth={1} className="min-w-6 h-6" />{" "}
                 <p>
                   {chapterNo}.{subChapterNo}. {subChapterName}

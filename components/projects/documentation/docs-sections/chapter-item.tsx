@@ -1,3 +1,5 @@
+"use client";
+
 interface ChapterItemProps {
   chapterNo: number;
   chapterName: string;
@@ -10,7 +12,7 @@ export const ChapterItem = ({
   children,
 }: ChapterItemProps) => {
   return (
-    <div className="py-5">
+    <div id="ass" className="py-5">
       <h2 className="text-2xl">
         {chapterNo}. {chapterName}
       </h2>

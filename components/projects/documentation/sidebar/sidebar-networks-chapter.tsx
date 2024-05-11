@@ -32,24 +32,31 @@ export const SidebarNetworksChapter = async ({
         <SubChapterSidebarItem
           chapterNo={chapterNo}
           subChapterNo={1 + i}
+          chapterName={"Networks"}
           subChapterName={network.name}
         >
           <SectionSidebarItem
             chapterNo={chapterNo}
             subChapterNo={1 + i}
             sectionNo={1}
+            chapterName={"Networks"}
+            subChapterName={network.name}
             sectionName={"Overview"}
           />
           <SectionSidebarItem
             chapterNo={chapterNo}
             subChapterNo={1 + i}
             sectionNo={2}
+            chapterName={"Networks"}
+            subChapterName={network.name}
             sectionName={"Team members addresses"}
           />
           <SectionSidebarItem
             chapterNo={chapterNo}
             subChapterNo={1 + i}
             sectionNo={3}
+            chapterName={"Networks"}
+            subChapterName={network.name}
             sectionName={"Connections"}
           />
         </SubChapterSidebarItem>

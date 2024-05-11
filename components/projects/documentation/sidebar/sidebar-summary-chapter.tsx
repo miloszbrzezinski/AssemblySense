@@ -15,11 +15,13 @@ export const SidebarSummaryChapter = async ({
       <SubChapterSidebarItem
         chapterNo={chapterNo}
         subChapterNo={1}
+        chapterName={"Project"}
         subChapterName="Stages"
       />
       <SubChapterSidebarItem
         chapterNo={chapterNo}
         subChapterNo={2}
+        chapterName={"Project"}
         subChapterName="Targets"
       />
     </ChapterSidebarItem>
