@@ -6,6 +6,7 @@ import { SidebarAssemblyGroupsChapter } from "./sidebar-assembly-groups-chapter"
 import { SidebarNetworksChapter } from "./sidebar-networks-chapter";
 import { SidebarTeamsChapter } from "./sidebar-team-chapter";
 import { SidebarSummaryChapter } from "./sidebar-summary-chapter";
+import { SidebarLayoutChapter } from "./sidebar-layout-chapter";
 
 interface DesignSidebarProps {
   projectId: string;
@@ -27,9 +28,7 @@ export const DocumentationSidebar = async ({
   return (
     <div className="w-full h-full border-r pt-3 pb-20 border-stone-300 shadow-md overflow-scroll">
       <SidebarSummaryChapter chapterNo={1} projectId={projectId} />
-      <ChapterSidebarItem chapterNo={2} chapterName="Layout and Routes">
-        ..
-      </ChapterSidebarItem>
+      <SidebarLayoutChapter chapterNo={2} projectId={projectId} />
       <SidebarTeamsChapter chapterNo={3} projectId={projectId} />
       <Separator />
       <SidebarNetworksChapter chapterNo={4} projectId={projectId} />

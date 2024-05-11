@@ -77,8 +77,8 @@ export const SidebarTeamsChapter = async ({
         {uniqueDepartments.map((department, i) => (
           <SectionSidebarItem
             chapterNo={chapterNo}
-            subChapterNo={1 + i}
-            sectionNo={1}
+            subChapterNo={2}
+            sectionNo={1 + i}
             sectionName={department.name}
           />
         ))}
