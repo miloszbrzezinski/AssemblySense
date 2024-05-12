@@ -9,6 +9,7 @@ import {
   ProjectMember,
   ProjectNetwork,
 } from "@prisma/client";
+import { Calendar } from "./calendar";
 
 interface DesignSidebarProps {
   profileId: string;
@@ -42,6 +43,8 @@ export const WorkingHoursSidebar = ({
   };
 
   return (
-    <div className="w-96 h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll bg-red-500"></div>
+    <div className="h-full border-r p-5 pb-20 border-stone-300 shadow-md overflow-scroll">
+      <Calendar />
+    </div>
   );
 };

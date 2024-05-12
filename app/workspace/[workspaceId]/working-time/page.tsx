@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function WorkTimePage() {
   return (
-    <div className="h-full w-full flex flex-col">
+    <div className=" w-full flex flex-col">
       <div className="flex h-full items-center justify-center">
         <Timer duration={1} />
       </div>
