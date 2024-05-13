@@ -1,3 +1,4 @@
+import { HoursInput } from "@/components/working-hours/hours-input";
 import { NewItemButton } from "@/components/working-hours/new-item-button";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -129,7 +130,7 @@ export default async function WorkTimePage({
                   </button>
                 </td>
                 <td className="group-hover:bg-slate-100 border border-stone-300">
-                  {wh.value}h
+                  <HoursInput />
                 </td>
                 <td className="group-hover:bg-slate-100 border border-stone-300">
                   {wh.projectMember.project.projectNo}:{" "}
