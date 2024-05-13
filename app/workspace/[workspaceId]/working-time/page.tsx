@@ -1,5 +1,6 @@
 "use client";
 import Timer from "@/components/timer";
+import { Calendar } from "@/components/working-hours/calendar";
 import HelloWidget from "@/components/workspace/hello-widget";
 import { SpaceNavbar } from "@/components/workspace/space-navbar";
 import Image from "next/image";
@@ -10,6 +11,7 @@ export default function WorkTimePage() {
     <div className=" w-full flex flex-col">
       <div className="flex h-full items-center justify-center">
         <Timer duration={1} />
+        <Calendar />
       </div>
     </div>
   );

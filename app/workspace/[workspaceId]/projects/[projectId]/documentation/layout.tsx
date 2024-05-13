@@ -21,7 +21,7 @@ export default async function ProjectDocumentationLayout({
   const profile = await currentProfile();
 
   if (!profile) {
-    return;
+    return <h1>Loading PL</h1>;
   }
   const workspace = await db.workspace.findUnique({
     where: {
@@ -58,7 +58,7 @@ export default async function ProjectDocumentationLayout({
   });
 
   if (!workspace) {
-    return;
+    return <h1>Loading WL</h1>;
   }
 
   const project = workspace.projects[0];

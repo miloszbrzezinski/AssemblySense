@@ -10,6 +10,7 @@ import {
   addMonths,
 } from "date-fns";
 import { ChevronLeft, ChevronRight, MoveLeft } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -30,7 +31,7 @@ export const Calendar = () => {
   };
 
   return (
-    <div className="w-full mx-auto border shadow rounded-lg overflow-hidden">
+    <div className="h-min">
       <div className="flex justify-between items-center p-4">
         <button
           onClick={handlePrevMonth}
@@ -48,25 +49,26 @@ export const Calendar = () => {
           <ChevronRight />
         </button>
       </div>
-      <div className="grid grid-cols-7">
+      <div className="flex">
         {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
           <div
             key={day}
-            className="px-2 py-1 text-sm font-semibold text-center"
+            className="min-w-12  max-w-12 w-12 text-sm font-semibold text-center"
           >
             {day}
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-7 border-t gap-1">
+      <div className="grid grid-cols-7 border-t">
         {days.map((day) => (
           <div
             key={day.toString()}
-            className={`w-12 h-12 flex items-center justify-center ${
+            className={cn(
+              "min-w-12  max-w-12 w-12 min-h-12 flex items-center justify-center rounded-md hover:shadow-md hover:bg-slate-200 select-none",
               format(day, "MM") !== format(currentDate, "MM")
-                ? "text-gray-400"
-                : "text-gray-800"
-            }`}
+                ? "text-stone-400/60"
+                : "text-stone-900"
+            )}
           >
             <p>{format(day, "dd")}</p>
           </div>
