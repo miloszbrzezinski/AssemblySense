@@ -161,6 +161,8 @@ model ProjectMember {
   workspaceMemberId String
   workspaceMember   Member @relation(fields: [workspaceMemberId], references: [id], onDelete: Cascade)
 
+  workingHours WorkingHours[]
+
   projectIssueApplications ProjectIssue[] @relation("reported")
   projectIssueSolved       ProjectIssue[] @relation("solvedBy")
 
@@ -175,6 +177,34 @@ model ProjectMember {
   @@index([workspaceMemberId])
 }
 
+model WorkingHours {
+  id          String @id @default(uuid())
+  value       Int
+  description String @db.Text
+
+  projectMemberId String
+  projectMember   ProjectMember @relation(fields: [projectMemberId], references: [id], onDelete: Cascade)
+
+  assemblyGroupId String?
+  assemblyGroup   AssemblyGroup? @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
+
+  processId String?
+  process   AssemblyProcess? @relation(fields: [processId], references: [id], onDelete: Cascade)
+
+  // project components
+  targetId String?
+  target   ProjectTarget? @relation(fields: [targetId], references: [id], onDelete: Cascade)
+
+  componentId String?
+  component   ProjectComponent? @relation(fields: [componentId], references: [id], onDelete: Cascade)
+
+  sequenceId String?
+  sequence   Sequence? @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model ProjectTarget {
   id                String            @id @default(uuid())
   name              String            @db.Text
@@ -182,6 +212,7 @@ model ProjectTarget {
   target            String            @db.Text
   projectTargetType ProjectTargetType @default(GENERAL)
 
+  workingHours  WorkingHours[]
   projectIssues ProjectIssue[]
 
   projectId String
@@ -344,6 +375,7 @@ model ProjectComponent {
   componentEvents      ComponentEvent[]
   componentConnections ComponentConnection[]
 
+  workingHours  WorkingHours[]
   projectIssues ProjectIssue[]
 
   projectId String
@@ -423,6 +455,7 @@ model Sequence {
   assemblyProcessId String
   assemblyProcess   AssemblyProcess @relation(fields: [assemblyProcessId], references: [id], onDelete: Cascade)
 
+  workingHours  WorkingHours[]
   projectIssues ProjectIssue[]
 
   createdAt DateTime @default(now())
@@ -508,6 +541,7 @@ model AssemblyGroup {
   projectNetworks   ProjectNetwork[]
   projectComponents ProjectComponent[]
 
+  workingHours  WorkingHours[]
   projectIssues ProjectIssue[]
 
   createdAt DateTime @default(now())
@@ -529,6 +563,7 @@ model AssemblyProcess {
   assemblyGroupId String
   assemblyGroup   AssemblyGroup @relation(fields: [assemblyGroupId], references: [id], onDelete: Cascade)
 
+  workingHours  WorkingHours[]
   projectIssues ProjectIssue[]
 
   createdAt DateTime @default(now())
