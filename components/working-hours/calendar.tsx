@@ -11,9 +11,15 @@ import {
 } from "date-fns";
 import { ChevronLeft, ChevronRight, MoveLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedDay = searchParams.get("day");
+  const selectedMonth = searchParams.get("month");
+  const selectedYear = searchParams.get("year");
 
   const getMonthData = (date: Date) => {
     const startDay = startOfWeek(startOfMonth(date));
@@ -28,6 +34,22 @@ export const Calendar = () => {
 
   const handleNextMonth = () => {
     setCurrentDate(addMonths(currentDate, 1));
+  };
+
+  const isSelectedDay = (day: Date) => {
+    return (
+      day.getDate() === Number(selectedDay) &&
+      day.getMonth() === Number(selectedMonth) - 1 &&
+      day.getFullYear() === Number(selectedYear)
+    );
+  };
+
+  const isCurrentdDay = (day: Date) => {
+    return (
+      day.getDate() === currentDate.getDate() &&
+      day.getMonth() === currentDate.getMonth() &&
+      day.getFullYear() === currentDate.getFullYear()
+    );
   };
 
   return (
@@ -61,17 +83,27 @@ export const Calendar = () => {
       </div>
       <div className="grid grid-cols-7 border-t">
         {days.map((day) => (
-          <div
+          <button
             key={day.toString()}
+            onClick={() => {
+              router.push(
+                `?day=${day.getDate()}&month=${
+                  day.getMonth() + 1
+                }&year=${day.getFullYear()}`
+              );
+            }}
             className={cn(
-              "min-w-12  max-w-12 w-12 min-h-12 flex items-center justify-center rounded-md hover:shadow-md hover:bg-slate-200 select-none",
+              "min-w-12  max-w-12 w-12 min-h-12 flex items-center justify-center rounded-md hover:shadow-sm hover:bg-slate-200 select-none",
               format(day, "MM") !== format(currentDate, "MM")
                 ? "text-stone-400/60"
-                : "text-stone-900"
+                : "text-stone-900",
+              isSelectedDay(day) &&
+                "bg-stone-300 hover:bg-stone-300/60 shadow-lg",
+              isCurrentdDay(day) && "border-2 border-red-800 shadow-md"
             )}
           >
             <p>{format(day, "dd")}</p>
-          </div>
+          </button>
         ))}
       </div>
     </div>
