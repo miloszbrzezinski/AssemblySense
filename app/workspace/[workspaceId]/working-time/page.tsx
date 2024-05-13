@@ -1,3 +1,4 @@
+import { NewItemButton } from "@/components/working-hours/new-item-button";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { MoreVertical, Plus, Timer } from "lucide-react";
@@ -23,6 +24,9 @@ export default async function WorkTimePage({
           profileId: profile.id,
         },
       },
+    },
+    include: {
+      projects: true,
     },
   });
 
@@ -128,7 +132,8 @@ export default async function WorkTimePage({
                   {wh.value}h
                 </td>
                 <td className="group-hover:bg-slate-100 border border-stone-300">
-                  {wh.projectMember.project.id}: {wh.projectMember.project.name}
+                  {wh.projectMember.project.projectNo}:{" "}
+                  {wh.projectMember.project.name}
                 </td>
                 <td className="group-hover:bg-slate-100 border border-stone-300">
                   {wh.assemblyGroup?.name}
@@ -141,22 +146,13 @@ export default async function WorkTimePage({
                 </td>
               </tr>
             ))}
-            <tr className="group h-10 select-none cursor-pointer">
-              <td className="group-hover:bg-slate-100 border border-l-1 border-r-0 border-stone-300">
-                <div className="flex items-center justify-center h-10 w-full">
-                  <Plus strokeWidth={1} />
-                </div>
-              </td>
-              <td className="group-hover:bg-slate-100 border-stone-300 border-b">
-                Add new
-              </td>
-              <td className="group-hover:bg-slate-100 border-stone-300 border-b"></td>
-              <td className="group-hover:bg-slate-100 border-stone-300 border-b"></td>
-              <td className="group-hover:bg-slate-100 border-stone-300 border-b"></td>
-              <td className="group-hover:bg-slate-100 border-stone-300 border-b border-r"></td>
-            </tr>
           </tbody>
         </table>
+        <NewItemButton
+          profileId={profile.id}
+          workspaceId={workspace.id}
+          projects={workspace.projects}
+        />
       </div>
     </div>
   );
