@@ -47,7 +47,10 @@ export default async function ProjectImplementatioLayout({
       <div className="flex h-full w-full">
         <WorkingHoursSidebar />
         {children}
-        <WorkingHoursProjectsSidebar workspaceId={workspace.id} />
+        <WorkingHoursProjectsSidebar
+          profileId={profile.id}
+          workspaceId={workspace.id}
+        />
       </div>
     </div>
   );
