@@ -1,6 +1,6 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { MoreVertical, Timer } from "lucide-react";
+import { MoreVertical, Plus, Timer } from "lucide-react";
 
 export default async function WorkTimePage({
   params,
@@ -141,6 +141,20 @@ export default async function WorkTimePage({
                 </td>
               </tr>
             ))}
+            <tr className="group h-10 select-none cursor-pointer">
+              <td className="group-hover:bg-slate-100 border border-l-1 border-r-0 border-stone-300">
+                <div className="flex items-center justify-center h-10 w-full">
+                  <Plus strokeWidth={1} />
+                </div>
+              </td>
+              <td className="group-hover:bg-slate-100 border-stone-300 border-b">
+                Add new
+              </td>
+              <td className="group-hover:bg-slate-100 border-stone-300 border-b"></td>
+              <td className="group-hover:bg-slate-100 border-stone-300 border-b"></td>
+              <td className="group-hover:bg-slate-100 border-stone-300 border-b"></td>
+              <td className="group-hover:bg-slate-100 border-stone-300 border-b border-r"></td>
+            </tr>
           </tbody>
         </table>
       </div>
