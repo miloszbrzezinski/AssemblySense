@@ -41,6 +41,9 @@ export default async function WorkTimePage({
   const date = new Date(
     `${searchParams?.year}-${searchParams?.month}-${searchParams?.day}`
   );
+
+  const currentDay = new Date();
+
   const weekDays = [
     "Sunday",
     "Monday",
@@ -84,51 +87,59 @@ export default async function WorkTimePage({
     <div className="w-full flex flex-col">
       <div className="flex w-full items-center p-5">
         <p className="text-3xl font-light">
-          {weekDays[date.getDay()]}, {date.getDate()} {months[date.getMonth()]}
+          {weekDays[date.getDay()]
+            ? weekDays[date.getDay()]
+            : weekDays[currentDay.getDay()]}
+          , {date.getDate() ? date.getDate() : currentDay.getDate()}{" "}
+          {months[date.getMonth()]
+            ? months[date.getMonth()]
+            : months[currentDay.getMonth()]}
         </p>
       </div>
       <div className="p-5">
-        <table className="border-collapse shadow-md relative w-full bg-white">
-          <thead className="h-14">
-            <tr>
-              <th className="sticky top-0 border bg-neutral-100/90 border-l-1 border-t-1 border-stone-300 w-10 min-w-10">
-                <div className="flex items-center justify-center">
-                  <Timer strokeWidth={1} />
-                </div>
-              </th>
-              <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
-                Time
-              </th>
-              <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
-                Project
-              </th>
-              <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
-                Group
-              </th>
-              <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
-                Process
-              </th>
-              <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
-                Source
-              </th>
-            </tr>
-          </thead>
-          <tbody className="pb-20">
-            {workingHours.map((wh) => (
-              <WorkHoursItem
-                profileId={profile.id}
-                workspaceId={workspace.id}
-                key={wh.id}
-                workingHours={wh}
-              />
-            ))}
-          </tbody>
-        </table>
-        <NewItemButton
-          profileId={profile.id}
-          workspaceId={workspace.id}
-          projects={workspace.projects}
-        />
+        <div className="shadow-md">
+          <table className="border-collapse relative w-full bg-white">
+            <thead className="h-14">
+              <tr>
+                <th className="sticky top-0 border bg-neutral-100/90 border-l-1 border-t-1 border-stone-300 w-10 min-w-10">
+                  <div className="flex items-center justify-center">
+                    <Timer strokeWidth={1} />
+                  </div>
+                </th>
+                <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+                  Time
+                </th>
+                <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+                  Project
+                </th>
+                <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+                  Group
+                </th>
+                <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+                  Process
+                </th>
+                <th className="sticky top-0 border bg-neutral-100/95 border-t-1 border-stone-300 min-w-36 text-base font-light whitespace-nowrap px-6">
+                  Source
+                </th>
+              </tr>
+            </thead>
+            <tbody className="pb-20">
+              {workingHours.map((wh) => (
+                <WorkHoursItem
+                  profileId={profile.id}
+                  workspaceId={workspace.id}
+                  key={wh.id}
+                  workingHours={wh}
+                />
+              ))}
+            </tbody>
+          </table>
+          <NewItemButton
+            profileId={profile.id}
+            workspaceId={workspace.id}
+            projects={workspace.projects}
+          />
+        </div>
       </div>
     </div>
   );
