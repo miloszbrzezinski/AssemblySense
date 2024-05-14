@@ -3,7 +3,10 @@ import {
   setComponentsAssemblyGroup,
   setComponentsAssemblyProcess,
 } from "@/actions/project-components";
-import { setWorkingHoursProjectAssemblyGroupProcess } from "@/actions/working-hours";
+import {
+  setWorkingHoursProjectAssemblyGroupProcess,
+  setWorkingHoursSource,
+} from "@/actions/working-hours";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -20,12 +23,14 @@ import {
 import {
   AssemblyGroup,
   AssemblyProcess,
+  ProjectIssue,
   ProjectNetwork,
   ProjectTarget,
   Sequence,
 } from "@prisma/client";
 import {
   ComponentIcon,
+  Flag,
   Folder,
   Goal,
   Network,
@@ -51,7 +56,7 @@ interface WorkingHoursSourcePopoverProps {
   profileId: string;
   workspaceId: string;
   projectComponents: ProjectComponentWithComponent[];
-  projectNewtorks: ProjectNetwork[];
+  projectIssues: ProjectIssue[];
   sequences: Sequence[];
   targets: ProjectTarget[];
   workingHours: WorkingHoursWithProjectMember;
@@ -61,7 +66,7 @@ export const WorkingHoursSourcePopover = ({
   profileId,
   workspaceId,
   projectComponents,
-  projectNewtorks,
+  projectIssues,
   sequences,
   targets,
   workingHours,
@@ -83,8 +88,8 @@ export const WorkingHoursSourcePopover = ({
   );
 
   // Filter the array based on the search term
-  const filteredNewtorks = projectNewtorks.filter((network) =>
-    network.name.toLowerCase().includes(searchInput)
+  const filteredIsues = projectIssues.filter((issue) =>
+    issue.name.toLowerCase().includes(searchInput)
   );
 
   // Filter the array based on the search term
@@ -98,27 +103,49 @@ export const WorkingHoursSourcePopover = ({
   );
 
   useEffect(() => {
-    if (workingHours.process) {
-      setSelectedValue(
-        `${workingHours.process.processId} ${workingHours.process.name}`
-      );
+    if (workingHours) {
+      setSelectedValue(`tbd`);
     }
   }, [workingHours.assemblyGroup]);
 
-  const onClick = (process: AssemblyProcess) => {
+  const onClick = (
+    component: ProjectComponentWithComponent | null,
+    target: ProjectTarget | null,
+    sequence: Sequence | null,
+    issue: ProjectIssue | null
+  ) => {
+    const componentId = component ? component.id : null;
+    const targetId = target ? target.id : null;
+    const sequenceId = sequence ? sequence.id : null;
+    const issueId = issue ? issue.id : null;
     startTransition(() => {
-      setWorkingHoursProjectAssemblyGroupProcess(
+      setWorkingHoursSource(
         profileId,
         workspaceId,
         workingHours.projectMember.projectId,
         workingHours,
-        process.id
+        componentId,
+        targetId,
+        sequenceId,
+        issueId
       ).then((data) => {
-        // setError(data.error);
+        if (data.error) {
+          toast(data.error, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+        }
         if (data.success) {
-          setSelectedValue(`${process.processId} ${process.name}`);
+          let selected =
+            component &&
+            `${component.name} ${component.component.manufacturer} ${component.component.name}`;
+          selected = target && target.name;
+          selected = sequence && sequence.name;
+          selected = issue && issue.name;
+          setSelectedValue(`${selected}`);
           toast(data.success, {
-            description: `New process: ${process.processId} ${process.name}`,
             action: {
               label: "Undo",
               onClick: () => console.log("Undo"),
@@ -133,11 +160,14 @@ export const WorkingHoursSourcePopover = ({
 
   const removeGroup = () => {
     startTransition(() => {
-      setWorkingHoursProjectAssemblyGroupProcess(
+      setWorkingHoursSource(
         profileId,
         workspaceId,
         workingHours.projectMember.projectId,
         workingHours,
+        null,
+        null,
+        null,
         null
       ).then((data) => {
         // setError(data.error);
@@ -192,6 +222,7 @@ export const WorkingHoursSourcePopover = ({
           {filteredComponents.map((component) => (
             <div
               key={component.id}
+              onClick={() => onClick(component, null, null, null)}
               className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
             >
               <Puzzle strokeWidth={1} />
@@ -204,20 +235,10 @@ export const WorkingHoursSourcePopover = ({
               </div>
             </div>
           ))}
-          {filteredNewtorks.map((network) => (
-            <div
-              key={network.id}
-              className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
-            >
-              <Network strokeWidth={1} />
-              <div className="space-x-2">
-                <span className="font-light">{network.name}</span>
-              </div>
-            </div>
-          ))}
           {filteredSequences.map((seq) => (
             <div
               key={seq.id}
+              onClick={() => onClick(null, null, seq, null)}
               className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
             >
               <Split strokeWidth={1} />
@@ -229,11 +250,24 @@ export const WorkingHoursSourcePopover = ({
           {filteredTargets.map((target) => (
             <div
               key={target.id}
+              onClick={() => onClick(null, target, null, null)}
               className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
             >
               <Target strokeWidth={1} />
               <div className="space-x-2">
                 <span className="font-light">{target.name}</span>
+              </div>
+            </div>
+          ))}
+          {filteredIsues.map((issue) => (
+            <div
+              key={issue.id}
+              onClick={() => onClick(null, null, null, issue)}
+              className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
+            >
+              <Flag strokeWidth={1} />
+              <div className="space-x-2">
+                <span className="font-light">{issue.name}</span>
               </div>
             </div>
           ))}

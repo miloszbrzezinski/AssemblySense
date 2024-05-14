@@ -222,3 +222,64 @@ export const setWorkingHoursProjectAssemblyGroupProcess = async (
 
   return { success: "Working hours updated" };
 };
+
+export const setWorkingHoursSource = async (
+  profileId: string,
+  workspaceId: string,
+  projectId: string,
+  workingHours: WorkingHours,
+  componentId: string | null,
+  targetId: string | null,
+  sequenceId: string | null,
+  projectIssueId: string | null
+) => {
+  // workspace access?
+  const workspace = await db.workspace.findFirst({
+    where: {
+      id: workspaceId,
+      members: {
+        some: {
+          profileId,
+          role: {
+            in: [MemberRole.ADMIN, MemberRole.MODERATOR],
+          },
+        },
+      },
+    },
+  });
+
+  if (!workspace) {
+    return { error: "Workspace access denied!" };
+  }
+
+  //project member?
+  const projectMember = await db.projectMember.findFirst({
+    where: {
+      project: {
+        workspaceId: workspace.id,
+      },
+      projectId: projectId,
+      workspaceMember: {
+        profileId,
+      },
+    },
+  });
+
+  if (!projectMember) {
+    return { error: "Project member not found!" };
+  }
+
+  //set project
+  await db.workingHours.update({
+    where: {
+      id: workingHours.id,
+    },
+    data: {
+      componentId,
+      targetId,
+      sequenceId,
+    },
+  });
+
+  return { success: "Working hours updated" };
+};

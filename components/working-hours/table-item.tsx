@@ -59,9 +59,9 @@ export const WorkHoursItem = async ({
     },
   });
 
-  const projectNetworks = await db.projectNetwork.findMany({
+  const projectIssues = await db.projectIssue.findMany({
     where: {
-      project: {
+      Project: {
         id: workingHours.projectMember.projectId,
       },
     },
@@ -115,7 +115,7 @@ export const WorkHoursItem = async ({
           workspaceId={workspaceId}
           workingHours={workingHours}
           projectComponents={projectComponents}
-          projectNewtorks={projectNetworks}
+          projectIssues={projectIssues}
           sequences={sequences}
           targets={targets}
         />
