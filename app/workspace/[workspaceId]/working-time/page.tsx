@@ -1,5 +1,8 @@
+import AssemblyGroupPopover from "@/components/working-hours/assembly-groups-popover";
 import { HoursInput } from "@/components/working-hours/hours-input";
 import { NewItemButton } from "@/components/working-hours/new-item-button";
+import { ProjectsPopover } from "@/components/working-hours/projects-popover";
+import { WorkHoursItem } from "@/components/working-hours/table-item";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { MoreVertical, Plus, Timer } from "lucide-react";
@@ -73,7 +76,15 @@ export default async function WorkTimePage({
     include: {
       projectMember: {
         include: {
-          project: true,
+          project: {
+            include: {
+              assemblyGroups: {
+                include: {
+                  assemblyProcesses: true,
+                },
+              },
+            },
+          },
         },
       },
       assemblyGroup: true,
@@ -82,6 +93,13 @@ export default async function WorkTimePage({
           assemblyGroup: true,
         },
       },
+      target: true,
+      component: {
+        include: {
+          component: true,
+        },
+      },
+      sequence: true,
     },
   });
 
@@ -120,32 +138,7 @@ export default async function WorkTimePage({
           </thead>
           <tbody className="pb-20">
             {workingHours.map((wh) => (
-              <tr className="group h-10">
-                <td className="group-hover:bg-slate-100 border border-l-1 border-stone-300">
-                  <button className="hover:bg-slate-200 flex items-center justify-center h-10 w-full">
-                    <MoreVertical
-                      strokeWidth={1}
-                      className="hidden group-hover:block"
-                    />
-                  </button>
-                </td>
-                <td className="group-hover:bg-slate-100 border border-stone-300">
-                  <HoursInput />
-                </td>
-                <td className="group-hover:bg-slate-100 border border-stone-300">
-                  {wh.projectMember.project.projectNo}:{" "}
-                  {wh.projectMember.project.name}
-                </td>
-                <td className="group-hover:bg-slate-100 border border-stone-300">
-                  {wh.assemblyGroup?.name}
-                </td>
-                <td className="group-hover:bg-slate-100 border border-stone-300">
-                  {wh.process?.processId} {wh.process?.name}
-                </td>
-                <td className="group-hover:bg-slate-100 border border-stone-300">
-                  S O U R C E
-                </td>
-              </tr>
+              <WorkHoursItem key={wh.id} workingHours={wh} />
             ))}
           </tbody>
         </table>

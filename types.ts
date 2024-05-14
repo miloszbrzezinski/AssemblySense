@@ -16,8 +16,10 @@ import {
   ProjectMember,
   ProjectNetwork,
   ProjectStage,
+  ProjectTarget,
   Sequence,
   SequenceStep,
+  WorkingHours,
 } from "@prisma/client";
 
 export type ProjectWithCustomer = Project & {
@@ -123,4 +125,18 @@ export type SequenceWithSteps = Sequence & {
 
 export type ProjectIssueCommentWithData = ProjectIssueComment & {
   projectMember: ProjectMemberWithProfile;
+};
+
+export type WorkingHoursWithData = WorkingHours & {
+  projectMember: ProjectMember;
+} & {
+  assemblyGroup: AssemblyGroup | null;
+} & {
+  process: AssemblyGroup | null;
+} & {
+  target: ProjectTarget | null;
+} & {
+  component: ProjectComponent | null;
+} & {
+  sequence: Sequence | null;
 };
