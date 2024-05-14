@@ -141,4 +141,10 @@ export type WorkingHoursWithProjectMember = WorkingHours & {
   assemblyGroup: AssemblyGroup | null;
 } & {
   process: AssemblyProcess | null;
+} & {
+  component: ProjectComponentWithComponent | null;
+} & {
+  sequence: Sequence | null;
+} & {
+  target: ProjectTarget | null;
 };

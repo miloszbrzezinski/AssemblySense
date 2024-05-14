@@ -84,6 +84,13 @@ export default async function WorkTimePage({
       },
       assemblyGroup: true,
       process: true,
+      component: {
+        include: {
+          component: true,
+        },
+      },
+      target: true,
+      sequence: true,
     },
   });
 

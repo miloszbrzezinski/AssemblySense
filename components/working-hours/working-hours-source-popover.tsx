@@ -103,8 +103,16 @@ export const WorkingHoursSourcePopover = ({
   );
 
   useEffect(() => {
-    if (workingHours) {
-      setSelectedValue(`tbd`);
+    if (workingHours.component) {
+      setSelectedValue(
+        `${workingHours.component.name} (${workingHours.component.component.manufacturer} ${workingHours.component.component.name})`
+      );
+    }
+    if (workingHours.target) {
+      setSelectedValue(`${workingHours.target.name}`);
+    }
+    if (workingHours.sequence) {
+      setSelectedValue(`${workingHours.sequence.name}`);
     }
   }, [workingHours.assemblyGroup]);
 
@@ -138,13 +146,17 @@ export const WorkingHoursSourcePopover = ({
           });
         }
         if (data.success) {
-          let selected =
-            component &&
-            `${component.name} ${component.component.manufacturer} ${component.component.name}`;
-          selected = target && target.name;
-          selected = sequence && sequence.name;
-          selected = issue && issue.name;
-          setSelectedValue(`${selected}`);
+          if (component) {
+            setSelectedValue(
+              `${component.name} (${component.component.manufacturer} ${component.component.name})`
+            );
+          }
+          if (target) {
+            setSelectedValue(`${target.name}`);
+          }
+          if (sequence) {
+            setSelectedValue(`${sequence.name}`);
+          }
           toast(data.success, {
             action: {
               label: "Undo",
