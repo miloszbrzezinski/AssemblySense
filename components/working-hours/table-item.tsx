@@ -6,6 +6,7 @@ import { WorkingHours } from "@prisma/client";
 import { db } from "@/lib/db";
 import { WorkingHoursWithProjectMember } from "@/types";
 import { AssemblyProcessPopover } from "./assembly-process-popover";
+import { WorkingHoursSourcePopover } from "./working-hours-source-popover";
 
 interface WorkHoursItemProps {
   profileId: string;
@@ -32,6 +33,45 @@ export const WorkHoursItem = async ({
     },
     include: {
       assemblyProcesses: true,
+    },
+  });
+
+  const projectComponents = await db.projectComponent.findMany({
+    where: {
+      project: {
+        id: workingHours.projectMember.projectId,
+      },
+      assemblyGroupId: workingHours.assemblyGroupId,
+      assemblyProcessId: workingHours.processId,
+    },
+    include: {
+      component: true,
+    },
+  });
+
+  const sequences = await db.sequence.findMany({
+    where: {
+      assemblyProcess: {
+        assemblyGroup: {
+          projectId: workingHours.projectMember.projectId,
+        },
+      },
+    },
+  });
+
+  const projectNetworks = await db.projectNetwork.findMany({
+    where: {
+      project: {
+        id: workingHours.projectMember.projectId,
+      },
+    },
+  });
+
+  const targets = await db.projectTarget.findMany({
+    where: {
+      Project: {
+        id: workingHours.projectMember.projectId,
+      },
     },
   });
 
@@ -70,7 +110,15 @@ export const WorkHoursItem = async ({
         />
       </td>
       <td className="group-hover:bg-slate-100 border border-stone-300">
-        S O U R C E
+        <WorkingHoursSourcePopover
+          profileId={profileId}
+          workspaceId={workspaceId}
+          workingHours={workingHours}
+          projectComponents={projectComponents}
+          projectNewtorks={projectNetworks}
+          sequences={sequences}
+          targets={targets}
+        />
       </td>
     </tr>
   );

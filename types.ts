@@ -111,6 +111,10 @@ export type ProjectComponentWithComponentWithAssemblyGroups =
     assemblyProcess: AssemblyProcess | null;
   };
 
+export type ProjectComponentWithComponent = ProjectComponent & {
+  component: Component;
+};
+
 export type ActionEnableTableData = ProjectComponent & {
   componentEvents: ComponentEventWithData[];
 };
