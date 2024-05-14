@@ -3,6 +3,7 @@ import {
   setComponentsAssemblyGroup,
   setComponentsAssemblyProcess,
 } from "@/actions/project-components";
+import { setWorkingHoursProjectAssemblyGroupProcess } from "@/actions/working-hours";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -67,57 +68,57 @@ export const AssemblyProcessPopover = ({
     }
   }, [workingHours.assemblyGroup]);
 
-  // const onClick = (process: AssemblyProcess) => {
-  //   startTransition(() => {
-  //     setComponentsAssemblyProcess(
-  //       profileId,
-  //       workspaceId,
-  //       projectComponent,
-  //       process,
-  //       projectComponent.projectId,
-  //     ).then((data) => {
-  //       // setError(data.error);
-  //       if (data.success) {
-  //         setSelectedValue(`${process.processId} ${process.name}`);
-  //         toast(data.success, {
-  //           description: `New process: ${process.processId} ${process.name}`,
-  //           action: {
-  //             label: "Undo",
-  //             onClick: () => console.log("Undo"),
-  //           },
-  //         });
-  //         closeRef.current?.click();
-  //         router.refresh();
-  //       }
-  //     });
-  //   });
-  // };
+  const onClick = (process: AssemblyProcess) => {
+    startTransition(() => {
+      setWorkingHoursProjectAssemblyGroupProcess(
+        profileId,
+        workspaceId,
+        workingHours.projectMember.projectId,
+        workingHours,
+        process.id
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          setSelectedValue(`${process.processId} ${process.name}`);
+          toast(data.success, {
+            description: `New process: ${process.processId} ${process.name}`,
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          closeRef.current?.click();
+          router.refresh();
+        }
+      });
+    });
+  };
 
-  // const removeGroup = () => {
-  //   startTransition(() => {
-  //     setComponentsAssemblyProcess(
-  //       profileId,
-  //       workspaceId,
-  //       projectComponent,
-  //       null,
-  //       projectComponent.projectId,
-  //     ).then((data) => {
-  //       // setError(data.error);
-  //       if (data.success) {
-  //         setSelectedValue("General");
-  //         closeRef.current?.click();
-  //         toast(data.success, {
-  //           description: `New group: ${"General"}`,
-  //           action: {
-  //             label: "Undo",
-  //             onClick: () => console.log("Undo"),
-  //           },
-  //         });
-  //         router.refresh();
-  //       }
-  //     });
-  //   });
-  // };
+  const removeGroup = () => {
+    startTransition(() => {
+      setWorkingHoursProjectAssemblyGroupProcess(
+        profileId,
+        workspaceId,
+        workingHours.projectMember.projectId,
+        workingHours,
+        null
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          setSelectedValue("General");
+          closeRef.current?.click();
+          toast(data.success, {
+            description: `New group: ${"General"}`,
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          router.refresh();
+        }
+      });
+    });
+  };
 
   return (
     <Popover>
@@ -144,7 +145,10 @@ export const AssemblyProcessPopover = ({
         </div>
 
         <div className="bg-stone-200 space-y-[1px]">
-          <div className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none">
+          <div
+            onClick={removeGroup}
+            className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
+          >
             <ComponentIcon strokeWidth={1} />
             <h3>General</h3>
           </div>
@@ -152,6 +156,9 @@ export const AssemblyProcessPopover = ({
             group.assemblyProcesses.map((process) => (
               <div
                 key={process.id}
+                onClick={() => {
+                  onClick(process);
+                }}
                 className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
               >
                 <ComponentIcon strokeWidth={1} />
