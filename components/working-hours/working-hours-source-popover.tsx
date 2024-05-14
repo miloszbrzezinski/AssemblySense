@@ -33,6 +33,7 @@ import {
   Flag,
   Folder,
   Goal,
+  LucideIcon,
   Network,
   Puzzle,
   Search,
@@ -73,6 +74,7 @@ export const WorkingHoursSourcePopover = ({
 }: WorkingHoursSourcePopoverProps) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedValue, setSelectedValue] = useState("General");
+  const [SelectedIcon, setSelectedIcon] = useState<LucideIcon>(Timer);
   const closeRef = useRef<ElementRef<"button">>(null);
   const router = useRouter();
 
@@ -107,17 +109,26 @@ export const WorkingHoursSourcePopover = ({
       setSelectedValue(
         `${workingHours.component.name} (${workingHours.component.component.manufacturer} ${workingHours.component.component.name})`
       );
+      setSelectedIcon(Puzzle);
     }
     if (workingHours.target) {
       setSelectedValue(`${workingHours.target.name}`);
+      setSelectedIcon(Target);
     }
     if (workingHours.sequence) {
       setSelectedValue(`${workingHours.sequence.name}`);
+      setSelectedIcon(Split);
     }
     if (workingHours.projectIssue) {
       setSelectedValue(`${workingHours.projectIssue.name}`);
+      setSelectedIcon(Flag);
     }
-  }, [workingHours.assemblyGroup]);
+  }, [
+    workingHours.component,
+    workingHours.target,
+    workingHours.sequence,
+    workingHours.projectIssue,
+  ]);
 
   const onClick = (
     component: ProjectComponentWithComponent | null,
@@ -153,15 +164,19 @@ export const WorkingHoursSourcePopover = ({
             setSelectedValue(
               `${component.name} (${component.component.manufacturer} ${component.component.name})`
             );
+            setSelectedIcon(Puzzle);
           }
           if (target) {
             setSelectedValue(`${target.name}`);
+            setSelectedIcon(Target);
           }
           if (sequence) {
             setSelectedValue(`${sequence.name}`);
+            setSelectedIcon(Split);
           }
           if (issue) {
             setSelectedValue(`${issue.name}`);
+            setSelectedIcon(Flag);
           }
           toast(data.success, {
             action: {
@@ -191,9 +206,9 @@ export const WorkingHoursSourcePopover = ({
         // setError(data.error);
         if (data.success) {
           setSelectedValue("General");
+          setSelectedIcon(Timer);
           closeRef.current?.click();
           toast(data.success, {
-            description: `New group: ${"General"}`,
             action: {
               label: "Undo",
               onClick: () => console.log("Undo"),
@@ -207,8 +222,9 @@ export const WorkingHoursSourcePopover = ({
 
   return (
     <Popover>
-      <PopoverTrigger className="text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
-        <h3 className="text-sm font-light px-2 whitespace-nowrap">
+      <PopoverTrigger className="px-2 space-x-2 text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
+        <SelectedIcon strokeWidth={1} />
+        <h3 className="text-sm font-light whitespace-nowrap">
           {selectedValue}
         </h3>
       </PopoverTrigger>

@@ -20,6 +20,7 @@ export const Calendar = () => {
   const selectedDay = searchParams.get("day");
   const selectedMonth = searchParams.get("month");
   const selectedYear = searchParams.get("year");
+  const today = new Date();
 
   const getMonthData = (date: Date) => {
     const startDay = startOfWeek(startOfMonth(date));
@@ -46,9 +47,9 @@ export const Calendar = () => {
 
   const isCurrentdDay = (day: Date) => {
     return (
-      day.getDate() === currentDate.getDate() &&
-      day.getMonth() === currentDate.getMonth() &&
-      day.getFullYear() === currentDate.getFullYear()
+      day.getDate() === today.getDate() &&
+      day.getMonth() === today.getMonth() &&
+      day.getFullYear() === today.getFullYear()
     );
   };
 
