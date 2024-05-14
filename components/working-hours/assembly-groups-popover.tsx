@@ -1,5 +1,6 @@
 "use client";
 import { setComponentsAssemblyGroup } from "@/actions/project-components";
+import { setWorkingHoursProjectAssemblyGroup } from "@/actions/working-hours";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -56,59 +57,59 @@ const AssemblyGroupPopover = ({
     }
   }, [workingHours.assemblyGroup]);
 
-  // const onClick = (group: AssemblyGroup) => {
-  //   startTransition(() => {
-  //     setComponentsAssemblyGroup(
-  //       profileId,
-  //       workspaceId,
-  //       projectComponent,
-  //       group.id,
-  //       projectComponent.projectId,
-  //     ).then((data) => {
-  //       // setError(data.error);
-  //       if (data.success) {
-  //         setSelectedValue(group.name);
-  //         toast(data.success, {
-  //           description: `New group: ${group.name}`,
-  //           action: {
-  //             label: "Undo",
-  //             onClick: () => console.log("Undo"),
-  //           },
-  //         });
-  //         closeRef.current?.click();
-  //         router.refresh();
-  //       }
-  //     });
-  //   });
-  // };
+  const onClick = (group: AssemblyGroup) => {
+    startTransition(() => {
+      setWorkingHoursProjectAssemblyGroup(
+        profileId,
+        workspaceId,
+        workingHours.projectMember.projectId,
+        workingHours,
+        group.id
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          setSelectedValue(group.name);
+          toast(data.success, {
+            description: `New group: ${group.name}`,
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          closeRef.current?.click();
+          router.refresh();
+        }
+      });
+    });
+  };
 
-  // const removeGroup = () => {
-  //   startTransition(() => {
-  //     setComponentsAssemblyGroup(
-  //       profileId,
-  //       workspaceId,
-  //       projectComponent,
-  //       null,
-  //       projectComponent.projectId,
-  //     ).then((data) => {
-  //       // setError(data.error);
-  //       if (data.success) {
-  //         if (data.success) {
-  //           setSelectedValue("General");
-  //           toast(data.success, {
-  //             description: `New group: ${"General"}`,
-  //             action: {
-  //               label: "Undo",
-  //               onClick: () => console.log("Undo"),
-  //             },
-  //           });
-  //           closeRef.current?.click();
-  //           router.refresh();
-  //         }
-  //       }
-  //     });
-  //   });
-  // };
+  const removeGroup = () => {
+    startTransition(() => {
+      setWorkingHoursProjectAssemblyGroup(
+        profileId,
+        workspaceId,
+        workingHours.projectMember.projectId,
+        workingHours,
+        null
+      ).then((data) => {
+        // setError(data.error);
+        if (data.success) {
+          if (data.success) {
+            setSelectedValue("General");
+            toast(data.success, {
+              description: `New group: ${"General"}`,
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
+            closeRef.current?.click();
+            router.refresh();
+          }
+        }
+      });
+    });
+  };
 
   return (
     <Popover>
@@ -133,13 +134,19 @@ const AssemblyGroupPopover = ({
         </div>
 
         <div className="bg-stone-200 space-y-[1px]">
-          <div className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none">
+          <div
+            onClick={removeGroup}
+            className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
+          >
             <Folder strokeWidth={1} />
             <h3>General</h3>
           </div>
           {filteredGroups.map((group) => (
             <div
               key={group.id}
+              onClick={() => {
+                onClick(group);
+              }}
               className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
             >
               <Folder strokeWidth={1} />
