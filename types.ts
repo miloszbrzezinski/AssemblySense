@@ -12,6 +12,7 @@ import {
   Profile,
   Project,
   ProjectComponent,
+  ProjectIssue,
   ProjectIssueComment,
   ProjectMember,
   ProjectNetwork,
@@ -147,4 +148,6 @@ export type WorkingHoursWithProjectMember = WorkingHours & {
   sequence: Sequence | null;
 } & {
   target: ProjectTarget | null;
+} & {
+  projectIssue: ProjectIssue | null;
 };

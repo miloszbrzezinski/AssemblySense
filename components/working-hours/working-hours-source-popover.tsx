@@ -114,6 +114,9 @@ export const WorkingHoursSourcePopover = ({
     if (workingHours.sequence) {
       setSelectedValue(`${workingHours.sequence.name}`);
     }
+    if (workingHours.projectIssue) {
+      setSelectedValue(`${workingHours.projectIssue.name}`);
+    }
   }, [workingHours.assemblyGroup]);
 
   const onClick = (
@@ -156,6 +159,9 @@ export const WorkingHoursSourcePopover = ({
           }
           if (sequence) {
             setSelectedValue(`${sequence.name}`);
+          }
+          if (issue) {
+            setSelectedValue(`${issue.name}`);
           }
           toast(data.success, {
             action: {

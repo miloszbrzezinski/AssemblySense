@@ -278,6 +278,7 @@ export const setWorkingHoursSource = async (
       componentId,
       targetId,
       sequenceId,
+      projectIssueId,
     },
   });
 

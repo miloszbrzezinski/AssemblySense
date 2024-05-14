@@ -91,6 +91,7 @@ export default async function WorkTimePage({
       },
       target: true,
       sequence: true,
+      projectIssue: true,
     },
   });
 
