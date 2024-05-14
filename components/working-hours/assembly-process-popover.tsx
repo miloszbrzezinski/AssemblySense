@@ -1,5 +1,8 @@
 "use client";
-import { setComponentsAssemblyGroup } from "@/actions/project-components";
+import {
+  setComponentsAssemblyGroup,
+  setComponentsAssemblyProcess,
+} from "@/actions/project-components";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -7,9 +10,13 @@ import {
   PopoverTrigger,
   PopoverClose,
 } from "@/components/ui/popover";
-import { WorkingHoursWithProjectMember } from "@/types";
-import { AssemblyGroup, WorkingHours } from "@prisma/client";
-import { Folder, Goal, Search, X } from "lucide-react";
+import {
+  AssemblyGroupWithProcesses,
+  ProjectComponentWithData,
+  WorkingHoursWithProjectMember,
+} from "@/types";
+import { AssemblyGroup, AssemblyProcess } from "@prisma/client";
+import { ComponentIcon, Folder, Goal, Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   ElementRef,
@@ -21,19 +28,19 @@ import {
 } from "react";
 import { toast } from "sonner";
 
-interface AssemblyGroupPopoverProps {
+interface AssemblyProcessPopoverProps {
   profileId: string;
   workspaceId: string;
-  assemblyGroups: AssemblyGroup[];
+  assemblyGroups: AssemblyGroupWithProcesses[];
   workingHours: WorkingHoursWithProjectMember;
 }
 
-const AssemblyGroupPopover = ({
+export const AssemblyProcessPopover = ({
   profileId,
   workspaceId,
   assemblyGroups,
   workingHours,
-}: AssemblyGroupPopoverProps) => {
+}: AssemblyProcessPopoverProps) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedValue, setSelectedValue] = useState("General");
   const closeRef = useRef<ElementRef<"button">>(null);
@@ -46,30 +53,34 @@ const AssemblyGroupPopover = ({
   };
 
   // Filter the team array based on the search term
-  const filteredGroups = assemblyGroups.filter((group) =>
-    group.name.toLowerCase().includes(searchInput)
+  const filteredGroups = assemblyGroups.filter(
+    (group) =>
+      group.name.toLowerCase().includes(searchInput) &&
+      group.id === workingHours.assemblyGroupId
   );
 
   useEffect(() => {
-    if (workingHours.assemblyGroup) {
-      setSelectedValue(workingHours.assemblyGroup.name);
+    if (workingHours.process) {
+      setSelectedValue(
+        `${workingHours.process.processId} ${workingHours.process.name}`
+      );
     }
   }, [workingHours.assemblyGroup]);
 
-  // const onClick = (group: AssemblyGroup) => {
+  // const onClick = (process: AssemblyProcess) => {
   //   startTransition(() => {
-  //     setComponentsAssemblyGroup(
+  //     setComponentsAssemblyProcess(
   //       profileId,
   //       workspaceId,
   //       projectComponent,
-  //       group.id,
+  //       process,
   //       projectComponent.projectId,
   //     ).then((data) => {
   //       // setError(data.error);
   //       if (data.success) {
-  //         setSelectedValue(group.name);
+  //         setSelectedValue(`${process.processId} ${process.name}`);
   //         toast(data.success, {
-  //           description: `New group: ${group.name}`,
+  //           description: `New process: ${process.processId} ${process.name}`,
   //           action: {
   //             label: "Undo",
   //             onClick: () => console.log("Undo"),
@@ -84,7 +95,7 @@ const AssemblyGroupPopover = ({
 
   // const removeGroup = () => {
   //   startTransition(() => {
-  //     setComponentsAssemblyGroup(
+  //     setComponentsAssemblyProcess(
   //       profileId,
   //       workspaceId,
   //       projectComponent,
@@ -93,18 +104,16 @@ const AssemblyGroupPopover = ({
   //     ).then((data) => {
   //       // setError(data.error);
   //       if (data.success) {
-  //         if (data.success) {
-  //           setSelectedValue("General");
-  //           toast(data.success, {
-  //             description: `New group: ${"General"}`,
-  //             action: {
-  //               label: "Undo",
-  //               onClick: () => console.log("Undo"),
-  //             },
-  //           });
-  //           closeRef.current?.click();
-  //           router.refresh();
-  //         }
+  //         setSelectedValue("General");
+  //         closeRef.current?.click();
+  //         toast(data.success, {
+  //           description: `New group: ${"General"}`,
+  //           action: {
+  //             label: "Undo",
+  //             onClick: () => console.log("Undo"),
+  //           },
+  //         });
+  //         router.refresh();
   //       }
   //     });
   //   });
@@ -113,7 +122,9 @@ const AssemblyGroupPopover = ({
   return (
     <Popover>
       <PopoverTrigger className="text-base h-10 w-full flex items-center justify-start hover:bg-slate-200">
-        <h3 className="text-sm font-light pl-2">{selectedValue}</h3>
+        <h3 className="text-sm font-light px-2 whitespace-nowrap">
+          {selectedValue}
+        </h3>
       </PopoverTrigger>
       <PopoverContent className="rounded-none p-0 bg-stone-200 space-y-[1px]">
         <div className="bg-white flex items-center pl-2">
@@ -134,22 +145,25 @@ const AssemblyGroupPopover = ({
 
         <div className="bg-stone-200 space-y-[1px]">
           <div className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none">
-            <Folder strokeWidth={1} />
+            <ComponentIcon strokeWidth={1} />
             <h3>General</h3>
           </div>
-          {filteredGroups.map((group) => (
-            <div
-              key={group.id}
-              className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
-            >
-              <Folder strokeWidth={1} />
-              <h3>{group.name}</h3>
-            </div>
-          ))}
+          {filteredGroups.map((group) =>
+            group.assemblyProcesses.map((process) => (
+              <div
+                key={process.id}
+                className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
+              >
+                <ComponentIcon strokeWidth={1} />
+                <div className="space-x-2">
+                  <span className="font-light">{process.processId}</span>
+                  <span className="font-extralight">{process.name}</span>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </PopoverContent>
     </Popover>
   );
 };
-
-export default AssemblyGroupPopover;

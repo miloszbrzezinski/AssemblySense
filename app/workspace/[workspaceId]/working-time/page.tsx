@@ -74,32 +74,9 @@ export default async function WorkTimePage({
       },
     },
     include: {
-      projectMember: {
-        include: {
-          project: {
-            include: {
-              assemblyGroups: {
-                include: {
-                  assemblyProcesses: true,
-                },
-              },
-            },
-          },
-        },
-      },
+      projectMember: true,
       assemblyGroup: true,
-      process: {
-        include: {
-          assemblyGroup: true,
-        },
-      },
-      target: true,
-      component: {
-        include: {
-          component: true,
-        },
-      },
-      sequence: true,
+      process: true,
     },
   });
 
@@ -138,7 +115,12 @@ export default async function WorkTimePage({
           </thead>
           <tbody className="pb-20">
             {workingHours.map((wh) => (
-              <WorkHoursItem key={wh.id} workingHours={wh} />
+              <WorkHoursItem
+                profileId={profile.id}
+                workspaceId={workspace.id}
+                key={wh.id}
+                workingHours={wh}
+              />
             ))}
           </tbody>
         </table>

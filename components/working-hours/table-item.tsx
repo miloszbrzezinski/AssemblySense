@@ -4,12 +4,13 @@ import { ProjectsPopover } from "./projects-popover";
 import AssemblyGroupPopover from "./assembly-groups-popover";
 import { WorkingHours } from "@prisma/client";
 import { db } from "@/lib/db";
-import { WorkingHoursWithData } from "@/types";
+import { WorkingHoursWithProjectMember } from "@/types";
+import { AssemblyProcessPopover } from "./assembly-process-popover";
 
 interface WorkHoursItemProps {
   profileId: string;
   workspaceId: string;
-  workingHours: WorkingHoursWithData;
+  workingHours: WorkingHoursWithProjectMember;
 }
 
 export const WorkHoursItem = async ({
@@ -28,6 +29,9 @@ export const WorkHoursItem = async ({
       project: {
         id: workingHours.projectMember.projectId,
       },
+    },
+    include: {
+      assemblyProcesses: true,
     },
   });
 
@@ -58,7 +62,12 @@ export const WorkHoursItem = async ({
         />
       </td>
       <td className="group-hover:bg-slate-100 border border-stone-300">
-        {workingHours.process?.processId} {workingHours.process?.name}
+        <AssemblyProcessPopover
+          profileId={profileId}
+          workspaceId={workspaceId}
+          workingHours={workingHours}
+          assemblyGroups={assemblyGroups}
+        />
       </td>
       <td className="group-hover:bg-slate-100 border border-stone-300">
         S O U R C E
