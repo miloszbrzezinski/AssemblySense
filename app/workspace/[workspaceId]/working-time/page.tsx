@@ -77,7 +77,11 @@ export default async function WorkTimePage({
       },
     },
     include: {
-      projectMember: true,
+      projectMember: {
+        include: {
+          project: true,
+        },
+      },
       assemblyGroup: true,
       process: true,
     },

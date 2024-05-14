@@ -52,6 +52,10 @@ export type ProjectMemberWithProfile = ProjectMember & {
   };
 };
 
+export type ProjectMemberWithProject = ProjectMember & {
+  project: Project;
+};
+
 export type WokrspaceMemberWithData = Member & {
   profile: Profile;
 } & { department: Department | null } & { projectMembers: ProjectMember[] };
@@ -128,7 +132,7 @@ export type ProjectIssueCommentWithData = ProjectIssueComment & {
 };
 
 export type WorkingHoursWithProjectMember = WorkingHours & {
-  projectMember: ProjectMember;
+  projectMember: ProjectMemberWithProject;
 } & {
   assemblyGroup: AssemblyGroup | null;
 } & {

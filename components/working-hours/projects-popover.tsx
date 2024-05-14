@@ -1,5 +1,6 @@
 "use client";
 import { setComponentsAssemblyGroup } from "@/actions/project-components";
+import { setWorkingHoursProject } from "@/actions/working-hours";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -7,7 +8,10 @@ import {
   PopoverTrigger,
   PopoverClose,
 } from "@/components/ui/popover";
-import { ProjectComponentWithData } from "@/types";
+import {
+  ProjectComponentWithData,
+  WorkingHoursWithProjectMember,
+} from "@/types";
 import { AssemblyGroup, Project, WorkingHours } from "@prisma/client";
 import { Folder, Goal, PencilRuler, PenLine, Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -25,7 +29,7 @@ interface ProjectsPopoverProps {
   profileId: string;
   workspaceId: string;
   projects: Project[];
-  workingHours: WorkingHours;
+  workingHours: WorkingHoursWithProjectMember;
 }
 
 export const ProjectsPopover = ({
@@ -50,65 +54,43 @@ export const ProjectsPopover = ({
     project.name.toLowerCase().includes(searchInput)
   );
 
-  // useEffect(() => {
-  //   if (workingHours) {
-  //     setSelectedValue(projectComponent.assemblyGroup.name);
-  //   }
-  // }, [projectComponent.assemblyGroup]);
+  useEffect(() => {
+    if (workingHours) {
+      setSelectedValue(workingHours.projectMember.project.name);
+    }
+  }, [workingHours.projectMember]);
 
-  // const onClick = (group: AssemblyGroup) => {
-  //   startTransition(() => {
-  //     setComponentsAssemblyGroup(
-  //       profileId,
-  //       workspaceId,
-  //       projectComponent,
-  //       group.id,
-  //       projectComponent.projectId,
-  //     ).then((data) => {
-  //       // setError(data.error);
-  //       if (data.success) {
-  //         setSelectedValue(group.name);
-  //         toast(data.success, {
-  //           description: `New group: ${group.name}`,
-  //           action: {
-  //             label: "Undo",
-  //             onClick: () => console.log("Undo"),
-  //           },
-  //         });
-  //         closeRef.current?.click();
-  //         router.refresh();
-  //       }
-  //     });
-  //   });
-  // };
-
-  // const removeGroup = () => {
-  //   startTransition(() => {
-  //     setComponentsAssemblyGroup(
-  //       profileId,
-  //       workspaceId,
-  //       projectComponent,
-  //       null,
-  //       projectComponent.projectId,
-  //     ).then((data) => {
-  //       // setError(data.error);
-  //       if (data.success) {
-  //         if (data.success) {
-  //           setSelectedValue("General");
-  //           toast(data.success, {
-  //             description: `New group: ${"General"}`,
-  //             action: {
-  //               label: "Undo",
-  //               onClick: () => console.log("Undo"),
-  //             },
-  //           });
-  //           closeRef.current?.click();
-  //           router.refresh();
-  //         }
-  //       }
-  //     });
-  //   });
-  // };
+  const onClick = (project: Project) => {
+    startTransition(() => {
+      setWorkingHoursProject(
+        profileId,
+        workspaceId,
+        project.id,
+        workingHours
+      ).then((data) => {
+        if (data.error) {
+          toast(data.error, {
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+        }
+        if (data.success) {
+          setSelectedValue(project.name);
+          toast(data.success, {
+            description: `New group: ${project.name}`,
+            action: {
+              label: "Undo",
+              onClick: () => console.log("Undo"),
+            },
+          });
+          closeRef.current?.click();
+          router.refresh();
+        }
+      });
+    });
+  };
 
   return (
     <Popover>
@@ -133,13 +115,12 @@ export const ProjectsPopover = ({
         </div>
 
         <div className="bg-stone-200 space-y-[1px]">
-          <div className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none">
-            <PencilRuler strokeWidth={1} />
-            <h3>General</h3>
-          </div>
           {filteredProjects.map((project) => (
             <div
               key={project.id}
+              onClick={() => {
+                onClick(project);
+              }}
               className="w-full flex items-center space-x-2 p-2 bg-white hover:bg-stone-50 font-light select-none"
             >
               <PencilRuler strokeWidth={1} />
