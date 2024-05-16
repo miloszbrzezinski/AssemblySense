@@ -1,10 +1,27 @@
 "use client";
 
+import { WorkingHours } from "@prisma/client";
 import { Minus, Plus } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const HoursInput = () => {
+interface HoursInputProps {
+  profileId: string;
+  workspaceId: string;
+  workingHours: WorkingHours;
+}
+
+export const HoursInput = ({
+  profileId,
+  workspaceId,
+  workingHours,
+}: HoursInputProps) => {
   const [time, setTime] = useState(0.0);
+
+  useEffect(() => {
+    if (workingHours) {
+      setTime(workingHours.value);
+    }
+  }, [workingHours]);
 
   const addTime = () => {
     time < 24 && setTime((t) => (t += 0.5));

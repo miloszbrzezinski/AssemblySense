@@ -83,7 +83,11 @@ export const WorkHoursItem = async ({
         </button>
       </td>
       <td className="group-hover:bg-slate-100 border border-stone-300">
-        <HoursInput />
+        <HoursInput
+          profileId={profileId}
+          workspaceId={workspaceId}
+          workingHours={workingHours}
+        />
       </td>
       <td className="group-hover:bg-slate-100 border border-stone-300">
         <ProjectsPopover

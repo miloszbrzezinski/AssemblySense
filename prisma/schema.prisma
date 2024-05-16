@@ -179,7 +179,7 @@ model ProjectMember {
 
 model WorkingHours {
   id          String   @id @default(uuid())
-  value       Int
+  value       Float
   description String   @db.Text
   date        DateTime @default(now())
 
