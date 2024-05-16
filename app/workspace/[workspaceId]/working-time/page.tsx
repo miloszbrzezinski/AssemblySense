@@ -68,12 +68,30 @@ export default async function WorkTimePage({
     "December",
   ];
 
+  const queryDateGt = searchParams?.year
+    ? new Date(
+        `${searchParams?.year}-${searchParams?.month}-${searchParams?.day} 00:00:00`
+      )
+    : new Date();
+
+  const queryDateLT = searchParams?.year
+    ? new Date(
+        `${searchParams?.year}-${searchParams?.month}-${searchParams?.day} 23:59:59`
+      )
+    : new Date(
+        `${currentDay.getFullYear()}-${currentDay.getMonth()}-${currentDay.getDate()} 23:59:59`
+      );
+
   const workingHours = await db.workingHours.findMany({
     where: {
       projectMember: {
         workspaceMember: {
           profileId: profile.id,
         },
+      },
+      date: {
+        gte: queryDateGt,
+        lte: queryDateLT,
       },
     },
     include: {
