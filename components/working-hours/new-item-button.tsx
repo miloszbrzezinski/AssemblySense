@@ -24,12 +24,14 @@ interface NewItemButtonProps {
   profileId: string;
   workspaceId: string;
   projects: Project[];
+  date: Date;
 }
 
 export const NewItemButton = ({
   profileId,
   workspaceId,
   projects,
+  date,
 }: NewItemButtonProps) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedValue, setSelectedValue] = useState("General");
@@ -49,19 +51,21 @@ export const NewItemButton = ({
 
   const onAdd = (project: Project) => {
     startTransition(() => {
-      reportWorkingHours(profileId, workspaceId, project.id).then((data) => {
-        // setError(data.error);
-        if (data.success) {
-          toast(data.success, {
-            action: {
-              label: "Undo",
-              onClick: () => console.log("Undo"),
-            },
-          });
-          closeRef.current?.click();
-          router.refresh();
+      reportWorkingHours(profileId, workspaceId, project.id, date).then(
+        (data) => {
+          // setError(data.error);
+          if (data.success) {
+            toast(data.success, {
+              action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+              },
+            });
+            closeRef.current?.click();
+            router.refresh();
+          }
         }
-      });
+      );
     });
   };
 

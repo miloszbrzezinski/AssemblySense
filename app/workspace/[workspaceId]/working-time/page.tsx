@@ -79,7 +79,9 @@ export default async function WorkTimePage({
         `${searchParams?.year}-${searchParams?.month}-${searchParams?.day} 23:59:59`
       )
     : new Date(
-        `${currentDay.getFullYear()}-${currentDay.getMonth()}-${currentDay.getDate()} 23:59:59`
+        `${currentDay.getFullYear()}-${
+          currentDay.getMonth() + 1
+        }-${currentDay.getDate()} 23:59:59`
       );
 
   const workingHours = await db.workingHours.findMany({
@@ -168,6 +170,7 @@ export default async function WorkTimePage({
             profileId={profile.id}
             workspaceId={workspace.id}
             projects={workspace.projects}
+            date={queryDateGt}
           />
         </div>
       </div>

@@ -6,7 +6,8 @@ import { MemberRole, WorkingHours } from "@prisma/client";
 export const reportWorkingHours = async (
   profileId: string,
   workspaceId: string,
-  projectId: string
+  projectId: string,
+  date: Date
 ) => {
   // workspace access?
   const workspace = await db.workspace.findFirst({
@@ -50,6 +51,7 @@ export const reportWorkingHours = async (
       value: 0,
       description: "",
       projectMemberId: projectMember.id,
+      date,
     },
   });
 
