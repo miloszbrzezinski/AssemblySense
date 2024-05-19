@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Search } from "lucide-react";
+import { Home, PencilRuler, Puzzle, Search, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
@@ -16,10 +16,9 @@ import {
 interface WorkspaceSearchProps {
   data: {
     label: string;
-    type: "space" | "member";
+    type: "project" | "member" | "component";
     data:
       | {
-          icon: React.ReactNode;
           name: string;
           id: string;
         }[]
@@ -44,15 +43,27 @@ export const WorkspaceSearch = ({ data }: WorkspaceSearchProps) => {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const onClick = ({ id, type }: { id: string; type: "space" | "member" }) => {
+  const onClick = ({
+    id,
+    type,
+  }: {
+    id: string;
+    type: "project" | "member" | "component";
+  }) => {
     setOpen(false);
 
-    // if (type === "member") {
-    //   return router.push(`/servers/${params?.serverId}/conversations/${id}`)
-    // }
+    if (type === "project") {
+      return router.push(
+        `/workspace/${params?.workspaceId}/projects/${id}/dashboard`
+      );
+    }
 
-    if (type === "space") {
-      return router.push(`/spaces/${params?.serverId}/channels/${id}`);
+    if (type === "member") {
+      return router.push(`/workspace/${params?.workspaceId}/members/${id}`);
+    }
+
+    if (type === "component") {
+      return router.push(`/workspace/${params?.workspaceId}/library/${id}`);
     }
   };
 
@@ -76,14 +87,22 @@ export const WorkspaceSearch = ({ data }: WorkspaceSearchProps) => {
 
             return (
               <CommandGroup key={label} heading={label}>
-                {data?.map(({ id, icon, name }) => {
+                {data?.map(({ id, name }) => {
                   return (
                     <CommandItem
                       key={id}
                       onSelect={() => onClick({ id, type })}
                     >
-                      {icon}
-                      <span>{name}</span>
+                      <button
+                        className="flex space-x-2"
+                        onClick={() => onClick({ id, type })}
+                      >
+                        {type === "project" && <PencilRuler strokeWidth={1} />}
+                        {type === "member" && <User strokeWidth={1} />}
+                        {type === "component" && <Puzzle strokeWidth={1} />}
+
+                        <span>{name}</span>
+                      </button>
                     </CommandItem>
                   );
                 })}

@@ -41,7 +41,7 @@ export default async function WorkspaceLayout({
       disableTransitionOnChange
     >
       <div className="h-full bg-stone-100 dark:bg-zinc-800">
-        <Navbar workspaceName={workspace.name} />
+        <Navbar activeWorkspace={workspace} />
         <div className="pt-14 h-full flex">
           <div className="hidden md:flex h-full w-16 z-40 fixed">
             <Sidebar />
