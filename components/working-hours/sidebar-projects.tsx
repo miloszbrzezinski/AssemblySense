@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { Project, WorkingHours } from "@prisma/client";
 
 interface WorkingHoursProjectsSidebarProps {
   profileId: string;
@@ -17,6 +18,18 @@ export const WorkingHoursProjectsSidebar = async ({
           workspaceMember: {
             profileId,
           },
+        },
+      },
+    },
+    include: {
+      projectMembers: {
+        where: {
+          workspaceMember: {
+            profileId,
+          },
+        },
+        include: {
+          workingHours: true,
         },
       },
     },
@@ -44,19 +57,11 @@ export const WorkingHoursProjectsSidebar = async ({
       </h4>
       <ol>
         {usersProjects.map((project) => (
-          <li
+          <ListItem
             key={project.id}
-            className="flex justify-between space-x-10 items-center bg-white/20 w-full whitespace-nowrap px-3 py-2 h-min select-none hover:bg-slate-200"
-          >
-            <p>
-              <span className="font-light text-lg uppercase">
-                {project.projectNo}
-              </span>
-              <br />
-              <span className="font-extralight">{project.name}</span>
-            </p>
-            <p className="text-2xl font-light">36h</p>
-          </li>
+            project={project}
+            workingHours={project.projectMembers[0].workingHours}
+          />
         ))}
       </ol>
       <h4 className="text-sm font-semibold text-stone-400 uppercase pl-2 select-none py-2 mt-5">
@@ -79,5 +84,26 @@ export const WorkingHoursProjectsSidebar = async ({
         ))}
       </ol>
     </div>
+  );
+};
+
+interface ListItemProps {
+  project: Project;
+  workingHours: WorkingHours[];
+}
+
+const ListItem = ({ project, workingHours }: ListItemProps) => {
+  const time = workingHours.reduce((sum, a) => sum + a.value, 0);
+  return (
+    <li className="flex justify-between space-x-10 items-center bg-white/20 w-full whitespace-nowrap px-3 py-2 h-min select-none hover:bg-slate-200">
+      <p>
+        <span className="font-light text-lg uppercase">
+          {project.projectNo}
+        </span>
+        <br />
+        <span className="font-extralight">{project.name}</span>
+      </p>
+      <p className="text-2xl font-light">{time}h</p>
+    </li>
   );
 };
