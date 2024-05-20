@@ -21,7 +21,7 @@ export const ProjectMembersCard = ({
 
   return (
     <DashboardCard icon={<Users strokeWidth={1} />} title="Leaders">
-      <div className="bg-stone-300 space-y-[1px]">
+      <div className="bg-stone-300 dark:bg-neutral-800 space-y-[1px]">
         {projectMembers.map(
           (member) =>
             member.isLeader && (

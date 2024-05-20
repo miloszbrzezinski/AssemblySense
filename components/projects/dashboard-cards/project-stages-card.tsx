@@ -44,19 +44,19 @@ export const ProjectStagesCard = ({
 
   return (
     <DashboardCard icon={<Rocket strokeWidth={1} />} title="Project stages">
-      <div className="space-x-[1px] flex h-60 items-center">
+      <div className="space-x-[1px] flex h-60 items-center select-none">
         {projectStages.map(
           (stage) =>
             activeStageOrder && (
               <div
                 className={cn(
-                  "w-full flex transition-all duration-200 bg-slate-400",
+                  "w-full flex transition-all duration-200 bg-slate-400 dark:bg-neutral-600",
                   stage.active &&
-                    "h-40 bg-white-500 border rounded-md hover:scale-y-105 shadow-md",
+                    "h-40 bg-white dark:bg-black border dark:border-neutral-300 rounded-md hover:scale-[1.001] shadow-md",
                   stage.order > activeStageOrder &&
-                    "h-10 items-center p-2 bg-stone-800/80 hover:scale-y-110 hover:shadow-md hover:shadow-stone-500 text-stone-200",
+                    "h-10 items-center p-2 bg-stone-800/80 dark:bg-neutral-800 hover:scale-[1.001] hover:shadow-md hover:shadow-stone-500 text-stone-200",
                   stage.order < activeStageOrder &&
-                    "h-10 items-center p-2 bg-green-800/50 text-green-50 hover:scale-y-110 hover:shadow-md hover:shadow-stone-500"
+                    "h-10 items-center p-2 bg-green-800/50 dark:bg-green-900 text-green-50 hover:scale-[1.001] hover:shadow-md hover:shadow-stone-500"
                 )}
               >
                 {!stage.active && (

@@ -17,7 +17,7 @@ export const DashboardCard = ({
   children,
 }: DashboardCardProps) => {
   return (
-    <div className="flex flex-col rounded-md border border-stone-200 bg-white w-full h-full shadow-sm">
+    <div className="flex flex-col rounded-md border border-stone-200 dark:border-neutral-500 bg-white dark:bg-neutral-950 w-full h-full shadow-sm">
       <div className="flex space-x-2 items-center justify-between p-2 h-14">
         <div className="flex space-x-2 items-center">
           {icon}

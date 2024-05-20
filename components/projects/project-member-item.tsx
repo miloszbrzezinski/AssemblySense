@@ -9,9 +9,9 @@ export const ProjectMemberItem = ({ member }: ProjectMemberItemProps) => {
   return (
     <div
       key={member.id}
-      className="flex p-1 w-full bg-white space-x-[1px]  items-center select-none"
+      className="flex p-1 w-full bg-white dark:bg-neutral-950 space-x-[1px]  items-center select-none"
     >
-      <div className="flex w-full min-h-14  items-center p-2 space-x-2 hover:bg-stone-100">
+      <div className="flex w-full min-h-14  items-center p-2 space-x-2 hover:bg-stone-100 dark:hover:bg-neutral-800">
         <Avatar>
           <AvatarImage src={member.workspaceMember.profile.imageUrl} />
         </Avatar>
@@ -24,7 +24,7 @@ export const ProjectMemberItem = ({ member }: ProjectMemberItemProps) => {
               {member.workspaceMember.profile.lastName}
             </p>
           </div>
-          <p className="text-sm font-extralight text-stone-600">
+          <p className="text-sm font-extralight text-stone-600 dark:text-neutral-400">
             {member.workspaceMember.department
               ? member.workspaceMember.department.name
               : "No department"}

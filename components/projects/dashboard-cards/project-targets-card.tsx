@@ -29,17 +29,17 @@ export const ProjectTargetsCard = ({
 
   return (
     <DashboardCard icon={<Target strokeWidth={1} />} title="Project targets">
-      <div className="bg-stone-100 space-y-[1px]">
+      <div className="bg-stone-100 dark:bg-neutral-800 space-y-[1px]">
         {projectTarget.map((target) => (
           <div
             key={target.id}
-            className="flex p-1 px-2 w-full min-h-20 bg-white space-x-[1px]  items-center justify-between select-none"
+            className="flex p-1 px-2 w-full min-h-20 bg-white dark:bg-neutral-950 space-x-[1px]  items-center justify-between select-none"
           >
             <div>
               <p className="font-light text-lg whitespace-nowrap">
                 {target.name}
               </p>
-              <p className="text-sm font-extralight text-stone-600 whitespace-nowrap">
+              <p className="text-sm font-extralight text-stone-600 dark:text-neutral-400 whitespace-nowrap">
                 {target.description}
               </p>
             </div>

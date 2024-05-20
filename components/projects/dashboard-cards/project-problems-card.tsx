@@ -46,15 +46,17 @@ export const ProjectProblemsCard = ({
                 `/workspace/${workspaceId}/projects/${projectId}/implementation/issues/${problem.id}`
               );
             }}
-            className="w-full bg-white p-2 select-none hover:bg-red-50/90"
+            className="w-full bg-white dark:bg-neutral-950 p-2 select-none hover:bg-red-50/90"
           >
             <h2 className="text-lg">
-              <span className="font-medium text-red-600 px-2 select-none">
+              <span className="font-medium text-red-600 dark:text-red-500 px-2 select-none">
                 {"!".repeat(problem.priority)}
               </span>
               <span>{problem.name}</span>
             </h2>
-            <p className="text-red-900 pl-7">{problem.description}</p>
+            <p className="text-red-900 dark:text-red-600 pl-7">
+              {problem.description}
+            </p>
           </div>
         ))}
       </div>
