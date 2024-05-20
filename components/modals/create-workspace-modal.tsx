@@ -52,7 +52,7 @@ export const CreateWorkspaceModal = () => {
   });
 
   if (!profileId) {
-    return <p>No user</p>;
+    return;
   }
 
   const onSubmit = (values: z.infer<typeof CreateWorkspaceSchema>) => {
