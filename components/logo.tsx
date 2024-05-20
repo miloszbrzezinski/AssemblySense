@@ -18,23 +18,23 @@ export const Logo = ({ className }: { className?: string }) => {
         <div
           className={cn(
             "hover:opacity-75 transition items-center gap-x-2 flex select-none",
-            className,
+            className
           )}
         >
           <p
             className={cn(
-              "hidden md:block text-2xl text-transparent bg-clip-text bg-gradient-to-r from-sky-900 to-amber-900 dark:from-sky-300 dark:to-amber-300",
+              "hidden md:block text-2xl text-transparent bg-clip-text bg-gradient-to-r from-sky-900 to-amber-900 dark:from-neutral-300 dark:to-stone-300",
               headingFont.className,
-              className,
+              className
             )}
           >
             AssemblySense
           </p>
           <p
             className={cn(
-              "md:hidden block text-xl text-transparent bg-clip-text bg-gradient-to-r from-sky-900 to-amber-900 dark:from-sky-300 dark:to-amber-300",
+              "md:hidden block text-xl text-transparent bg-clip-text bg-gradient-to-r from-sky-900 to-amber-900 dark:from-neutral-300 dark:to-stone-300",
               headingFont.className,
-              className,
+              className
             )}
           >
             AssemblySense

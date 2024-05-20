@@ -74,7 +74,7 @@ const ProjectNavbar = ({
   };
 
   return (
-    <div className="flex flex-col w-full items-center h-24 bg-stone-50 dark:bg-zinc-900/30 dark:border-b-zinc-400 border-b-stone-500/30 shadow-sm border-b select-none">
+    <div className="flex flex-col w-full items-center h-24 bg-stone-50 dark:bg-neutral-950 dark:border-b-zinc-400 border-b-stone-500/30 shadow-sm border-b select-none">
       <div className="flex flex-row flex-grow w-full justify-between md:px-5 px-1">
         <div className="flex items-center h-12 text-2xl pt-2">
           {/* <Button

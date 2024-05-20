@@ -67,7 +67,7 @@ export default async function ProjectDesignLayout({
   }
 
   return (
-    <div className="h-full flex bg-stone-100 dark:bg-zinc-800">
+    <div className="h-full flex">
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel className="min-w-72 h-full" defaultSize={15}>
           <DesignSidebar
@@ -82,9 +82,7 @@ export default async function ProjectDesignLayout({
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel className="min-w-[50%] h-full" defaultSize={85}>
-          <div className="w-full h-full transition-all bg-stone-100 dark:bg-zinc-800">
-            {children}
-          </div>
+          <div className="w-full h-full transition-all">{children}</div>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

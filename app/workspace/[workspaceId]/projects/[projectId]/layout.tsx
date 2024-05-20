@@ -51,7 +51,7 @@ export default async function WorkspaceLayout({
   const isFavourite = project.profileFavourite.length === 1;
 
   return (
-    <div className="h-full bg-stone-100 dark:bg-zinc-800">
+    <div className="h-full">
       <div className="absolute z-20 w-full left-0 md:pl-14 transition-all">
         <ProjectNavbar
           profileId={profile.id}
@@ -60,9 +60,7 @@ export default async function WorkspaceLayout({
         />
       </div>
       <div className="h-full flex pt-24">
-        <div className="w-full transition-all bg-stone-100 dark:bg-zinc-800">
-          {children}
-        </div>
+        <div className="w-full transition-all">{children}</div>
       </div>
     </div>
   );

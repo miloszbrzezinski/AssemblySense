@@ -52,7 +52,7 @@ export default async function ProjectDesignLayout({
   }
 
   return (
-    <div className="h-full w-full bg-stone-100 dark:bg-zinc-800">
+    <div className="h-full w-full">
       <div className="absolute z-20 w-full left-0 md:pl-14 transition-all">
         <SpaceNavbar spaceName="Library" />
       </div>

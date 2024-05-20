@@ -40,15 +40,13 @@ export default async function WorkspaceLayout({
       defaultTheme="light"
       disableTransitionOnChange
     >
-      <div className="h-full bg-stone-100 dark:bg-zinc-800">
+      <div className="h-full bg-stone-100 dark:bg-neutral-900">
         <Navbar activeWorkspace={workspace} />
         <div className="pt-14 h-full flex">
           <div className="hidden md:flex h-full w-16 z-40 fixed">
             <Sidebar />
           </div>
-          <div className="w-full md:pl-14 transition-all bg-stone-100 dark:bg-zinc-800">
-            {children}
-          </div>
+          <div className="w-full md:pl-14 transition-all">{children}</div>
           <div className="md:hidden flex h-16 w-full z-40 fixed bottom-0">
             <SidebarMobile />
           </div>

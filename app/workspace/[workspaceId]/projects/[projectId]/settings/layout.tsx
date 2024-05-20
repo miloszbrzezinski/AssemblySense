@@ -69,7 +69,7 @@ export default async function ProjectDesignLayout({
   }
 
   return (
-    <div className="h-full flex bg-stone-100 dark:bg-zinc-800">
+    <div className="h-full flex">
       <ProjectSettingsSidebar
         profileId={profile.id}
         workspaceId={params.workspaceId}
@@ -78,9 +78,7 @@ export default async function ProjectDesignLayout({
         projectMembers={project.projectMembers}
         projectStages={project.projectStages}
       />
-      <div className="w-full h-full transition-all bg-stone-100 dark:bg-zinc-800">
-        {children}
-      </div>
+      <div className="w-full h-full transition-all">{children}</div>
     </div>
   );
 }

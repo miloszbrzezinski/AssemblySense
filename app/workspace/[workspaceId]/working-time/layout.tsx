@@ -42,7 +42,7 @@ export default async function ProjectImplementatioLayout({
   }
 
   return (
-    <div className="h-full w-full flex flex-col bg-stone-100 dark:bg-zinc-800">
+    <div className="h-full w-full flex flex-col">
       <SpaceNavbar spaceName="Working time"></SpaceNavbar>
       <div className="flex h-full w-full">
         <WorkingHoursSidebar />

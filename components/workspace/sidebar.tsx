@@ -15,7 +15,7 @@ import {
 
 export const Sidebar = () => {
   return (
-    <div className="flex flex-col items-center pb-14 bg-white dark:bg-zinc-900 dark:border-r-[0px] border-r-[1px] border-[#E3E5E8] w-14 justify-between">
+    <div className="flex flex-col items-center pb-14 bg-white dark:bg-black dark:border-r-[0.5px] border-r-[1px] border-stone-300 dark:border-neutral-500 w-14 justify-between">
       <div className="flex flex-col items-center">
         <div className="flex flex-col items-center py-3 space-y-1">
           <SidebarButton buttonName="Home" path="home">

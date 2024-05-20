@@ -81,7 +81,7 @@ export const Navbar = async ({
   });
 
   return (
-    <nav className="fixed z-50 top-0 md:px-4 px-2 w-full h-14 border-b dark:border-neutral-700 shadow-sm bg-white dark:bg-neutral-900 flex items-center">
+    <nav className="fixed z-50 top-0 md:px-4 px-2 w-full h-14 border-b dark:border-neutral-700 shadow-sm bg-white dark:bg-black flex items-center">
       <div className="flex items-center gap-x-4">
         <div className="flex items-center justify-center md:space-x-2 space-x-1">
           <Logo />
