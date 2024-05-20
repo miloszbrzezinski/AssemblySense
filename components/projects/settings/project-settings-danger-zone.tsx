@@ -18,7 +18,7 @@ export const ProjectSettingsDangerZone = ({
   return (
     <div className="w-full space-y-3">
       <h3 className="text-2xl font-normal">Danger zone</h3>
-      <div className="w-1/2 space-y-1 border-2 border-red-800 bg-red-900/5 rounded-md">
+      <div className="w-1/2 space-y-1 border-2 border-red-800 dark:border-red-900 bg-red-900/5 rounded-md">
         <div className="flex items-center justify-between p-3 w-full">
           <div>
             <h4>Change visibility</h4>
@@ -28,7 +28,7 @@ export const ProjectSettingsDangerZone = ({
           </div>
           <Button
             variant="outline"
-            className="border-red-700 border-2 text-red-800"
+            className="border-red-700 dark:border-red-900 border-2 text-red-800 dark:text-red-600"
           >
             Change visibility
           </Button>
@@ -41,7 +41,7 @@ export const ProjectSettingsDangerZone = ({
           </div>
           <Button
             variant="outline"
-            className="border-red-700 border-2 text-red-800"
+            className="border-red-700 dark:border-red-900 border-2 text-red-800 dark:text-red-600"
           >
             Change
           </Button>
@@ -57,7 +57,7 @@ export const ProjectSettingsDangerZone = ({
               onOpen("removeProject", { profileId, workspaceId, projectId });
             }}
             variant="outline"
-            className="border-red-700 border-2 text-red-800"
+            className="border-red-700 dark:border-red-900 border-2 text-red-800 dark:text-red-600"
           >
             Delete this project
           </Button>

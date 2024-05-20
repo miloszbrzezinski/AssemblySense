@@ -1,4 +1,5 @@
 import { ProjectLayoutList } from "@/components/projects/design/layout/project-layout-list";
+import { TitleBar } from "@/components/projects/design/titlebar";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { AssemblyProcessWithGroup } from "@/types";
@@ -60,9 +61,7 @@ export default async function ProjectDesignLayoutPage({
   });
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
-        <p>Layout</p>
-      </div>
+      <TitleBar title="Layout" />
       <ProjectLayoutList
         profileId={profile.id}
         workspaceId={params.workspaceId}

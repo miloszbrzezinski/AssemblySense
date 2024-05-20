@@ -61,7 +61,7 @@ export const DesignSidebar = ({
   assemblyGroups.forEach((g) => (processesCount += g.assemblyProcesses.length));
 
   return (
-    <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll">
+    <div className="w-full h-full border-r pb-20 border-stone-300 dark:bg-black/50 shadow-md overflow-scroll">
       <Accordion type="single" collapsible defaultValue="project">
         <AccordionItem value="project">
           <div className="shadow-sm shadow-stone-300 w-full">
@@ -76,8 +76,8 @@ export const DesignSidebar = ({
                   `/workspace/${params.workspaceId}/projects/${params.projectId}/design/layout`
                 );
               }}
-              variant="secondary"
-              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+              variant="ghost"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
             >
               <div className="flex items-center justify-start space-x-2">
                 <Waypoints strokeWidth={1} />
@@ -91,8 +91,8 @@ export const DesignSidebar = ({
                   `/workspace/${params.workspaceId}/projects/${params.projectId}/design/network`
                 );
               }}
-              variant="secondary"
-              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+              variant="ghost"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
             >
               <div className="flex items-center justify-start space-x-2">
                 <Network strokeWidth={1} />
@@ -106,8 +106,8 @@ export const DesignSidebar = ({
                   `/workspace/${params.workspaceId}/projects/${params.projectId}/design/components`
                 );
               }}
-              variant="secondary"
-              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+              variant="ghost"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
             >
               <div className="flex items-center justify-start space-x-2">
                 <Puzzle strokeWidth={1} />
@@ -122,8 +122,8 @@ export const DesignSidebar = ({
                   `/workspace/${params.workspaceId}/projects/${params.projectId}/design/io-list`
                 );
               }}
-              variant="secondary"
-              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+              variant="ghost"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
             >
               <div className="flex items-center justify-start space-x-2">
                 <Binary strokeWidth={1} />
@@ -136,8 +136,8 @@ export const DesignSidebar = ({
                   `/workspace/${params.workspaceId}/projects/${params.projectId}/design/enables`
                 );
               }}
-              variant="secondary"
-              className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+              variant="ghost"
+              className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
             >
               <div className="flex items-center justify-start space-x-2">
                 <Shield strokeWidth={1} />

@@ -35,15 +35,15 @@ export const ProjectSettingsSidebar = ({
   const activeStageOrder = projectStages.filter((s) => s.active)[0]?.order;
 
   return (
-    <div className="w-72 h-full border-r pt-2 pb-20 border-stone-300 shadow-md overflow-scroll">
+    <div className="w-72 h-full border-r pt-2 pb-20 border-stone-300 dark:bg-black/50 shadow-md overflow-scroll">
       <Button
         onClick={() => {
           router.push(
             `/workspace/${params.workspaceId}/projects/${params.projectId}/settings/general`
           );
         }}
-        variant="secondary"
-        className="w-full justify-start space-x-2 hover:bg-stone-200/60 rounded-none"
+        variant="ghost"
+        className="w-full justify-start space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
       >
         <Cog strokeWidth={1} />
         <p className="font-light">General</p>
@@ -55,8 +55,8 @@ export const ProjectSettingsSidebar = ({
             `/workspace/${params.workspaceId}/projects/${params.projectId}/settings/stages`
           );
         }}
-        variant="secondary"
-        className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+        variant="ghost"
+        className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
       >
         <div className="flex items-center justify-start space-x-2">
           <Rocket strokeWidth={1} />
@@ -72,8 +72,8 @@ export const ProjectSettingsSidebar = ({
             `/workspace/${params.workspaceId}/projects/${params.projectId}/settings/targets`
           );
         }}
-        variant="secondary"
-        className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+        variant="ghost"
+        className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
       >
         <div className="flex  items-center justify-start space-x-2">
           <Target strokeWidth={1} />
@@ -87,8 +87,8 @@ export const ProjectSettingsSidebar = ({
             `/workspace/${params.workspaceId}/projects/${params.projectId}/settings/members`
           );
         }}
-        variant="secondary"
-        className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+        variant="ghost"
+        className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
       >
         <div className="flex items-center justify-start space-x-2">
           <Users strokeWidth={1} />
@@ -103,8 +103,8 @@ export const ProjectSettingsSidebar = ({
             `/workspace/${params.workspaceId}/projects/${params.projectId}/settings/change-log`
           );
         }}
-        variant="secondary"
-        className="w-full justify-between space-x-2 hover:bg-stone-200/60 rounded-none"
+        variant="ghost"
+        className="w-full justify-between space-x-2 hover:bg-stone-200/60 dark:hover:bg-neutral-800 rounded-none"
       >
         <div className="flex items-center justify-start space-x-2">
           <FileClock strokeWidth={1} />

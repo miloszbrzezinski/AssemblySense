@@ -92,7 +92,7 @@ const ProjectNavbar = ({
             variant="ghost"
             className="md:text-2xl text-xl space-x-2 text-stone-900 dark:text-zinc-300 font-normal px-2"
           >
-            <span>{project.projectNo}</span>
+            <span className="uppercase">{project.projectNo}</span>
             <span className="font-light">{project.name}</span>
           </Button>
           {pathname.split("/")[5] === "settings" && (

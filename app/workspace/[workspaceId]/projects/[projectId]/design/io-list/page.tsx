@@ -1,5 +1,6 @@
 import { ProjectComponentSidebar } from "@/components/projects/design/io-list/project-components-sidebar";
 import { IOTable } from "@/components/projects/design/io-list/table/io-table";
+import { TitleBar } from "@/components/projects/design/titlebar";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -84,9 +85,7 @@ export default async function IOListPage({
     <div className="h-full w-full flex flex-col">
       <ResizablePanelGroup direction="horizontal" className="h-full">
         <ResizablePanel className="min-w-[50%] h-full" defaultSize={80}>
-          <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
-            <p>I/O List</p>
-          </div>
+          <TitleBar title="I/O list" />
           <div className="flex flex-col h-screen pb-52">
             <IOTable
               profileId={profile.id}

@@ -1,5 +1,6 @@
 import { ComponentsTable } from "@/components/projects/design/components/components-table/components-table";
 import { DesignLibrarySidebar } from "@/components/projects/design/components/library-sidebar";
+import { TitleBar } from "@/components/projects/design/titlebar";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -76,9 +77,7 @@ export default async function ProjectDesignComponentsPage({
     <div className="h-full w-full flex flex-col">
       <ResizablePanelGroup direction="horizontal" className="h-full">
         <ResizablePanel className="min-w-[50%] h-full" defaultSize={80}>
-          <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
-            <p>Project components</p>
-          </div>
+          <TitleBar title="Components" />
           <div className="flex flex-col h-screen pb-52">
             <ComponentsTable
               profileId={profile.id}

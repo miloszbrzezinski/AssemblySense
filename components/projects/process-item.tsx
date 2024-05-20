@@ -19,10 +19,10 @@ export const ProcessItem = ({
   return (
     <Button
       variant="ghost"
-      className="p-1 pl-5 h-min justify-start w-full rounded-none space-x-2 hover:bg-slate-200"
+      className="p-1 pl-5 h-min justify-start w-full rounded-none space-x-2 hover:bg-slate-200 dark:hover:bg-neutral-800"
       onClick={() => {
         router.push(
-          `/workspace/${workspaceId}/projects/${assemblyGroup.projectId}/design/group/${assemblyGroup.id}/process/${assemblyProcess.id}`,
+          `/workspace/${workspaceId}/projects/${assemblyGroup.projectId}/design/group/${assemblyGroup.id}/process/${assemblyProcess.id}`
         );
       }}
     >

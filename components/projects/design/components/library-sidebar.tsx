@@ -1,6 +1,7 @@
 "use client";
 import { ComponentCategoryWithComponents } from "@/types";
 import { ComponentCategoryItem } from "./component-category";
+import { TitleBar } from "../titlebar";
 
 interface DesignLibrarySidebarProps {
   profileId: string;
@@ -17,9 +18,7 @@ export const DesignLibrarySidebar = ({
 }: DesignLibrarySidebarProps) => {
   return (
     <div className="relative w-full h-full border-r border-stone-300 shadow-md">
-      <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
-        <p>Workspace library</p>
-      </div>
+      <TitleBar title="Workspace library" />
       {componentCategories.length === 0 && (
         <p className="pt-10 pl-2 text-stone-500">Library empty</p>
       )}

@@ -86,7 +86,7 @@ export const ProjectLayoutList = ({
                     <li
                       {...provided.draggableProps}
                       ref={provided.innerRef}
-                      className="w-full bg-white items-center flex p-5 pl-2 justify-between"
+                      className="w-full bg-white dark:bg-black items-center flex p-5 pl-2 justify-between"
                     >
                       <div className="flex space-x-2 items-center">
                         <div

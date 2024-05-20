@@ -1,4 +1,5 @@
 import { NetworkTable } from "@/components/projects/design/network/network-table/network-table";
+import { TitleBar } from "@/components/projects/design/titlebar";
 import ProjectItem from "@/components/projects/project-item";
 import ProjectNavbar from "@/components/projects/project-navbar";
 import HelloWidget from "@/components/workspace/hello-widget";
@@ -79,9 +80,7 @@ export default async function ProjectDesignNetworkPage({
   }
   return (
     <div className="h-full w-full flex flex-col">
-      <div className="border-b text-xl font-light items-center p-2 bg-white shadow-md">
-        <p>Network</p>
-      </div>
+      <TitleBar title="Networks" />
       <div className="flex flex-col h-screen pb-52">
         <NetworkTable
           profileId={profile.id}

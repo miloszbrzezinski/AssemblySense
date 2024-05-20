@@ -7,6 +7,7 @@ import {
 } from "../../../ui/accordion";
 import { ProjectComponentWithData } from "@/types";
 import { Button } from "@/components/ui/button";
+import { TitleBar } from "../titlebar";
 
 interface ProjectComponentSidebarProps {
   profileId: string;
@@ -21,9 +22,7 @@ export const ProjectComponentSidebar = ({
 }: ProjectComponentSidebarProps) => {
   return (
     <div className="w-full h-full border-r pb-20 border-stone-300 shadow-md overflow-scroll ">
-      <div className="border-b text-xl items-center p-2 bg-white shadow-md">
-        <p>Project Components</p>
-      </div>
+      <TitleBar title="Project components" />
       <div className="flex flex-col space-y-[1px] bg-stone-300">
         {projectComponents.map((component) => (
           <div
