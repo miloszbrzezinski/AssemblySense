@@ -12,9 +12,11 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 
 const WorkspaceButton = ({
+  profileId,
   workspaceName,
   workspaces,
 }: {
+  profileId: string;
   workspaceName: string;
   workspaces?: Workspace[];
 }) => {
@@ -45,7 +47,7 @@ const WorkspaceButton = ({
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
-            onOpen("addWorkspace");
+            onOpen("addWorkspace", { profileId });
           }}
           className="space-x-2"
         >

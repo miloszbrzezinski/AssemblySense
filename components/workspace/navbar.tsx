@@ -87,6 +87,7 @@ export const Navbar = async ({
           <Logo />
           <span className="text-xl font-thin">|</span>
           <WorkspaceButton
+            profileId={profile.id}
             workspaceName={activeWorkspace.name}
             workspaces={workspaces}
           />

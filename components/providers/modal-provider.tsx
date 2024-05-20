@@ -20,6 +20,7 @@ import { AddProjectStageModal } from "../modals/add-project-stage-modal";
 import { RemoveProjectStageModal } from "../modals/remove-project-stage";
 import { EditProjectStageModal } from "../modals/edit-project-stage-modal";
 import { RemoveAssemblyGroupModal } from "../modals/remove-assembly-group";
+import { CreateWorkspaceModal } from "../modals/create-workspace-modal";
 
 export const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -53,6 +54,7 @@ export const ModalProvider = () => {
       <RemoveProjectStageModal />
       <EditProjectStageModal />
       <RemoveAssemblyGroupModal />
+      <CreateWorkspaceModal />
     </>
   );
 };
