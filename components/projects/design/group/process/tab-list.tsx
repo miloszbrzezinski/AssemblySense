@@ -33,7 +33,7 @@ export const TabsListItem = ({
         workspaceId,
         projectId,
         groupId,
-        processId,
+        processId
       ).then((data) => {
         // setError(data.error);
         if (data.success) {
@@ -50,9 +50,9 @@ export const TabsListItem = ({
   };
 
   return (
-    <div className="flex items-center justify-between bg-stone-200 dark:bg-neutral-900 shadow-md rounded-md space-x-1">
+    <div className="flex items-center justify-between bg-stone-200 dark:bg-neutral-800 shadow-md rounded-md space-x-1">
       <div className="flex overflow-x-scroll no-scrollbar">
-        <TabsList className="bg-stone-200 dark:bg-neutral-900">
+        <TabsList className="bg-stone-200 dark:bg-neutral-800">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           {sequences.map((seq) => (
             <TabsTrigger key={seq.id} value={seq.id}>

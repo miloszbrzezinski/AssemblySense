@@ -106,7 +106,7 @@ export const SequenceTitle = ({
           onKeyDown={handleKeyDown}
           onBlur={saveName}
           ref={inputRef}
-          className="group-hover:bg-slate-100 dark:group-hover:bg-slate-900/50 dark:bg-neutral-900 w-full text-lg font-medium focus:outline-none dark:focus:bg-slate-800 focus:bg-slate-200 focus:rounded-none p-2"
+          className="group-hover:bg-slate-100 dark:group-hover:bg-slate-900/50 dark:bg-neutral-950 w-full text-lg font-medium focus:outline-none dark:focus:bg-slate-800 focus:bg-slate-200 focus:rounded-none p-2"
         />
         <button
           onClick={onProblemReport}

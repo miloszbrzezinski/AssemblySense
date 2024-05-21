@@ -61,10 +61,10 @@ export const DesignSidebar = ({
   assemblyGroups.forEach((g) => (processesCount += g.assemblyProcesses.length));
 
   return (
-    <div className="w-full h-full border-r pb-20 border-stone-300 dark:bg-black/50 shadow-md overflow-scroll">
+    <div className="w-full h-full border-r pb-20 border-stone-300 dark:border-neutral-700 dark:bg-black/50 shadow-md overflow-scroll">
       <Accordion type="single" collapsible defaultValue="project">
         <AccordionItem value="project">
-          <div className="shadow-sm shadow-stone-300 w-full">
+          <div className="shadow-sm shadow-stone-300 dark:shadow-none w-full">
             <AccordionTrigger>
               <p className="text-lg pl-1 font-normal">Project</p>
             </AccordionTrigger>
@@ -149,7 +149,7 @@ export const DesignSidebar = ({
       </Accordion>
       <Accordion type="single" collapsible defaultValue="groups">
         <AccordionItem value="groups">
-          <div className="flex w-full justify-between items-center shadow-sm shadow-stone-300">
+          <div className="flex w-full justify-between items-center shadow-sm shadow-stone-300 dark:shadow-none">
             <AccordionTrigger>
               <div className="flex justify-between w-full">
                 <p className="text-lg pl-1 font-normal">Control groups</p>

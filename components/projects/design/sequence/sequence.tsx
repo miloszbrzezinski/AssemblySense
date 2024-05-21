@@ -41,7 +41,7 @@ export const ProcessSequence = ({
         projectId,
         groupId,
         processId,
-        sequence.id,
+        sequence.id
       ).then((data) => {
         // setError(data.error);
         if (data.success) {
@@ -58,7 +58,7 @@ export const ProcessSequence = ({
   };
 
   return (
-    <div className="w-full flex flex-col bg-white dark:bg-neutral-900 border shadow-lg">
+    <div className="w-full flex flex-col bg-white dark:bg-neutral-950 border shadow-lg">
       <SequenceTitle
         profileId={profileId}
         workspaceId={workspaceId}
