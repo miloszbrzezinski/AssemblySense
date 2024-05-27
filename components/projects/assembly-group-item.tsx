@@ -24,10 +24,11 @@ import {
 import { AssemblyGroupWithProcesses } from "@/types";
 import { useModal } from "@/hooks/use-modal-store";
 import { ProcessItem } from "./process-item";
-import { startTransition, useRef, useState } from "react";
+import { startTransition, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { setAssemblyGroupName } from "@/actions/assembly-group";
 import { toast } from "sonner";
+import { DonutGraph } from "./donut-graph";
 
 interface AssemblyGroupItemProps {
   assemblyGroup: AssemblyGroupWithProcesses;

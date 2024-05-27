@@ -47,7 +47,7 @@ export const ProjectStagesCard = ({
       <div className="space-x-[1px] flex h-60 items-center select-none">
         {projectStages.map(
           (stage) =>
-            activeStageOrder && (
+            activeStageOrder != null && (
               <div
                 className={cn(
                   "w-full flex transition-all duration-200 bg-slate-400 dark:bg-neutral-600",
