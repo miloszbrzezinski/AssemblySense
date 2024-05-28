@@ -9,6 +9,7 @@ import { Avatar, AvatarImage } from "../../ui/avatar";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { ProjectMemberItem } from "../project-member-item";
+import { useRouter } from "next/navigation";
 
 interface ProjectMembersCardProps {
   projectMembers: ProjectMemberWithProfile[];
@@ -17,11 +18,25 @@ interface ProjectMembersCardProps {
 export const ProjectMembersCard = ({
   projectMembers,
 }: ProjectMembersCardProps) => {
+  const router = useRouter();
   const { onOpen } = useModal();
 
   return (
     <DashboardCard icon={<Users strokeWidth={1} />} title="Leaders">
       <div className="bg-stone-300 dark:bg-neutral-800 space-y-[1px]">
+        {projectMembers.length > 0 && (
+          <div className="bg-white dark:bg-neutral-950 text-center justify-center h-full flex flex-col py-10 text-2xl font-light">
+            <p>No project members</p>
+            <button
+              onClick={() => {
+                router.push("settings/members");
+              }}
+              className="underline text-lg"
+            >
+              add here
+            </button>
+          </div>
+        )}
         {projectMembers.map(
           (member) =>
             member.isLeader && (
