@@ -7,6 +7,7 @@ import { ProjectStage } from "@prisma/client";
 import { CalendarCard } from "../../ui/calendar-card";
 import { TimeDisplay } from "../../ui/time-display";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 interface ProjectStagesCardProps {
   projectStages: ProjectStage[];
@@ -20,6 +21,7 @@ export const ProjectStagesCard = ({
   let activeStageOrder = null;
 
   const { onOpen } = useModal();
+  const router = useRouter();
 
   const activeStage = projectStages.filter((p) => p.active)[0];
   if (activeStage) {
@@ -45,6 +47,19 @@ export const ProjectStagesCard = ({
   return (
     <DashboardCard icon={<Rocket strokeWidth={1} />} title="Project stages">
       <div className="space-x-[1px] flex h-60 items-center select-none">
+        {projectStages.length === 0 && (
+          <div className="bg-white dark:bg-neutral-950 text-center justify-center h-full w-full flex flex-col py-10 text-2xl font-light">
+            <p>No project stages</p>
+            <button
+              onClick={() => {
+                router.push("settings/stages");
+              }}
+              className="underline text-lg"
+            >
+              add here
+            </button>
+          </div>
+        )}
         {projectStages.map(
           (stage) =>
             activeStageOrder != null && (
