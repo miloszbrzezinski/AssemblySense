@@ -20,13 +20,14 @@ export const ProjectMembersCard = ({
 }: ProjectMembersCardProps) => {
   const router = useRouter();
   const { onOpen } = useModal();
+  const projectLeaders = projectMembers.filter((member) => member.isLeader);
 
   return (
     <DashboardCard icon={<Users strokeWidth={1} />} title="Leaders">
       <div className="bg-stone-300 dark:bg-neutral-800 space-y-[1px]">
-        {projectMembers.length > 0 && (
+        {projectLeaders.length === 0 && (
           <div className="bg-white dark:bg-neutral-950 text-center justify-center h-full flex flex-col py-10 text-2xl font-light">
-            <p>No project members</p>
+            <p>No project leaders</p>
             <button
               onClick={() => {
                 router.push("settings/members");
@@ -37,7 +38,7 @@ export const ProjectMembersCard = ({
             </button>
           </div>
         )}
-        {projectMembers.map(
+        {projectLeaders.map(
           (member) =>
             member.isLeader && (
               <ProjectMemberItem key={member.id} member={member} />
