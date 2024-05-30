@@ -17,6 +17,7 @@ import { ProjectTarget, ProjectTargetType } from "@prisma/client";
 import { Separator } from "../../ui/separator";
 import { CalendarCard } from "../../ui/calendar-card";
 import { TimeDisplay } from "../../ui/time-display";
+import { useRouter } from "next/navigation";
 
 interface ProjectTargetsCardProps {
   projectTarget: ProjectTarget[];
@@ -25,11 +26,25 @@ interface ProjectTargetsCardProps {
 export const ProjectTargetsCard = ({
   projectTarget,
 }: ProjectTargetsCardProps) => {
+  const router = useRouter();
   const { onOpen } = useModal();
 
   return (
     <DashboardCard icon={<Target strokeWidth={1} />} title="Project targets">
       <div className="bg-stone-100 dark:bg-neutral-800 space-y-[1px]">
+        {projectTarget.length === 0 && (
+          <div className="bg-white dark:bg-neutral-950 text-center justify-center h-full flex flex-col py-10 text-2xl font-light">
+            <p>No project targets</p>
+            <button
+              onClick={() => {
+                router.push("settings/targets");
+              }}
+              className="underline text-lg"
+            >
+              add here
+            </button>
+          </div>
+        )}
         {projectTarget.map((target) => (
           <div
             key={target.id}
